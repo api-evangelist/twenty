@@ -1,0 +1,68 @@
+name: Twenty Plans and Pricing
+description: >
+  Twenty offers two cloud pricing tiers, Pro and Organization, billed per
+  user per month with an optional annual discount of 25%. The self-hosted
+  option is free and includes all Pro-tier features. A 30-day free trial
+  is available for cloud plans with no credit card required.
+specificationVersion: "0.1"
+url: https://twenty.com/pricing
+plans:
+  - name: Self-Hosted
+    description: >
+      Run Twenty on your own infrastructure using Docker Compose. Includes
+      all Pro-tier features at no cost. Requires self-managed infrastructure,
+      updates, and backups.
+    price: 0
+    currency: USD
+    unit: per workspace
+    billing: N/A
+    features:
+      - Unlimited custom objects, fields, views, and records
+      - REST and GraphQL APIs with webhooks
+      - Workflows and AI agents
+      - Two-factor authentication
+      - Unlimited user roles
+      - 30+ language support
+      - Field-level permissions
+      - Docker Compose deployment
+  - name: Pro
+    description: >
+      Cloud-hosted plan for teams that want managed infrastructure with
+      the full Twenty feature set including REST/GraphQL APIs, webhooks,
+      workflows, and AI agents. Rate limit of 50 API calls per minute.
+    price: 9
+    currency: USD
+    unit: per user / per month
+    billing: monthly (or annually at 25% discount)
+    free_trial: 30 days, no credit card required
+    features:
+      - Unlimited custom objects, fields, views, and records
+      - REST and GraphQL APIs with webhooks
+      - Workflows and AI agents
+      - Two-factor authentication
+      - Unlimited user roles
+      - 30+ language support
+      - Field-level permissions
+      - 50 API calls per minute
+      - 50 million workflow automation credits per year
+  - name: Organization
+    description: >
+      Cloud-hosted plan for larger teams or organizations requiring
+      enterprise security features including SSO, row-level permissions,
+      custom domain, audit logs, and priority support. Rate limit of
+      100 API calls per minute.
+    price: 19
+    currency: USD
+    unit: per user / per month
+    billing: monthly (or annually at 25% discount)
+    free_trial: 30 days, no credit card required
+    features:
+      - Everything in Pro
+      - Row-level permissions
+      - SAML/OIDC SSO
+      - Custom domain support
+      - Priority customer support
+      - Audit logs
+      - Encryption key rotation
+      - 100 API calls per minute
+      - Implementation partner access

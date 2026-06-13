@@ -1,0 +1,107 @@
+aid: twenty
+name: Twenty
+description: >
+  Twenty is an open-source CRM platform built as a modern alternative to
+  Salesforce, designed for teams that need flexibility, data ownership, and
+  a contemporary developer experience. It provides REST and GraphQL APIs
+  covering core CRM operations such as managing companies, people,
+  opportunities, notes, tasks, and fully customizable objects. Developers
+  can extend Twenty with custom objects, server-side logic, UI components,
+  and AI agents as TypeScript packages, all surfaced through the same API
+  surface. The platform is available as a cloud service or as a
+  self-hosted deployment via Docker Compose, giving teams full control over
+  their data residency and infrastructure.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/twenty/refs/heads/main/apis.yml
+created: 2026-06-12
+modified: 2026-06-12
+specificationVersion: "0.19"
+tags:
+  - CRM
+  - Open Source
+  - REST
+  - GraphQL
+  - Webhooks
+  - Self-Hosted
+  - Companies
+  - People
+  - Opportunities
+  - Workflows
+  - AI Agents
+  - Custom Objects
+apis:
+  - aid: twenty:core-api
+    name: Twenty Core API
+    description: >
+      The Twenty Core API provides REST and GraphQL endpoints for CRUD
+      operations on all CRM records including companies, people,
+      opportunities, notes, tasks, and any custom objects defined in a
+      workspace. Both interfaces support batch operations of up to 60
+      records per request, filtering, and relation traversal. GraphQL
+      additionally supports batch upsert using plural object names.
+      Authentication is via bearer token generated from the workspace
+      settings. The API schema is per-tenant and adapts automatically as
+      custom objects are added.
+    type: Contract
+    tags:
+      - CRM
+      - REST
+      - GraphQL
+      - Companies
+      - People
+      - Opportunities
+    contact:
+      - FN: Twenty Developer Documentation
+        url: https://docs.twenty.com/developers/extend/api
+    properties:
+      - type: Documentation
+        url: https://docs.twenty.com/developers/extend/api
+      - type: OpenAPI
+        url: https://api.twenty.com/open-api
+  - aid: twenty:metadata-api
+    name: Twenty Metadata API
+    description: >
+      The Twenty Metadata API provides REST and GraphQL endpoints for
+      programmatic schema management, allowing developers to create, update,
+      and delete custom objects, fields, and relations within a workspace.
+      Changes made through the Metadata API are immediately reflected in
+      the Core API surface, enabling dynamic data modeling at runtime. The
+      base paths are /rest/metadata/ for REST and /metadata/ for GraphQL.
+    type: Contract
+    tags:
+      - Metadata
+      - Schema Management
+      - Custom Objects
+      - REST
+      - GraphQL
+    contact:
+      - FN: Twenty Developer Documentation
+        url: https://docs.twenty.com/developers/extend/api
+    properties:
+      - type: Documentation
+        url: https://docs.twenty.com/developers/extend/api
+common:
+  - type: Website
+    url: https://twenty.com
+  - type: Documentation
+    url: https://docs.twenty.com/developers/introduction
+  - type: GitHubOrg
+    url: https://github.com/twentyhq
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/twenty
+  - type: Blog
+    url: https://twenty.com/releases
+  - type: Pricing
+    url: https://twenty.com/pricing
+  - type: X
+    url: https://x.com/twentycrm
+  - type: Plans
+    url: plans/twenty-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/twenty-rate-limits.yml
+  - type: FinOps
+    url: finops/twenty-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,87 @@
+name: Twenty FinOps
+description: >
+  FinOps Framework 1.0 FOCUS-aligned cost and usage data for the Twenty
+  CRM platform. Twenty offers transparent, per-user-per-month pricing
+  across cloud tiers with no hidden charges for API access, webhooks, or
+  workflows. Self-hosted deployments incur no software licensing cost;
+  infrastructure costs are borne by the operator. Cloud plans include a
+  25% discount for annual billing. API rate limits and automation credit
+  quotas are the primary consumption metrics for capacity planning.
+specificationVersion: "1.0"
+url: https://twenty.com/pricing
+provider: Twenty
+currency: USD
+billing_model: per-user-per-month
+services:
+  - name: Twenty Pro Cloud
+    description: Managed cloud CRM with full REST/GraphQL API access, webhooks, workflows, and AI agents.
+    sku: twenty-pro-cloud
+    unit_price: 9.00
+    unit: user/month
+    billing_period: monthly
+    annual_price: 6.75
+    annual_unit: user/month
+    annual_discount_pct: 25
+    included_resources:
+      - api_calls_per_minute: 50
+      - batch_records_per_request: 60
+      - workflow_credits_per_year: 50000000
+      - custom_objects: unlimited
+      - records: unlimited
+    notes: >
+      No additional charges for API access, webhooks, or workflow features.
+      30-day free trial, no credit card required.
+
+  - name: Twenty Organization Cloud
+    description: >
+      Enterprise-grade managed cloud CRM adding SSO, row-level permissions,
+      custom domain, audit logs, and priority support.
+    sku: twenty-organization-cloud
+    unit_price: 19.00
+    unit: user/month
+    billing_period: monthly
+    annual_price: 14.25
+    annual_unit: user/month
+    annual_discount_pct: 25
+    included_resources:
+      - api_calls_per_minute: 100
+      - batch_records_per_request: 60
+      - custom_objects: unlimited
+      - records: unlimited
+      - sso: true
+      - row_level_permissions: true
+      - audit_logs: true
+    notes: >
+      Includes all Pro features plus enterprise security controls.
+      30-day free trial, no credit card required.
+
+  - name: Twenty Self-Hosted
+    description: >
+      Open-source self-hosted deployment. No software licensing cost.
+      Operator is responsible for infrastructure, compute, storage,
+      and maintenance costs. Feature-equivalent to Pro cloud tier.
+    sku: twenty-self-hosted
+    unit_price: 0.00
+    unit: workspace
+    billing_period: N/A
+    included_resources:
+      - api_calls: configurable
+      - custom_objects: unlimited
+      - records: unlimited
+    notes: >
+      Infrastructure costs vary by provider and workload. Typical Docker
+      Compose deployment requires a small VM (2 vCPU / 4 GB RAM minimum)
+      plus PostgreSQL and Redis instances.
+
+cost_optimization:
+  - strategy: Annual billing
+    description: Switch from monthly to annual billing to save 25% on Pro and Organization plans.
+  - strategy: Self-hosting
+    description: >
+      Teams with regulated data or high user counts may achieve significant
+      savings by self-hosting, eliminating per-user licensing costs at the
+      expense of operational overhead.
+  - strategy: Right-size plan
+    description: >
+      Pro plan is sufficient for most teams. Upgrade to Organization only
+      when SSO, row-level permissions, or audit logs are required.

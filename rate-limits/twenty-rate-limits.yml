@@ -1,0 +1,41 @@
+name: Twenty Rate Limits
+description: >
+  Twenty enforces API rate limits on a per-workspace basis that vary by
+  plan tier. Limits apply to both REST and GraphQL API calls. Batch
+  operations (create, update, delete) are capped at 60 records per
+  request regardless of plan. GraphQL additionally supports batch upsert
+  operations using plural object names. Self-hosted deployments may
+  configure their own rate limits.
+specificationVersion: "0.1"
+url: https://docs.twenty.com/developers/extend/api
+limits:
+  - name: Pro Plan API Rate Limit
+    description: Maximum number of API calls (REST or GraphQL) per minute for Pro plan workspaces.
+    plan: Pro
+    limit: 50
+    unit: requests per minute
+    scope: per workspace
+  - name: Organization Plan API Rate Limit
+    description: Maximum number of API calls (REST or GraphQL) per minute for Organization plan workspaces.
+    plan: Organization
+    limit: 100
+    unit: requests per minute
+    scope: per workspace
+  - name: GraphQL Token Rate Limit
+    description: Maximum number of GraphQL tokens consumed per 60-second window across all plans.
+    plan: All
+    limit: 100
+    unit: tokens per 60 seconds
+    scope: per workspace
+  - name: Batch Operation Record Limit
+    description: Maximum number of records that can be created, updated, or deleted in a single batch API call.
+    plan: All
+    limit: 60
+    unit: records per request
+    scope: per request
+  - name: Workflow Automation Credits (Pro)
+    description: Annual quota of workflow automation execution credits included in the Pro plan.
+    plan: Pro
+    limit: 50000000
+    unit: credits per year
+    scope: per workspace
