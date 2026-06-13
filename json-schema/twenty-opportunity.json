@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/twenty/main/json-schema/twenty-opportunity.json",
+  "title": "Opportunity",
+  "description": "A Twenty CRM opportunity record representing a potential deal or sale.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "deletedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Opportunity name or deal title"
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["NEW", "SCREENING", "MEETING", "PROPOSAL", "CUSTOMER"],
+      "description": "Current pipeline stage of the opportunity"
+    },
+    "amount": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Deal value",
+          "properties": {
+            "amountMicros": {
+              "type": ["integer", "null"],
+              "description": "Amount in micros (1,000,000 = 1.00)"
+            },
+            "currencyCode": {
+              "type": ["string", "null"],
+              "pattern": "^[A-Z]{3}$"
+            }
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "closeDate": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Expected or actual close date"
+    },
+    "position": {
+      "type": "number"
+    },
+    "companyId": {
+      "type": ["string", "null"],
+      "format": "uuid"
+    },
+    "pointOfContactId": {
+      "type": ["string", "null"],
+      "format": "uuid",
+      "description": "ID of the primary person contact for this opportunity"
+    },
+    "ownerId": {
+      "type": ["string", "null"],
+      "format": "uuid",
+      "description": "ID of the workspace member who owns this opportunity"
+    },
+    "createdBy": {
+      "$ref": "#/$defs/ActorMetadata"
+    },
+    "updatedBy": {
+      "$ref": "#/$defs/ActorMetadata"
+    }
+  },
+  "required": ["id", "createdAt", "updatedAt", "name", "stage"],
+  "$defs": {
+    "ActorMetadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["EMAIL", "CALENDAR", "API", "IMPORT", "MANUAL", "SYSTEM", "WORKFLOW", "WEBHOOK"]
+        },
+        "workspaceMemberId": {"type": ["string", "null"], "format": "uuid"},
+        "name": {"type": ["string", "null"]},
+        "context": {"type": ["object", "null"]}
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "5c222222-0000-0000-0000-000000000003",
+      "createdAt": "2026-03-01T08:00:00Z",
+      "updatedAt": "2026-06-10T11:00:00Z",
+      "deletedAt": null,
+      "name": "Acme Enterprise Expansion",
+      "stage": "PROPOSAL",
+      "amount": {
+        "amountMicros": 250000000000,
+        "currencyCode": "USD"
+      },
+      "closeDate": "2026-09-30",
+      "position": 2.0,
+      "companyId": "3b5e1234-0000-0000-0000-000000000001",
+      "pointOfContactId": "4a111111-0000-0000-0000-000000000002",
+      "ownerId": "9f000000-0000-0000-0000-000000000099",
+      "createdBy": {
+        "source": "MANUAL",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      },
+      "updatedBy": {
+        "source": "MANUAL",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      }
+    }
+  ]
+}

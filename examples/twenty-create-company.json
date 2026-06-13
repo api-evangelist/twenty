@@ -1,0 +1,89 @@
+{
+  "title": "Create a Company",
+  "description": "Example request and response for creating a company via the Twenty Core REST API.",
+  "request": {
+    "method": "POST",
+    "url": "https://api.twenty.com/rest/core/companies",
+    "headers": {
+      "Authorization": "Bearer <your-workspace-token>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Acme Corporation",
+      "domainName": {
+        "primaryLinkUrl": "https://acme.com",
+        "primaryLinkLabel": "Acme"
+      },
+      "linkedinLink": {
+        "primaryLinkUrl": "https://www.linkedin.com/company/acme-corp",
+        "primaryLinkLabel": "Acme on LinkedIn"
+      },
+      "annualRevenue": {
+        "amountMicros": 500000000000,
+        "currencyCode": "USD"
+      },
+      "address": {
+        "addressStreet1": "123 Innovation Drive",
+        "addressCity": "San Francisco",
+        "addressState": "CA",
+        "addressCountry": "US",
+        "addressPostcode": "94102"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "data": {
+        "createCompany": {
+          "id": "3b5e1234-abcd-0000-0000-000000000001",
+          "createdAt": "2026-06-12T12:00:00.000Z",
+          "updatedAt": "2026-06-12T12:00:00.000Z",
+          "deletedAt": null,
+          "name": "Acme Corporation",
+          "domainName": {
+            "primaryLinkUrl": "https://acme.com",
+            "primaryLinkLabel": "Acme",
+            "secondaryLinks": null
+          },
+          "linkedinLink": {
+            "primaryLinkUrl": "https://www.linkedin.com/company/acme-corp",
+            "primaryLinkLabel": "Acme on LinkedIn",
+            "secondaryLinks": null
+          },
+          "annualRevenue": {
+            "amountMicros": 500000000000,
+            "currencyCode": "USD"
+          },
+          "address": {
+            "addressStreet1": "123 Innovation Drive",
+            "addressStreet2": null,
+            "addressCity": "San Francisco",
+            "addressState": "CA",
+            "addressCountry": "US",
+            "addressPostcode": "94102",
+            "addressLat": null,
+            "addressLng": null
+          },
+          "position": 1.0,
+          "createdBy": {
+            "source": "API",
+            "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+            "name": "Kin Lane",
+            "context": null
+          },
+          "updatedBy": {
+            "source": "API",
+            "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+            "name": "Kin Lane",
+            "context": null
+          },
+          "accountOwnerId": null
+        }
+      }
+    }
+  }
+}

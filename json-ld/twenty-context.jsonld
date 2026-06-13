@@ -1,0 +1,302 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "twenty": "https://twenty.com/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "id": "@id",
+    "type": "@type",
+
+    "Company": {
+      "@id": "schema:Organization",
+      "@context": {
+        "name": "schema:name",
+        "domainName": "schema:url",
+        "linkedinLink": "schema:sameAs",
+        "annualRevenue": "schema:MonetaryAmount",
+        "address": "schema:PostalAddress",
+        "people": "schema:employee",
+        "opportunities": "twenty:opportunity",
+        "accountOwner": "twenty:accountOwner",
+        "taskTargets": "twenty:taskTarget",
+        "noteTargets": "twenty:noteTarget",
+        "attachments": "schema:associatedMedia",
+        "createdAt": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "deletedAt": {
+          "@id": "twenty:deletedAt",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Person": {
+      "@id": "schema:Person",
+      "@context": {
+        "name": "schema:name",
+        "emails": "schema:email",
+        "phones": "schema:telephone",
+        "jobTitle": "schema:jobTitle",
+        "linkedinLink": "schema:sameAs",
+        "company": "schema:worksFor",
+        "companyId": "twenty:companyId",
+        "pointOfContactForOpportunities": "twenty:opportunity",
+        "taskTargets": "twenty:taskTarget",
+        "noteTargets": "twenty:noteTarget",
+        "attachments": "schema:associatedMedia",
+        "createdAt": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "deletedAt": {
+          "@id": "twenty:deletedAt",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Opportunity": {
+      "@id": "twenty:Opportunity",
+      "@context": {
+        "name": "schema:name",
+        "stage": "twenty:stage",
+        "amount": "schema:priceSpecification",
+        "closeDate": {
+          "@id": "twenty:closeDate",
+          "@type": "xsd:date"
+        },
+        "company": "schema:provider",
+        "companyId": "twenty:companyId",
+        "pointOfContact": "schema:agent",
+        "pointOfContactId": "twenty:pointOfContactId",
+        "owner": "twenty:owner",
+        "ownerId": "twenty:ownerId",
+        "taskTargets": "twenty:taskTarget",
+        "noteTargets": "twenty:noteTarget",
+        "attachments": "schema:associatedMedia",
+        "createdAt": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "deletedAt": {
+          "@id": "twenty:deletedAt",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Note": {
+      "@id": "schema:CreativeWork",
+      "@context": {
+        "title": "schema:headline",
+        "bodyV2": "schema:text",
+        "noteTargets": "twenty:noteTarget",
+        "attachments": "schema:associatedMedia",
+        "createdAt": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "deletedAt": {
+          "@id": "twenty:deletedAt",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Task": {
+      "@id": "schema:Action",
+      "@context": {
+        "title": "schema:name",
+        "bodyV2": "schema:description",
+        "status": "schema:actionStatus",
+        "dueAt": {
+          "@id": "schema:endTime",
+          "@type": "xsd:dateTime"
+        },
+        "assignee": "schema:agent",
+        "assigneeId": "twenty:assigneeId",
+        "taskTargets": "twenty:taskTarget",
+        "attachments": "schema:associatedMedia",
+        "createdAt": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "deletedAt": {
+          "@id": "twenty:deletedAt",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "WorkspaceMember": {
+      "@id": "schema:Person",
+      "@context": {
+        "name": "schema:name",
+        "colorScheme": "twenty:colorScheme",
+        "locale": "schema:inLanguage"
+      }
+    },
+
+    "LinksMetadata": {
+      "@id": "schema:WebPage",
+      "@context": {
+        "primaryLinkUrl": "schema:url",
+        "primaryLinkLabel": "schema:name",
+        "secondaryLinks": "schema:sameAs"
+      }
+    },
+
+    "CurrencyMetadata": {
+      "@id": "schema:MonetaryAmount",
+      "@context": {
+        "amountMicros": "twenty:amountMicros",
+        "currencyCode": "schema:currency"
+      }
+    },
+
+    "AddressMetadata": {
+      "@id": "schema:PostalAddress",
+      "@context": {
+        "addressStreet1": "schema:streetAddress",
+        "addressStreet2": "twenty:addressStreet2",
+        "addressCity": "schema:addressLocality",
+        "addressState": "schema:addressRegion",
+        "addressCountry": "schema:addressCountry",
+        "addressPostcode": "schema:postalCode",
+        "addressLat": "schema:latitude",
+        "addressLng": "schema:longitude"
+      }
+    },
+
+    "FullNameMetadata": {
+      "@id": "schema:Person",
+      "@context": {
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName"
+      }
+    },
+
+    "EmailsMetadata": {
+      "@id": "twenty:EmailsMetadata",
+      "@context": {
+        "primaryEmail": "schema:email",
+        "additionalEmails": "twenty:additionalEmails"
+      }
+    },
+
+    "PhonesMetadata": {
+      "@id": "twenty:PhonesMetadata",
+      "@context": {
+        "primaryPhoneNumber": "schema:telephone",
+        "primaryPhoneCountryCode": "twenty:phoneCountryCode",
+        "primaryPhoneCallingCode": "twenty:phoneCallingCode",
+        "additionalPhones": "twenty:additionalPhones"
+      }
+    },
+
+    "RichTextMetadata": {
+      "@id": "schema:TextDigitalDocument",
+      "@context": {
+        "blocknote": "twenty:blocknote",
+        "markdown": "schema:text"
+      }
+    },
+
+    "ActorMetadata": {
+      "@id": "schema:Person",
+      "@context": {
+        "source": "twenty:actorSource",
+        "workspaceMemberId": "twenty:workspaceMemberId",
+        "name": "schema:name",
+        "context": "twenty:actorContext"
+      }
+    },
+
+    "ObjectMetadata": {
+      "@id": "twenty:ObjectMetadata",
+      "@context": {
+        "nameSingular": "twenty:nameSingular",
+        "namePlural": "twenty:namePlural",
+        "labelSingular": "twenty:labelSingular",
+        "labelPlural": "twenty:labelPlural",
+        "description": "schema:description",
+        "icon": "twenty:icon",
+        "isCustom": "twenty:isCustom",
+        "isActive": "twenty:isActive",
+        "isSystem": "twenty:isSystem",
+        "fields": "twenty:field"
+      }
+    },
+
+    "FieldMetadata": {
+      "@id": "twenty:FieldMetadata",
+      "@context": {
+        "objectMetadataId": "twenty:objectMetadataId",
+        "name": "schema:name",
+        "label": "schema:alternateName",
+        "type": "twenty:fieldType",
+        "description": "schema:description",
+        "icon": "twenty:icon",
+        "isNullable": "twenty:isNullable",
+        "isCustom": "twenty:isCustom",
+        "isSystem": "twenty:isSystem",
+        "isActive": "twenty:isActive",
+        "defaultValue": "schema:defaultValue",
+        "options": "twenty:selectOption"
+      }
+    },
+
+    "RelationMetadata": {
+      "@id": "twenty:RelationMetadata",
+      "@context": {
+        "relationType": "twenty:relationType",
+        "fromObjectMetadataId": "twenty:fromObjectMetadataId",
+        "toObjectMetadataId": "twenty:toObjectMetadataId",
+        "fromFieldMetadataId": "twenty:fromFieldMetadataId",
+        "toFieldMetadataId": "twenty:toFieldMetadataId"
+      }
+    },
+
+    "PageInfo": {
+      "@id": "twenty:PageInfo",
+      "@context": {
+        "hasNextPage": "twenty:hasNextPage",
+        "hasPreviousPage": "twenty:hasPreviousPage",
+        "startCursor": "twenty:startCursor",
+        "endCursor": "twenty:endCursor"
+      }
+    },
+
+    "Webhook": {
+      "@id": "twenty:Webhook",
+      "@context": {
+        "targetUrl": "schema:url",
+        "operations": "twenty:webhookOperation",
+        "secret": "twenty:webhookSecret"
+      }
+    }
+  }
+}

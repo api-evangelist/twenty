@@ -1,0 +1,120 @@
+{
+  "title": "Create a Custom Object via Metadata API",
+  "description": "Example showing how to create a custom 'Invoice' object and add a custom field via the Twenty Metadata API.",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Create the custom object",
+      "request": {
+        "method": "POST",
+        "url": "https://api.twenty.com/rest/metadata/objects",
+        "headers": {
+          "Authorization": "Bearer <your-workspace-token>",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "nameSingular": "invoice",
+          "namePlural": "invoices",
+          "labelSingular": "Invoice",
+          "labelPlural": "Invoices",
+          "description": "Customer invoices for billing",
+          "icon": "IconFileInvoice"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "createOneObject": {
+              "id": "aaaaaaaa-0000-0000-0000-000000000001",
+              "createdAt": "2026-06-12T12:00:00.000Z",
+              "updatedAt": "2026-06-12T12:00:00.000Z",
+              "nameSingular": "invoice",
+              "namePlural": "invoices",
+              "labelSingular": "Invoice",
+              "labelPlural": "Invoices",
+              "description": "Customer invoices for billing",
+              "icon": "IconFileInvoice",
+              "isCustom": true,
+              "isActive": true,
+              "isSystem": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "step": 2,
+      "title": "Add an invoice number field",
+      "request": {
+        "method": "POST",
+        "url": "https://api.twenty.com/rest/metadata/fields",
+        "headers": {
+          "Authorization": "Bearer <your-workspace-token>",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "objectMetadataId": "aaaaaaaa-0000-0000-0000-000000000001",
+          "name": "invoiceNumber",
+          "label": "Invoice Number",
+          "type": "TEXT",
+          "description": "Unique invoice identifier",
+          "icon": "IconHash",
+          "isNullable": false
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "createOneField": {
+              "id": "bbbbbbbb-0000-0000-0000-000000000002",
+              "createdAt": "2026-06-12T12:01:00.000Z",
+              "updatedAt": "2026-06-12T12:01:00.000Z",
+              "objectMetadataId": "aaaaaaaa-0000-0000-0000-000000000001",
+              "name": "invoiceNumber",
+              "label": "Invoice Number",
+              "type": "TEXT",
+              "description": "Unique invoice identifier",
+              "icon": "IconHash",
+              "isNullable": false,
+              "isCustom": true,
+              "isSystem": false,
+              "isActive": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "step": 3,
+      "title": "Use the new invoice object via Core API",
+      "note": "After creation, the /rest/core/invoices endpoint is immediately available",
+      "request": {
+        "method": "POST",
+        "url": "https://api.twenty.com/rest/core/invoices",
+        "headers": {
+          "Authorization": "Bearer <your-workspace-token>",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "invoiceNumber": "INV-2026-001"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "createInvoice": {
+              "id": "cccccccc-0000-0000-0000-000000000003",
+              "createdAt": "2026-06-12T12:02:00.000Z",
+              "updatedAt": "2026-06-12T12:02:00.000Z",
+              "deletedAt": null,
+              "invoiceNumber": "INV-2026-001"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/twenty/main/json-schema/twenty-company.json",
+  "title": "Company",
+  "description": "A Twenty CRM company record representing a business or organization.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique record identifier",
+      "readOnly": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp",
+      "readOnly": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last-update timestamp",
+      "readOnly": true
+    },
+    "deletedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Soft-delete timestamp; null if record is active",
+      "readOnly": true
+    },
+    "name": {
+      "type": ["string", "null"],
+      "description": "Company name"
+    },
+    "domainName": {
+      "$ref": "#/$defs/LinksMetadata",
+      "description": "Primary web domain of the company"
+    },
+    "linkedinLink": {
+      "oneOf": [
+        {"$ref": "#/$defs/LinksMetadata"},
+        {"type": "null"}
+      ],
+      "description": "Company LinkedIn profile URL"
+    },
+    "annualRevenue": {
+      "oneOf": [
+        {"$ref": "#/$defs/CurrencyMetadata"},
+        {"type": "null"}
+      ],
+      "description": "Company annual revenue"
+    },
+    "address": {
+      "$ref": "#/$defs/AddressMetadata",
+      "description": "Company headquarters address"
+    },
+    "position": {
+      "type": "number",
+      "description": "Sort position within list views"
+    },
+    "createdBy": {
+      "$ref": "#/$defs/ActorMetadata",
+      "description": "Who/what created this record"
+    },
+    "updatedBy": {
+      "$ref": "#/$defs/ActorMetadata",
+      "description": "Who/what last updated this record"
+    },
+    "accountOwnerId": {
+      "type": ["string", "null"],
+      "format": "uuid",
+      "description": "ID of the workspace member who owns this account"
+    }
+  },
+  "required": ["id", "createdAt", "updatedAt"],
+  "$defs": {
+    "LinksMetadata": {
+      "type": "object",
+      "description": "A primary URL with optional label and secondary links",
+      "properties": {
+        "primaryLinkUrl": {
+          "type": ["string", "null"],
+          "format": "uri"
+        },
+        "primaryLinkLabel": {
+          "type": ["string", "null"]
+        },
+        "secondaryLinks": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": {"type": "string", "format": "uri"},
+              "label": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "CurrencyMetadata": {
+      "type": "object",
+      "description": "Monetary amount in micros with ISO 4217 currency code",
+      "properties": {
+        "amountMicros": {
+          "type": ["integer", "null"],
+          "description": "Amount in micros (1,000,000 = 1.00)"
+        },
+        "currencyCode": {
+          "type": ["string", "null"],
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 three-letter currency code",
+          "examples": ["USD", "EUR", "GBP"]
+        }
+      }
+    },
+    "AddressMetadata": {
+      "type": "object",
+      "description": "Postal address",
+      "properties": {
+        "addressStreet1": {"type": ["string", "null"]},
+        "addressStreet2": {"type": ["string", "null"]},
+        "addressCity": {"type": ["string", "null"]},
+        "addressState": {"type": ["string", "null"]},
+        "addressCountry": {"type": ["string", "null"]},
+        "addressPostcode": {"type": ["string", "null"]},
+        "addressLat": {"type": ["number", "null"]},
+        "addressLng": {"type": ["number", "null"]}
+      }
+    },
+    "ActorMetadata": {
+      "type": "object",
+      "description": "Audit record of who created or last updated an object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["EMAIL", "CALENDAR", "API", "IMPORT", "MANUAL", "SYSTEM", "WORKFLOW", "WEBHOOK"]
+        },
+        "workspaceMemberId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "name": {
+          "type": ["string", "null"]
+        },
+        "context": {
+          "type": ["object", "null"]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "3b5e1234-0000-0000-0000-000000000001",
+      "createdAt": "2026-01-15T09:00:00Z",
+      "updatedAt": "2026-06-01T14:30:00Z",
+      "deletedAt": null,
+      "name": "Acme Corporation",
+      "domainName": {
+        "primaryLinkUrl": "https://acme.com",
+        "primaryLinkLabel": "Acme",
+        "secondaryLinks": null
+      },
+      "linkedinLink": {
+        "primaryLinkUrl": "https://www.linkedin.com/company/acme-corp",
+        "primaryLinkLabel": "Acme Corp on LinkedIn",
+        "secondaryLinks": null
+      },
+      "annualRevenue": {
+        "amountMicros": 500000000000,
+        "currencyCode": "USD"
+      },
+      "address": {
+        "addressStreet1": "123 Innovation Drive",
+        "addressStreet2": null,
+        "addressCity": "San Francisco",
+        "addressState": "CA",
+        "addressCountry": "US",
+        "addressPostcode": "94102",
+        "addressLat": 37.7749,
+        "addressLng": -122.4194
+      },
+      "position": 1.0,
+      "createdBy": {
+        "source": "API",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      },
+      "updatedBy": {
+        "source": "MANUAL",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      },
+      "accountOwnerId": "9f000000-0000-0000-0000-000000000099"
+    }
+  ]
+}

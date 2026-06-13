@@ -1,0 +1,309 @@
+vocabulary:
+  name: Twenty CRM Vocabulary
+  description: >
+    Domain terms and concepts for the Twenty open-source CRM platform API.
+    Covers core CRM entities, composite field types, metadata schema management,
+    pagination, filtering, and workspace customization concepts.
+  url: https://twenty.com
+  version: v0.1
+  created: 2026-06-12
+  modified: 2026-06-12
+
+terms:
+
+  # --- Core Entities ---
+  - term: company
+    label: Company
+    description: >
+      A business or organization tracked in the CRM. Standard fields include
+      name, domainName, linkedinLink, annualRevenue, and address. Relates to
+      people, opportunities, tasks, notes, and attachments.
+    type: entity
+    endpoints:
+      - GET /rest/core/companies
+      - POST /rest/core/companies
+      - GET /rest/core/companies/{id}
+      - PATCH /rest/core/companies/{id}
+      - DELETE /rest/core/companies/{id}
+      - POST /rest/core/batch/companies
+
+  - term: person
+    label: Person
+    description: >
+      An individual contact tracked in the CRM. Standard fields include name
+      (full name), emails, phones, jobTitle, and linkedinLink. A person can
+      belong to one company.
+    type: entity
+    endpoints:
+      - GET /rest/core/people
+      - POST /rest/core/people
+      - GET /rest/core/people/{id}
+      - PATCH /rest/core/people/{id}
+      - DELETE /rest/core/people/{id}
+      - POST /rest/core/batch/people
+
+  - term: opportunity
+    label: Opportunity
+    description: >
+      A potential sale or deal. Standard fields include name, stage, amount
+      (currency), closeDate, companyId, and ownerId. Stage values are:
+      NEW, SCREENING, MEETING, PROPOSAL, CUSTOMER.
+    type: entity
+    endpoints:
+      - GET /rest/core/opportunities
+      - POST /rest/core/opportunities
+      - GET /rest/core/opportunities/{id}
+      - PATCH /rest/core/opportunities/{id}
+      - DELETE /rest/core/opportunities/{id}
+
+  - term: note
+    label: Note
+    description: >
+      A rich-text note associated with one or more CRM records. Fields include
+      title and bodyV2 (rich text). Notes are linked to records via noteTargets.
+    type: entity
+    endpoints:
+      - GET /rest/core/notes
+      - POST /rest/core/notes
+      - GET /rest/core/notes/{id}
+      - PATCH /rest/core/notes/{id}
+      - DELETE /rest/core/notes/{id}
+
+  - term: task
+    label: Task
+    description: >
+      An action item associated with CRM records. Fields include title, bodyV2,
+      status (TODO, IN_PROGRESS, DONE), dueAt, and assigneeId. Tasks are linked
+      to records via taskTargets.
+    type: entity
+    endpoints:
+      - GET /rest/core/tasks
+      - POST /rest/core/tasks
+      - GET /rest/core/tasks/{id}
+      - PATCH /rest/core/tasks/{id}
+      - DELETE /rest/core/tasks/{id}
+
+  - term: attachment
+    label: Attachment
+    description: A file attached to a CRM record.
+    type: entity
+
+  - term: workspaceMember
+    label: Workspace Member
+    description: >
+      A user who belongs to the workspace. Workspace members can own
+      opportunities, be assigned tasks, and act as account owners for companies.
+    type: entity
+
+  # --- Custom Object System ---
+  - term: customObject
+    label: Custom Object
+    description: >
+      A user-defined entity type created via the Metadata API. Custom objects
+      receive the same REST and GraphQL endpoints as standard objects immediately
+      upon creation. Defined by nameSingular, namePlural, labelSingular,
+      labelPlural, and optional description/icon.
+    type: concept
+
+  - term: customField
+    label: Custom Field
+    description: >
+      A user-defined field added to a standard or custom object via the Metadata
+      API. Supports types: TEXT, RICH_TEXT, NUMBER, NUMERIC, BOOLEAN, DATE,
+      DATE_TIME, SELECT, MULTI_SELECT, CURRENCY, FULL_NAME, EMAILS, PHONES,
+      LINKS, ADDRESS, RATING, UUID, JSON, ARRAY.
+    type: concept
+
+  - term: relation
+    label: Relation
+    description: >
+      A typed association between two objects. Relation types: ONE_TO_MANY,
+      MANY_TO_ONE, ONE_TO_ONE. Defined via the Metadata API and immediately
+      exposed in the Core API.
+    type: concept
+
+  # --- Composite Field Types ---
+  - term: linksMetadata
+    label: Links Metadata
+    description: >
+      A composite field storing a primary URL+label pair and optional secondary
+      links array. Used for domainName and linkedinLink on Company and Person.
+    type: fieldType
+    properties:
+      - primaryLinkUrl
+      - primaryLinkLabel
+      - secondaryLinks
+
+  - term: currencyMetadata
+    label: Currency Metadata
+    description: >
+      A composite field storing a monetary amount in micros (integer) and ISO
+      4217 currency code. 1,000,000 micros = 1.00 of the currency unit.
+    type: fieldType
+    properties:
+      - amountMicros
+      - currencyCode
+
+  - term: addressMetadata
+    label: Address Metadata
+    description: >
+      A composite field for postal addresses with street, city, state, country,
+      postcode, and optional lat/lng.
+    type: fieldType
+    properties:
+      - addressStreet1
+      - addressStreet2
+      - addressCity
+      - addressState
+      - addressCountry
+      - addressPostcode
+      - addressLat
+      - addressLng
+
+  - term: fullNameMetadata
+    label: Full Name Metadata
+    description: >
+      A composite field storing a person's first name and last name separately.
+    type: fieldType
+    properties:
+      - firstName
+      - lastName
+
+  - term: emailsMetadata
+    label: Emails Metadata
+    description: >
+      A composite field storing a primary email address and optional additional
+      email addresses array.
+    type: fieldType
+    properties:
+      - primaryEmail
+      - additionalEmails
+
+  - term: phonesMetadata
+    label: Phones Metadata
+    description: >
+      A composite field storing a primary phone number with country code and
+      calling code, plus optional additional phones array.
+    type: fieldType
+    properties:
+      - primaryPhoneNumber
+      - primaryPhoneCountryCode
+      - primaryPhoneCallingCode
+      - additionalPhones
+
+  - term: richTextMetadata
+    label: Rich Text Metadata
+    description: >
+      A composite field storing block-based rich text content. Provides both
+      blocknote (JSON block format) and markdown representations.
+    type: fieldType
+    properties:
+      - blocknote
+      - markdown
+
+  - term: actorMetadata
+    label: Actor Metadata
+    description: >
+      An audit field recording who created or last updated a record, including
+      source (EMAIL, CALENDAR, API, IMPORT, MANUAL, SYSTEM, WORKFLOW, WEBHOOK),
+      workspaceMemberId, and name.
+    type: fieldType
+    properties:
+      - source
+      - workspaceMemberId
+      - name
+      - context
+
+  # --- API Behavior Concepts ---
+  - term: cursorPagination
+    label: Cursor-based Pagination
+    description: >
+      All list endpoints use cursor-based pagination. Clients use starting_after
+      (forward) or ending_before (backward) with cursor values from pageInfo
+      (startCursor, endCursor). Default and maximum page size is 60 records for
+      the Core API, 1000 for the Metadata API.
+    type: concept
+
+  - term: filterExpression
+    label: Filter Expression
+    description: >
+      Query parameter syntax for narrowing results. Format:
+      field[COMPARATOR]:value. Multiple conditions are AND-joined by comma.
+      Supports and(), or(), not() for composability. Comparators: eq, neq, in,
+      containsAny, is, gt, gte, lt, lte, startsWith, like, ilike.
+    type: concept
+
+  - term: orderByExpression
+    label: Order-By Expression
+    description: >
+      Query parameter for sorting results. Format: field1,field2[DIRECTION].
+      Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+      Default direction is AscNullsFirst.
+    type: concept
+
+  - term: depthParameter
+    label: Depth Parameter
+    description: >
+      Controls how many levels of related objects are included in the response.
+      0 = primary object only. 1 = primary object plus direct relations (default).
+    type: concept
+
+  - term: upsert
+    label: Upsert
+    description: >
+      Query parameter on create endpoints. When true, creates the record if it
+      does not exist, or updates it if it does.
+    type: concept
+
+  - term: batchOperation
+    label: Batch Operation
+    description: >
+      Create up to 60 records in a single request using the /batch/{objects}
+      endpoint. Accepts an array of input objects.
+    type: concept
+
+  - term: softDelete
+    label: Soft Delete
+    description: >
+      Records can be soft-deleted (deletedAt timestamp set) rather than
+      permanently removed. Soft-deleted records are excluded from normal queries
+      but can be restored.
+    type: concept
+
+  - term: workspace
+    label: Workspace
+    description: >
+      A tenant-scoped environment in Twenty. Each workspace has its own schema,
+      users (workspace members), data, API tokens, and can define custom objects
+      and fields. The API schema is per-workspace.
+    type: concept
+
+  - term: bearerToken
+    label: Bearer Token
+    description: >
+      Workspace-scoped JWT used for API authentication. Generated in workspace
+      Settings → Playground. Must be passed in the Authorization header:
+      "Authorization: Bearer <token>". Never pass in URL parameters.
+    type: concept
+
+  - term: mcpServer
+    label: MCP Server
+    description: >
+      The Twenty Model Context Protocol server at https://api.twenty.com/mcp,
+      recommended for LLM agent integrations (Claude Desktop, Cursor, Windsurf).
+      Exposes typed tools with header-based auth without requiring raw OpenAPI.
+    type: concept
+
+  - term: webhook
+    label: Webhook
+    description: >
+      HTTP callbacks triggered on CRM record events (create, update, delete) and
+      delivered to a registered endpoint URL. Configured in workspace settings.
+    type: concept
+
+  - term: workflowEngine
+    label: Workflow Engine
+    description: >
+      Twenty's built-in automation system for creating event-driven or scheduled
+      workflows using a visual builder or TypeScript code steps.
+    type: concept

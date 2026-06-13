@@ -1,0 +1,820 @@
+openapi: 3.0.3
+info:
+  title: Twenty Metadata API
+  description: >
+    The Twenty Metadata API provides REST endpoints for programmatic schema
+    management, allowing developers to create, update, and delete custom objects,
+    fields, and relations within a workspace. Changes made through the Metadata
+    API are immediately reflected in the Core API surface, enabling dynamic data
+    modeling at runtime.
+
+    Base paths: /rest/metadata/ for REST, /metadata/ for GraphQL.
+
+    Authentication is via workspace-scoped Bearer token. The full
+    workspace-specific metadata schema is available (with auth) at
+    https://api.twenty.com/open-api/metadata.
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api
+servers:
+  - url: https://api.twenty.com/rest/metadata
+    description: Production
+tags:
+  - name: objects
+    description: Custom object metadata management
+  - name: fields
+    description: Custom field metadata management
+  - name: relations
+    description: Custom relation metadata management
+  - name: openapi
+    description: OpenAPI schema discovery
+security:
+  - bearerAuth: []
+paths:
+  /open-api/metadata:
+    get:
+      tags:
+        - openapi
+      summary: Get Metadata OpenAPI Schema
+      description: >
+        Returns the full workspace-specific OpenAPI schema for the metadata API.
+        Without authentication returns a skeleton schema. Requires Bearer token
+        for the full schema with all custom object/field definitions.
+      operationId: getMetadataOpenApiSchema
+      servers:
+        - url: https://api.twenty.com
+      security: []
+      responses:
+        '200':
+          description: OpenAPI document
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /objects:
+    get:
+      tags:
+        - objects
+      summary: Find Many Objects
+      description: Returns metadata for all objects defined in the workspace.
+      operationId: findManyObjects
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectMetadataListResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - objects
+      summary: Create One Object
+      description: Creates a new custom object in the workspace schema.
+      operationId: createOneObject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectMetadataInput'
+            example:
+              nameSingular: invoice
+              namePlural: invoices
+              labelSingular: Invoice
+              labelPlural: Invoices
+              description: Customer invoices
+              icon: IconFileInvoice
+      responses:
+        '201':
+          description: Object created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /objects/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - objects
+      summary: Find One Object
+      operationId: findOneObject
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectMetadataResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - objects
+      summary: Update One Object
+      operationId: updateOneObject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectMetadataInput'
+      responses:
+        '200':
+          description: Object updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - objects
+      summary: Delete One Object
+      operationId: deleteOneObject
+      responses:
+        '200':
+          description: Object deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /fields:
+    get:
+      tags:
+        - fields
+      summary: Find Many Fields
+      description: Returns metadata for all fields across all objects in the workspace.
+      operationId: findManyFields
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMetadataListResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - fields
+      summary: Create One Field
+      description: Creates a new custom field on an object.
+      operationId: createOneField
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldMetadataInput'
+            example:
+              objectMetadataId: 3c2a1d0e-1234-5678-abcd-ef0123456789
+              name: invoiceNumber
+              label: Invoice Number
+              type: TEXT
+              description: Unique invoice identifier
+              icon: IconHash
+              isNullable: false
+      responses:
+        '201':
+          description: Field created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /fields/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - fields
+      summary: Find One Field
+      operationId: findOneField
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMetadataResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - fields
+      summary: Update One Field
+      operationId: updateOneField
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldMetadataInput'
+      responses:
+        '200':
+          description: Field updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - fields
+      summary: Delete One Field
+      operationId: deleteOneField
+      responses:
+        '200':
+          description: Field deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /relations:
+    get:
+      tags:
+        - relations
+      summary: Find Many Relations
+      operationId: findManyRelations
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationMetadataListResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - relations
+      summary: Create One Relation
+      description: Creates a relation between two objects.
+      operationId: createOneRelation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationMetadataInput'
+      responses:
+        '201':
+          description: Relation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /relations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    delete:
+      tags:
+        - relations
+      summary: Delete One Relation
+      operationId: deleteOneRelation
+      responses:
+        '200':
+          description: Relation deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >
+        Workspace-scoped Bearer token. Generate from Settings → Playground in
+        your Twenty workspace.
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+
+    ObjectMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        nameSingular:
+          type: string
+          description: Camel-case singular name (e.g. invoice)
+        namePlural:
+          type: string
+          description: Camel-case plural name (e.g. invoices)
+        labelSingular:
+          type: string
+          description: Human-readable singular label
+        labelPlural:
+          type: string
+          description: Human-readable plural label
+        description:
+          type: string
+          nullable: true
+        icon:
+          type: string
+          nullable: true
+          description: Icon name from Twenty icon set
+        isCustom:
+          type: boolean
+          readOnly: true
+        isActive:
+          type: boolean
+        isSystem:
+          type: boolean
+          readOnly: true
+        fields:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/FieldMetadata'
+
+    ObjectMetadataInput:
+      type: object
+      required:
+        - nameSingular
+        - namePlural
+        - labelSingular
+        - labelPlural
+      properties:
+        nameSingular:
+          type: string
+        namePlural:
+          type: string
+        labelSingular:
+          type: string
+        labelPlural:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        isActive:
+          type: boolean
+
+    ObjectMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            objects:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/ObjectMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    ObjectMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/ObjectMetadata'
+
+    FieldMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        objectMetadataId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Camel-case field name
+        label:
+          type: string
+          description: Human-readable field label
+        type:
+          type: string
+          enum:
+            - TEXT
+            - RICH_TEXT
+            - NUMERIC
+            - NUMBER
+            - BOOLEAN
+            - DATE
+            - DATE_TIME
+            - SELECT
+            - MULTI_SELECT
+            - RELATION
+            - CURRENCY
+            - FULL_NAME
+            - EMAILS
+            - PHONES
+            - LINKS
+            - ADDRESS
+            - RATING
+            - UUID
+            - JSON
+            - ARRAY
+            - TS_VECTOR
+        description:
+          type: string
+          nullable: true
+        icon:
+          type: string
+          nullable: true
+        isNullable:
+          type: boolean
+        isCustom:
+          type: boolean
+          readOnly: true
+        isSystem:
+          type: boolean
+          readOnly: true
+        isActive:
+          type: boolean
+        defaultValue:
+          nullable: true
+        options:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              value:
+                type: string
+              label:
+                type: string
+              color:
+                type: string
+
+    FieldMetadataInput:
+      type: object
+      required:
+        - objectMetadataId
+        - name
+        - label
+        - type
+      properties:
+        objectMetadataId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+            - TEXT
+            - RICH_TEXT
+            - NUMERIC
+            - NUMBER
+            - BOOLEAN
+            - DATE
+            - DATE_TIME
+            - SELECT
+            - MULTI_SELECT
+            - CURRENCY
+            - FULL_NAME
+            - EMAILS
+            - PHONES
+            - LINKS
+            - ADDRESS
+            - RATING
+            - UUID
+            - JSON
+            - ARRAY
+        description:
+          type: string
+        icon:
+          type: string
+        isNullable:
+          type: boolean
+        defaultValue:
+          nullable: true
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              label:
+                type: string
+              color:
+                type: string
+
+    FieldMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            fields:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/FieldMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    FieldMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            field:
+              $ref: '#/components/schemas/FieldMetadata'
+
+    RelationMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        relationType:
+          type: string
+          enum: [ONE_TO_MANY, MANY_TO_ONE, ONE_TO_ONE]
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromFieldMetadataId:
+          type: string
+          format: uuid
+        toFieldMetadataId:
+          type: string
+          format: uuid
+
+    RelationMetadataInput:
+      type: object
+      required:
+        - relationType
+        - fromObjectMetadataId
+        - toObjectMetadataId
+        - fromName
+        - fromLabel
+        - toName
+        - toLabel
+      properties:
+        relationType:
+          type: string
+          enum: [ONE_TO_MANY, MANY_TO_ONE, ONE_TO_ONE]
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromName:
+          type: string
+        fromLabel:
+          type: string
+        toName:
+          type: string
+        toLabel:
+          type: string
+        fromIcon:
+          type: string
+        toIcon:
+          type: string
+
+    RelationMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relations:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/RelationMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    RelationMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relation:
+              $ref: '#/components/schemas/RelationMetadata'
+
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+              - Missing authentication token
+            error: FORBIDDEN_EXCEPTION

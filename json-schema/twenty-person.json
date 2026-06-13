@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/twenty/main/json-schema/twenty-person.json",
+  "title": "Person",
+  "description": "A Twenty CRM person record representing an individual contact.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique record identifier",
+      "readOnly": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "deletedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "readOnly": true
+    },
+    "name": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Person full name",
+          "properties": {
+            "firstName": {"type": ["string", "null"]},
+            "lastName": {"type": ["string", "null"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "emails": {
+      "type": "object",
+      "description": "Email addresses",
+      "properties": {
+        "primaryEmail": {
+          "type": ["string", "null"],
+          "format": "email"
+        },
+        "additionalEmails": {
+          "type": ["array", "null"],
+          "items": {"type": "string", "format": "email"}
+        }
+      }
+    },
+    "phones": {
+      "type": "object",
+      "description": "Phone numbers",
+      "properties": {
+        "primaryPhoneNumber": {"type": ["string", "null"]},
+        "primaryPhoneCountryCode": {"type": ["string", "null"]},
+        "primaryPhoneCallingCode": {"type": ["string", "null"]},
+        "additionalPhones": {"type": ["array", "null"], "items": {"type": "object"}}
+      }
+    },
+    "jobTitle": {
+      "type": ["string", "null"],
+      "description": "Professional title"
+    },
+    "linkedinLink": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "primaryLinkUrl": {"type": ["string", "null"], "format": "uri"},
+            "primaryLinkLabel": {"type": ["string", "null"]},
+            "secondaryLinks": {"type": ["array", "null"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "position": {
+      "type": "number"
+    },
+    "companyId": {
+      "type": ["string", "null"],
+      "format": "uuid",
+      "description": "ID of the associated company"
+    },
+    "createdBy": {
+      "$ref": "#/$defs/ActorMetadata"
+    },
+    "updatedBy": {
+      "$ref": "#/$defs/ActorMetadata"
+    }
+  },
+  "required": ["id", "createdAt", "updatedAt"],
+  "$defs": {
+    "ActorMetadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["EMAIL", "CALENDAR", "API", "IMPORT", "MANUAL", "SYSTEM", "WORKFLOW", "WEBHOOK"]
+        },
+        "workspaceMemberId": {"type": ["string", "null"], "format": "uuid"},
+        "name": {"type": ["string", "null"]},
+        "context": {"type": ["object", "null"]}
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "4a111111-0000-0000-0000-000000000002",
+      "createdAt": "2026-02-10T10:00:00Z",
+      "updatedAt": "2026-05-20T16:45:00Z",
+      "deletedAt": null,
+      "name": {
+        "firstName": "Jane",
+        "lastName": "Smith"
+      },
+      "emails": {
+        "primaryEmail": "jane.smith@acme.com",
+        "additionalEmails": ["jane@personal.com"]
+      },
+      "phones": {
+        "primaryPhoneNumber": "+15555550100",
+        "primaryPhoneCountryCode": "US",
+        "primaryPhoneCallingCode": "+1",
+        "additionalPhones": null
+      },
+      "jobTitle": "VP of Engineering",
+      "linkedinLink": {
+        "primaryLinkUrl": "https://www.linkedin.com/in/jane-smith",
+        "primaryLinkLabel": "Jane Smith",
+        "secondaryLinks": null
+      },
+      "position": 1.0,
+      "companyId": "3b5e1234-0000-0000-0000-000000000001",
+      "createdBy": {
+        "source": "API",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      },
+      "updatedBy": {
+        "source": "MANUAL",
+        "workspaceMemberId": "9f000000-0000-0000-0000-000000000099",
+        "name": "Kin Lane",
+        "context": null
+      }
+    }
+  ]
+}

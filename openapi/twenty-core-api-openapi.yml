@@ -1,0 +1,1487 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core API
+  description: >
+    The Twenty Core API provides REST endpoints for CRUD operations on all CRM
+    records including companies, people, opportunities, notes, tasks, and any
+    custom objects defined in a workspace. All list endpoints use cursor-based
+    pagination. Authentication is via Bearer token generated from workspace
+    Settings → Playground. The API schema is per-tenant and adapts automatically
+    as custom objects are added.
+
+    Note: The full workspace-specific schema is available at
+    https://api.twenty.com/open-api/core (requires Bearer token) and reflects all
+    standard and custom objects configured in your workspace.
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api
+servers:
+  - url: https://api.twenty.com/rest/core
+    description: Production
+tags:
+  - name: companies
+    description: Company CRM records
+  - name: people
+    description: Person/contact CRM records
+  - name: opportunities
+    description: Opportunity/deal CRM records
+  - name: notes
+    description: Note records associated with CRM objects
+  - name: tasks
+    description: Task records associated with CRM objects
+  - name: openapi
+    description: OpenAPI schema discovery
+security:
+  - bearerAuth: []
+paths:
+  /open-api/core:
+    get:
+      tags:
+        - openapi
+      summary: Get Core OpenAPI Schema
+      description: >
+        Returns the full workspace-specific OpenAPI schema for the core API,
+        including all standard and custom objects. Requires authentication.
+      operationId: getCoreOpenApiSchema
+      servers:
+        - url: https://api.twenty.com
+      responses:
+        '200':
+          description: OpenAPI document
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/401'
+
+  /companies:
+    get:
+      tags:
+        - companies
+      summary: Find Many Companies
+      description: >
+        Returns a paginated list of companies. Use filter, order_by, limit,
+        starting_after, and ending_before to control results.
+      operationId: findManyCompanies
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - companies
+      summary: Create One Company
+      operationId: createOneCompany
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInput'
+            example:
+              name: Acme Corp
+              domainName:
+                primaryLinkUrl: https://acme.com
+                primaryLinkLabel: Acme
+              address:
+                addressStreet1: 123 Main St
+                addressCity: San Francisco
+                addressState: CA
+                addressCountry: US
+                addressPostcode: '94102'
+      responses:
+        '201':
+          description: Company created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /batch/companies:
+    post:
+      tags:
+        - companies
+      summary: Create Many Companies
+      operationId: createManyCompanies
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompanyInput'
+              maxItems: 60
+      responses:
+        '201':
+          description: Companies created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      createCompanies:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /companies/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - companies
+      summary: Find One Company
+      operationId: findOneCompany
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - companies
+      summary: Update One Company
+      operationId: updateOneCompany
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInput'
+      responses:
+        '200':
+          description: Company updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - companies
+      summary: Delete One Company
+      operationId: deleteOneCompany
+      responses:
+        '200':
+          description: Company deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /people:
+    get:
+      tags:
+        - people
+      summary: Find Many People
+      operationId: findManyPeople
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - people
+      summary: Create One Person
+      operationId: createOnePerson
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonInput'
+            example:
+              name:
+                firstName: Jane
+                lastName: Smith
+              emails:
+                primaryEmail: jane.smith@example.com
+              phones:
+                primaryPhoneNumber: '+15555550100'
+                primaryPhoneCountryCode: US
+              jobTitle: VP of Engineering
+      responses:
+        '201':
+          description: Person created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /batch/people:
+    post:
+      tags:
+        - people
+      summary: Create Many People
+      operationId: createManyPeople
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonInput'
+              maxItems: 60
+      responses:
+        '201':
+          description: People created
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /people/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - people
+      summary: Find One Person
+      operationId: findOnePerson
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - people
+      summary: Update One Person
+      operationId: updateOnePerson
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonInput'
+      responses:
+        '200':
+          description: Person updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - people
+      summary: Delete One Person
+      operationId: deleteOnePerson
+      responses:
+        '200':
+          description: Person deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /opportunities:
+    get:
+      tags:
+        - opportunities
+      summary: Find Many Opportunities
+      operationId: findManyOpportunities
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - opportunities
+      summary: Create One Opportunity
+      operationId: createOneOpportunity
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+            example:
+              name: New Deal with Acme
+              stage: NEW
+              amount:
+                amountMicros: 50000000000
+                currencyCode: USD
+              closeDate: '2026-12-31'
+      responses:
+        '201':
+          description: Opportunity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /opportunities/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - opportunities
+      summary: Find One Opportunity
+      operationId: findOneOpportunity
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - opportunities
+      summary: Update One Opportunity
+      operationId: updateOneOpportunity
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+      responses:
+        '200':
+          description: Opportunity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - opportunities
+      summary: Delete One Opportunity
+      operationId: deleteOneOpportunity
+      responses:
+        '200':
+          description: Opportunity deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /notes:
+    get:
+      tags:
+        - notes
+      summary: Find Many Notes
+      operationId: findManyNotes
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - notes
+      summary: Create One Note
+      operationId: createOneNote
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '201':
+          description: Note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /notes/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - notes
+      summary: Find One Note
+      operationId: findOneNote
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - notes
+      summary: Update One Note
+      operationId: updateOneNote
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '200':
+          description: Note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - notes
+      summary: Delete One Note
+      operationId: deleteOneNote
+      responses:
+        '200':
+          description: Note deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /tasks:
+    get:
+      tags:
+        - tasks
+      summary: Find Many Tasks
+      operationId: findManyTasks
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/startingAfter'
+        - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+        - tasks
+      summary: Create One Task
+      operationId: createOneTask
+      parameters:
+        - $ref: '#/components/parameters/depth'
+        - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+            example:
+              title: Follow up with Acme
+              status: TODO
+              dueAt: '2026-06-30T17:00:00Z'
+      responses:
+        '201':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+  /tasks/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - tasks
+      summary: Find One Task
+      operationId: findOneTask
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+        - tasks
+      summary: Update One Task
+      operationId: updateOneTask
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+      responses:
+        '200':
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+        - tasks
+      summary: Delete One Task
+      operationId: deleteOneTask
+      responses:
+        '200':
+          description: Task deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >
+        Workspace-scoped Bearer token. Generate from Settings → Playground in
+        your Twenty workspace.
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: >
+        Filter expression. Format: field[COMPARATOR]:value. Multiple conditions
+        separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte,
+        like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+      schema:
+        type: string
+      examples:
+        simple:
+          value: 'name[eq]:"Acme"'
+        dateRange:
+          value: 'createdAt[gte]:"2024-01-01"'
+        composite:
+          value: 'emails.primaryEmail[eq]:foo@example.com'
+        logical:
+          value: 'or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")'
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: >
+        Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst,
+        AscNullsLast, DescNullsFirst, DescNullsLast.
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: 'id[AscNullsFirst],createdAt[DescNullsLast]'
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: >
+        Depth of nested relations to include. 0 = primary object only;
+        1 = primary object + direct relations.
+      schema:
+        type: integer
+        enum: [0, 1]
+        default: 1
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+
+    LinksMetadata:
+      type: object
+      description: Link with a primary URL and optional label
+      properties:
+        primaryLinkUrl:
+          type: string
+          format: uri
+          nullable: true
+        primaryLinkLabel:
+          type: string
+          nullable: true
+        secondaryLinks:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              label:
+                type: string
+
+    CurrencyMetadata:
+      type: object
+      description: Monetary amount with currency code
+      properties:
+        amountMicros:
+          type: integer
+          format: int64
+          description: Amount in micros (e.g. 1000000 = 1.00)
+          nullable: true
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          example: USD
+          nullable: true
+
+    AddressMetadata:
+      type: object
+      description: Postal address
+      properties:
+        addressStreet1:
+          type: string
+          nullable: true
+        addressStreet2:
+          type: string
+          nullable: true
+        addressCity:
+          type: string
+          nullable: true
+        addressState:
+          type: string
+          nullable: true
+        addressCountry:
+          type: string
+          nullable: true
+        addressPostcode:
+          type: string
+          nullable: true
+        addressLat:
+          type: number
+          nullable: true
+        addressLng:
+          type: number
+          nullable: true
+
+    FullNameMetadata:
+      type: object
+      description: Person full name
+      properties:
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+
+    EmailsMetadata:
+      type: object
+      description: Email addresses
+      properties:
+        primaryEmail:
+          type: string
+          format: email
+          nullable: true
+        additionalEmails:
+          type: array
+          nullable: true
+          items:
+            type: string
+            format: email
+
+    PhonesMetadata:
+      type: object
+      description: Phone numbers
+      properties:
+        primaryPhoneNumber:
+          type: string
+          nullable: true
+        primaryPhoneCountryCode:
+          type: string
+          nullable: true
+        primaryPhoneCallingCode:
+          type: string
+          nullable: true
+        additionalPhones:
+          type: array
+          nullable: true
+          items:
+            type: object
+
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum: [EMAIL, CALENDAR, API, IMPORT, MANUAL, SYSTEM, WORKFLOW, WEBHOOK]
+        workspaceMemberId:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        context:
+          type: object
+          nullable: true
+
+    RichTextMetadata:
+      type: object
+      description: Rich text content (block-based)
+      properties:
+        blocknote:
+          type: string
+          nullable: true
+        markdown:
+          type: string
+          nullable: true
+
+    # --- Company ---
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          allOf:
+            - $ref: '#/components/schemas/LinksMetadata'
+          nullable: true
+        annualRevenue:
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMetadata'
+          nullable: true
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+
+    CompanyInput:
+      type: object
+      properties:
+        name:
+          type: string
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          $ref: '#/components/schemas/LinksMetadata'
+        annualRevenue:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        accountOwnerId:
+          type: string
+          format: uuid
+          nullable: true
+
+    CompanyListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            companies:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Company'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    CompanyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            company:
+              $ref: '#/components/schemas/Company'
+
+    # --- Person ---
+    Person:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        name:
+          allOf:
+            - $ref: '#/components/schemas/FullNameMetadata'
+          nullable: true
+        emails:
+          $ref: '#/components/schemas/EmailsMetadata'
+        phones:
+          $ref: '#/components/schemas/PhonesMetadata'
+        jobTitle:
+          type: string
+          nullable: true
+        linkedinLink:
+          allOf:
+            - $ref: '#/components/schemas/LinksMetadata'
+          nullable: true
+        position:
+          type: number
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+
+    PersonInput:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/FullNameMetadata'
+        emails:
+          $ref: '#/components/schemas/EmailsMetadata'
+        phones:
+          $ref: '#/components/schemas/PhonesMetadata'
+        jobTitle:
+          type: string
+        linkedinLink:
+          $ref: '#/components/schemas/LinksMetadata'
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+
+    PersonListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            people:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Person'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    PersonResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            person:
+              $ref: '#/components/schemas/Person'
+
+    # --- Opportunity ---
+    Opportunity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+        stage:
+          type: string
+          enum: [NEW, SCREENING, MEETING, PROPOSAL, CUSTOMER]
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMetadata'
+          nullable: true
+        closeDate:
+          type: string
+          format: date
+          nullable: true
+        position:
+          type: number
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+        pointOfContactId:
+          type: string
+          format: uuid
+          nullable: true
+        ownerId:
+          type: string
+          format: uuid
+          nullable: true
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+
+    OpportunityInput:
+      type: object
+      properties:
+        name:
+          type: string
+        stage:
+          type: string
+          enum: [NEW, SCREENING, MEETING, PROPOSAL, CUSTOMER]
+        amount:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        closeDate:
+          type: string
+          format: date
+        companyId:
+          type: string
+          format: uuid
+        pointOfContactId:
+          type: string
+          format: uuid
+        ownerId:
+          type: string
+          format: uuid
+
+    OpportunityListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunities:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Opportunity'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    OpportunityResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunity:
+              $ref: '#/components/schemas/Opportunity'
+
+    # --- Note ---
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        title:
+          type: string
+        bodyV2:
+          allOf:
+            - $ref: '#/components/schemas/RichTextMetadata'
+          nullable: true
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+
+    NoteInput:
+      type: object
+      properties:
+        title:
+          type: string
+        bodyV2:
+          $ref: '#/components/schemas/RichTextMetadata'
+
+    NoteListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            notes:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Note'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    NoteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            note:
+              $ref: '#/components/schemas/Note'
+
+    # --- Task ---
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        title:
+          type: string
+          nullable: true
+        bodyV2:
+          allOf:
+            - $ref: '#/components/schemas/RichTextMetadata'
+          nullable: true
+        status:
+          type: string
+          enum: [TODO, IN_PROGRESS, DONE]
+          nullable: true
+        dueAt:
+          type: string
+          format: date-time
+          nullable: true
+        position:
+          type: number
+        assigneeId:
+          type: string
+          format: uuid
+          nullable: true
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+
+    TaskInput:
+      type: object
+      properties:
+        title:
+          type: string
+        bodyV2:
+          $ref: '#/components/schemas/RichTextMetadata'
+        status:
+          type: string
+          enum: [TODO, IN_PROGRESS, DONE]
+        dueAt:
+          type: string
+          format: date-time
+        assigneeId:
+          type: string
+          format: uuid
+
+    TaskListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tasks:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Task'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+
+    TaskResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            task:
+              $ref: '#/components/schemas/Task'
+
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+              - Missing authentication token
+            error: FORBIDDEN_EXCEPTION

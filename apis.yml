@@ -58,7 +58,21 @@ apis:
       - type: Documentation
         url: https://docs.twenty.com/developers/extend/api
       - type: OpenAPI
-        url: https://api.twenty.com/open-api
+        url: https://api.twenty.com/open-api/core
+      - type: OpenAPI
+        url: openapi/twenty-core-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/twenty-company.json
+      - type: JSONSchema
+        url: json-schema/twenty-person.json
+      - type: JSONSchema
+        url: json-schema/twenty-opportunity.json
+      - type: Examples
+        url: examples/twenty-create-company.json
+      - type: Examples
+        url: examples/twenty-list-companies.json
+      - type: Examples
+        url: examples/twenty-create-custom-object.json
   - aid: twenty:metadata-api
     name: Twenty Metadata API
     description: >
@@ -81,6 +95,10 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.twenty.com/developers/extend/api
+      - type: OpenAPI
+        url: https://api.twenty.com/open-api/metadata
+      - type: OpenAPI
+        url: openapi/twenty-metadata-api-openapi.yml
 common:
   - type: Website
     url: https://twenty.com
@@ -92,6 +110,14 @@ common:
     url: https://www.linkedin.com/company/twenty
   - type: Blog
     url: https://twenty.com/releases
+  - type: BlogRSS
+    url: https://github.com/twentyhq/twenty/releases.atom
+  - type: Blogs
+    url: blogs/blogs.json
+  - type: Vocabulary
+    url: vocabulary/twenty-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/twenty-context.jsonld
   - type: Pricing
     url: https://twenty.com/pricing
   - type: X
