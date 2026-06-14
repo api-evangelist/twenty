@@ -1,0 +1,1281 @@
+"""
+Twenty CRM GraphQL Schema (Core API + Metadata API)
+
+Core API endpoint:     https://api.twenty.com/graphql
+Metadata API endpoint: https://api.twenty.com/metadata
+
+Authentication: Bearer token via Authorization header.
+Tokens are generated from Workspace Settings -> Security -> API Keys.
+
+The schema is generated dynamically per workspace. Standard objects are listed
+below. Custom objects added through the Metadata API appear with identical
+query/mutation fields automatically generated.
+
+Relay-style cursor pagination is used throughout (Connection / Edge / PageInfo).
+Batch operations accept up to 60 records per request.
+
+Source: packages/twenty-server/src/modules/*/standard-objects/*.workspace-entity.ts
+        packages/twenty-server/src/engine/api/graphql/workspace-resolver-builder/
+"""
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar UUID
+scalar Upload
+
+# ---------------------------------------------------------------------------
+# Composite field types
+# ---------------------------------------------------------------------------
+
+type FullNameMetadata {
+  firstName: String
+  lastName: String
+}
+
+input FullNameInput {
+  firstName: String
+  lastName: String
+}
+
+type EmailsMetadata {
+  primaryEmail: String
+  additionalEmails: [String!]
+}
+
+input EmailsInput {
+  primaryEmail: String
+  additionalEmails: [String!]
+}
+
+type PhonesMetadata {
+  primaryPhoneNumber: String
+  primaryPhoneCountryCode: String
+  additionalPhones: [JSON!]
+}
+
+input PhonesInput {
+  primaryPhoneNumber: String
+  primaryPhoneCountryCode: String
+  additionalPhones: [JSON!]
+}
+
+type LinksMetadata {
+  primaryLinkUrl: String
+  primaryLinkLabel: String
+  secondaryLinks: [JSON!]
+}
+
+input LinksInput {
+  primaryLinkUrl: String
+  primaryLinkLabel: String
+  secondaryLinks: [JSON!]
+}
+
+type CurrencyMetadata {
+  amountMicros: Float
+  currencyCode: String
+}
+
+input CurrencyInput {
+  amountMicros: Float
+  currencyCode: String
+}
+
+type AddressMetadata {
+  addressStreet1: String
+  addressStreet2: String
+  addressCity: String
+  addressState: String
+  addressPostcode: String
+  addressCountry: String
+  addressLat: Float
+  addressLng: Float
+}
+
+input AddressInput {
+  addressStreet1: String
+  addressStreet2: String
+  addressCity: String
+  addressState: String
+  addressPostcode: String
+  addressCountry: String
+  addressLat: Float
+  addressLng: Float
+}
+
+type RichTextMetadata {
+  blocknote: String
+  markdown: String
+}
+
+input RichTextInput {
+  blocknote: String
+  markdown: String
+}
+
+type ActorMetadata {
+  source: String
+  workspaceMemberId: String
+  name: String
+}
+
+# ---------------------------------------------------------------------------
+# Relay pagination
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ---------------------------------------------------------------------------
+# Filter scalars
+# ---------------------------------------------------------------------------
+
+enum FilterIs {
+  NULL
+  NOT_NULL
+}
+
+enum OrderByDirection {
+  AscNullsFirst
+  AscNullsLast
+  DescNullsFirst
+  DescNullsLast
+}
+
+input StringFilter {
+  eq: String
+  neq: String
+  like: String
+  ilike: String
+  in: [String!]
+  is: FilterIs
+  startsWith: String
+}
+
+input IDFilter {
+  eq: UUID
+  neq: UUID
+  in: [UUID!]
+  is: FilterIs
+}
+
+input DateFilter {
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+  in: [DateTime!]
+  is: FilterIs
+}
+
+input FloatFilter {
+  eq: Float
+  neq: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float!]
+  is: FilterIs
+}
+
+input BooleanFilter {
+  eq: Boolean
+  is: FilterIs
+}
+
+# ---------------------------------------------------------------------------
+# Company
+# ---------------------------------------------------------------------------
+
+type Company {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  domainName: LinksMetadata
+  linkedinLink: LinksMetadata
+  annualRevenue: CurrencyMetadata
+  address: AddressMetadata
+  position: Float
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  people(filter: PersonFilter, orderBy: [PersonOrderByInput!], first: Int, last: Int, before: String, after: String): PersonConnection
+  accountOwner: WorkspaceMember
+  accountOwnerId: UUID
+  opportunities(filter: OpportunityFilter, orderBy: [OpportunityOrderByInput!], first: Int, last: Int, before: String, after: String): OpportunityConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  taskTargets(first: Int, last: Int): TaskTargetConnection
+  noteTargets(first: Int, last: Int): NoteTargetConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type CompanyEdge {
+  node: Company!
+  cursor: String!
+}
+
+type CompanyConnection {
+  edges: [CompanyEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input CompanyFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  name: StringFilter
+  accountOwnerId: IDFilter
+  and: [CompanyFilter!]
+  or: [CompanyFilter!]
+  not: CompanyFilter
+}
+
+input CompanyOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  name: OrderByDirection
+  position: OrderByDirection
+}
+
+input CreateCompanyInput {
+  id: UUID
+  name: String
+  domainName: LinksInput
+  linkedinLink: LinksInput
+  annualRevenue: CurrencyInput
+  address: AddressInput
+  position: Float
+  accountOwnerId: UUID
+}
+
+input UpdateCompanyInput {
+  name: String
+  domainName: LinksInput
+  linkedinLink: LinksInput
+  annualRevenue: CurrencyInput
+  address: AddressInput
+  position: Float
+  accountOwnerId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# Person
+# ---------------------------------------------------------------------------
+
+type Person {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: FullNameMetadata
+  emails: EmailsMetadata
+  linkedinLink: LinksMetadata
+  jobTitle: String
+  phones: PhonesMetadata
+  avatarUrl: String
+  position: Float
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  company: Company
+  companyId: UUID
+  pointOfContactForOpportunities(filter: OpportunityFilter, first: Int, last: Int): OpportunityConnection
+  taskTargets(first: Int, last: Int): TaskTargetConnection
+  noteTargets(first: Int, last: Int): NoteTargetConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type PersonEdge {
+  node: Person!
+  cursor: String!
+}
+
+type PersonConnection {
+  edges: [PersonEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input PersonFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  jobTitle: StringFilter
+  companyId: IDFilter
+  and: [PersonFilter!]
+  or: [PersonFilter!]
+  not: PersonFilter
+}
+
+input PersonOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  position: OrderByDirection
+  jobTitle: OrderByDirection
+}
+
+input CreatePersonInput {
+  id: UUID
+  name: FullNameInput
+  emails: EmailsInput
+  linkedinLink: LinksInput
+  jobTitle: String
+  phones: PhonesInput
+  avatarUrl: String
+  position: Float
+  companyId: UUID
+}
+
+input UpdatePersonInput {
+  name: FullNameInput
+  emails: EmailsInput
+  linkedinLink: LinksInput
+  jobTitle: String
+  phones: PhonesInput
+  avatarUrl: String
+  position: Float
+  companyId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# Opportunity
+# ---------------------------------------------------------------------------
+
+enum OpportunityStage {
+  NEW
+  SCREENING
+  MEETING
+  PROPOSAL
+  CUSTOMER
+}
+
+type Opportunity {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String!
+  amount: CurrencyMetadata
+  closeDate: DateTime
+  stage: OpportunityStage!
+  position: Float!
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  company: Company
+  companyId: UUID
+  pointOfContact: Person
+  pointOfContactId: UUID
+  owner: WorkspaceMember
+  ownerId: UUID
+  taskTargets(first: Int, last: Int): TaskTargetConnection
+  noteTargets(first: Int, last: Int): NoteTargetConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type OpportunityEdge {
+  node: Opportunity!
+  cursor: String!
+}
+
+type OpportunityConnection {
+  edges: [OpportunityEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input OpportunityFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  name: StringFilter
+  stage: StringFilter
+  closeDate: DateFilter
+  companyId: IDFilter
+  ownerId: IDFilter
+  pointOfContactId: IDFilter
+  and: [OpportunityFilter!]
+  or: [OpportunityFilter!]
+  not: OpportunityFilter
+}
+
+input OpportunityOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  name: OrderByDirection
+  stage: OrderByDirection
+  closeDate: OrderByDirection
+  position: OrderByDirection
+}
+
+input CreateOpportunityInput {
+  id: UUID
+  name: String
+  amount: CurrencyInput
+  closeDate: DateTime
+  stage: OpportunityStage
+  position: Float
+  companyId: UUID
+  pointOfContactId: UUID
+  ownerId: UUID
+}
+
+input UpdateOpportunityInput {
+  name: String
+  amount: CurrencyInput
+  closeDate: DateTime
+  stage: OpportunityStage
+  position: Float
+  companyId: UUID
+  pointOfContactId: UUID
+  ownerId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# Note
+# ---------------------------------------------------------------------------
+
+type Note {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  title: String
+  bodyV2: RichTextMetadata
+  position: Float!
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  noteTargets(first: Int, last: Int): NoteTargetConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type NoteEdge {
+  node: Note!
+  cursor: String!
+}
+
+type NoteConnection {
+  edges: [NoteEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input NoteFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  title: StringFilter
+  and: [NoteFilter!]
+  or: [NoteFilter!]
+  not: NoteFilter
+}
+
+input NoteOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  title: OrderByDirection
+  position: OrderByDirection
+}
+
+input CreateNoteInput {
+  id: UUID
+  title: String
+  bodyV2: RichTextInput
+  position: Float
+}
+
+input UpdateNoteInput {
+  title: String
+  bodyV2: RichTextInput
+  position: Float
+}
+
+type NoteTarget {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: Note
+  noteId: UUID
+  company: Company
+  companyId: UUID
+  person: Person
+  personId: UUID
+  opportunity: Opportunity
+  opportunityId: UUID
+}
+
+type NoteTargetEdge {
+  node: NoteTarget!
+  cursor: String!
+}
+
+type NoteTargetConnection {
+  edges: [NoteTargetEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input NoteTargetFilter {
+  id: IDFilter
+  noteId: IDFilter
+  companyId: IDFilter
+  personId: IDFilter
+  opportunityId: IDFilter
+  and: [NoteTargetFilter!]
+  or: [NoteTargetFilter!]
+  not: NoteTargetFilter
+}
+
+input NoteTargetOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+input CreateNoteTargetInput {
+  id: UUID
+  noteId: UUID
+  companyId: UUID
+  personId: UUID
+  opportunityId: UUID
+}
+
+input UpdateNoteTargetInput {
+  noteId: UUID
+  companyId: UUID
+  personId: UUID
+  opportunityId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# Task
+# ---------------------------------------------------------------------------
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+type Task {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  title: String
+  bodyV2: RichTextMetadata
+  dueAt: DateTime
+  status: TaskStatus
+  position: Float!
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  assignee: WorkspaceMember
+  assigneeId: UUID
+  taskTargets(first: Int, last: Int): TaskTargetConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type TaskEdge {
+  node: Task!
+  cursor: String!
+}
+
+type TaskConnection {
+  edges: [TaskEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input TaskFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  title: StringFilter
+  status: StringFilter
+  dueAt: DateFilter
+  assigneeId: IDFilter
+  and: [TaskFilter!]
+  or: [TaskFilter!]
+  not: TaskFilter
+}
+
+input TaskOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  title: OrderByDirection
+  status: OrderByDirection
+  dueAt: OrderByDirection
+  position: OrderByDirection
+}
+
+input CreateTaskInput {
+  id: UUID
+  title: String
+  bodyV2: RichTextInput
+  dueAt: DateTime
+  status: TaskStatus
+  position: Float
+  assigneeId: UUID
+}
+
+input UpdateTaskInput {
+  title: String
+  bodyV2: RichTextInput
+  dueAt: DateTime
+  status: TaskStatus
+  position: Float
+  assigneeId: UUID
+}
+
+type TaskTarget {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  task: Task
+  taskId: UUID
+  company: Company
+  companyId: UUID
+  person: Person
+  personId: UUID
+  opportunity: Opportunity
+  opportunityId: UUID
+}
+
+type TaskTargetEdge {
+  node: TaskTarget!
+  cursor: String!
+}
+
+type TaskTargetConnection {
+  edges: [TaskTargetEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input TaskTargetFilter {
+  id: IDFilter
+  taskId: IDFilter
+  companyId: IDFilter
+  personId: IDFilter
+  opportunityId: IDFilter
+  and: [TaskTargetFilter!]
+  or: [TaskTargetFilter!]
+  not: TaskTargetFilter
+}
+
+input TaskTargetOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+input CreateTaskTargetInput {
+  id: UUID
+  taskId: UUID
+  companyId: UUID
+  personId: UUID
+  opportunityId: UUID
+}
+
+input UpdateTaskTargetInput {
+  taskId: UUID
+  companyId: UUID
+  personId: UUID
+  opportunityId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# WorkspaceMember
+# ---------------------------------------------------------------------------
+
+enum WorkspaceMemberDateFormatEnum {
+  SYSTEM
+  MONTH_FIRST
+  DAY_FIRST
+  YEAR_FIRST
+}
+
+enum WorkspaceMemberTimeFormatEnum {
+  SYSTEM
+  HOUR_12
+  HOUR_24
+}
+
+enum WorkspaceMemberNumberFormatEnum {
+  SYSTEM
+  COMMAS_AND_DOT
+  SPACES_AND_COMMA
+  DOTS_AND_COMMA
+  APOSTROPHE_AND_DOT
+}
+
+type WorkspaceMember {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: FullNameMetadata!
+  colorScheme: String!
+  locale: String!
+  avatarUrl: String
+  userEmail: String
+  calendarStartDay: Int
+  userId: UUID!
+  timeZone: String
+  dateFormat: WorkspaceMemberDateFormatEnum
+  timeFormat: WorkspaceMemberTimeFormatEnum
+  numberFormat: WorkspaceMemberNumberFormatEnum
+  position: Float
+  accountOwnerForCompanies(filter: CompanyFilter, first: Int, last: Int): CompanyConnection
+  assignedTasks(filter: TaskFilter, first: Int, last: Int): TaskConnection
+  ownedOpportunities(filter: OpportunityFilter, first: Int, last: Int): OpportunityConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type WorkspaceMemberEdge {
+  node: WorkspaceMember!
+  cursor: String!
+}
+
+type WorkspaceMemberConnection {
+  edges: [WorkspaceMemberEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input WorkspaceMemberFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  userEmail: StringFilter
+  userId: IDFilter
+  and: [WorkspaceMemberFilter!]
+  or: [WorkspaceMemberFilter!]
+  not: WorkspaceMemberFilter
+}
+
+input WorkspaceMemberOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  position: OrderByDirection
+}
+
+input UpdateWorkspaceMemberInput {
+  name: FullNameInput
+  colorScheme: String
+  locale: String
+  avatarUrl: String
+  timeZone: String
+  dateFormat: WorkspaceMemberDateFormatEnum
+  timeFormat: WorkspaceMemberTimeFormatEnum
+  numberFormat: WorkspaceMemberNumberFormatEnum
+}
+
+# ---------------------------------------------------------------------------
+# Attachment
+# ---------------------------------------------------------------------------
+
+type Attachment {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  fullPath: String
+  type: String
+  fileCategory: String
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  targetTask: Task
+  targetTaskId: UUID
+  targetNote: Note
+  targetNoteId: UUID
+  targetPerson: Person
+  targetPersonId: UUID
+  targetCompany: Company
+  targetCompanyId: UUID
+  targetOpportunity: Opportunity
+  targetOpportunityId: UUID
+}
+
+type AttachmentEdge {
+  node: Attachment!
+  cursor: String!
+}
+
+type AttachmentConnection {
+  edges: [AttachmentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input AttachmentFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  targetCompanyId: IDFilter
+  targetPersonId: IDFilter
+  targetOpportunityId: IDFilter
+  targetTaskId: IDFilter
+  targetNoteId: IDFilter
+  and: [AttachmentFilter!]
+  or: [AttachmentFilter!]
+  not: AttachmentFilter
+}
+
+input AttachmentOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  name: OrderByDirection
+}
+
+input CreateAttachmentInput {
+  id: UUID
+  name: String
+  fullPath: String
+  type: String
+  targetCompanyId: UUID
+  targetPersonId: UUID
+  targetOpportunityId: UUID
+  targetTaskId: UUID
+  targetNoteId: UUID
+}
+
+input UpdateAttachmentInput {
+  name: String
+  fullPath: String
+  type: String
+  targetCompanyId: UUID
+  targetPersonId: UUID
+  targetOpportunityId: UUID
+  targetTaskId: UUID
+  targetNoteId: UUID
+}
+
+# ---------------------------------------------------------------------------
+# Workflow
+# ---------------------------------------------------------------------------
+
+enum WorkflowStatus {
+  DRAFT
+  ACTIVE
+  DEACTIVATED
+}
+
+type Workflow {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  statuses: [WorkflowStatus!]
+  lastPublishedVersionId: UUID
+  position: Float!
+  createdBy: ActorMetadata
+  updatedBy: ActorMetadata
+  versions(first: Int, last: Int): WorkflowVersionConnection
+  runs(first: Int, last: Int): WorkflowRunConnection
+  automatedTriggers(first: Int, last: Int): WorkflowAutomatedTriggerConnection
+  attachments(filter: AttachmentFilter, first: Int, last: Int): AttachmentConnection
+  timelineActivities(first: Int, last: Int): TimelineActivityConnection
+}
+
+type WorkflowEdge {
+  node: Workflow!
+  cursor: String!
+}
+
+type WorkflowConnection {
+  edges: [WorkflowEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input WorkflowFilter {
+  id: IDFilter
+  createdAt: DateFilter
+  updatedAt: DateFilter
+  deletedAt: DateFilter
+  name: StringFilter
+  and: [WorkflowFilter!]
+  or: [WorkflowFilter!]
+  not: WorkflowFilter
+}
+
+input WorkflowOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  updatedAt: OrderByDirection
+  name: OrderByDirection
+  position: OrderByDirection
+}
+
+input CreateWorkflowInput {
+  id: UUID
+  name: String
+  position: Float
+}
+
+input UpdateWorkflowInput {
+  name: String
+  position: Float
+}
+
+type WorkflowVersion {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  steps: JSON
+  trigger: JSON
+  status: String
+  workflowId: UUID
+  workflow: Workflow
+}
+
+type WorkflowVersionEdge {
+  node: WorkflowVersion!
+  cursor: String!
+}
+
+type WorkflowVersionConnection {
+  edges: [WorkflowVersionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input WorkflowVersionFilter {
+  id: IDFilter
+  workflowId: IDFilter
+  and: [WorkflowVersionFilter!]
+  or: [WorkflowVersionFilter!]
+  not: WorkflowVersionFilter
+}
+
+input WorkflowVersionOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+type WorkflowRun {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  startedAt: DateTime
+  endedAt: DateTime
+  status: String
+  output: JSON
+  workflowVersionId: UUID
+  workflowVersion: WorkflowVersion
+  workflowId: UUID
+  workflow: Workflow
+}
+
+type WorkflowRunEdge {
+  node: WorkflowRun!
+  cursor: String!
+}
+
+type WorkflowRunConnection {
+  edges: [WorkflowRunEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input WorkflowRunFilter {
+  id: IDFilter
+  workflowId: IDFilter
+  workflowVersionId: IDFilter
+  and: [WorkflowRunFilter!]
+  or: [WorkflowRunFilter!]
+  not: WorkflowRunFilter
+}
+
+input WorkflowRunOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+  startedAt: OrderByDirection
+  endedAt: OrderByDirection
+}
+
+type WorkflowAutomatedTrigger {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  type: String
+  settings: JSON
+  workflowId: UUID
+  workflow: Workflow
+}
+
+type WorkflowAutomatedTriggerEdge {
+  node: WorkflowAutomatedTrigger!
+  cursor: String!
+}
+
+type WorkflowAutomatedTriggerConnection {
+  edges: [WorkflowAutomatedTriggerEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ---------------------------------------------------------------------------
+# Timeline Activity
+# ---------------------------------------------------------------------------
+
+type TimelineActivity {
+  id: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  name: String
+  properties: JSON
+  linkedRecordCachedName: String
+  linkedRecordId: UUID
+  linkedObjectMetadataId: UUID
+  workspaceMemberId: UUID
+  workspaceMember: WorkspaceMember
+  companyId: UUID
+  company: Company
+  personId: UUID
+  person: Person
+  opportunityId: UUID
+  opportunity: Opportunity
+  noteId: UUID
+  note: Note
+  taskId: UUID
+  task: Task
+}
+
+type TimelineActivityEdge {
+  node: TimelineActivity!
+  cursor: String!
+}
+
+type TimelineActivityConnection {
+  edges: [TimelineActivityEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+input TimelineActivityFilter {
+  id: IDFilter
+  companyId: IDFilter
+  personId: IDFilter
+  opportunityId: IDFilter
+  workspaceMemberId: IDFilter
+  and: [TimelineActivityFilter!]
+  or: [TimelineActivityFilter!]
+  not: TimelineActivityFilter
+}
+
+input TimelineActivityOrderByInput {
+  id: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+# ---------------------------------------------------------------------------
+# Query
+# Per-object pattern: {object}(id) findOne, {objects}(...) findMany,
+# {objects}Duplicates findDuplicates, {objects}GroupBy groupBy
+# ---------------------------------------------------------------------------
+
+type Query {
+  # Company
+  company(id: UUID!): Company
+  companies(filter: CompanyFilter, orderBy: [CompanyOrderByInput!], first: Int, last: Int, before: String, after: String): CompanyConnection!
+  companiesDuplicates(data: CreateCompanyInput, id: UUID): CompanyConnection!
+
+  # Person
+  person(id: UUID!): Person
+  people(filter: PersonFilter, orderBy: [PersonOrderByInput!], first: Int, last: Int, before: String, after: String): PersonConnection!
+  peopleDuplicates(data: CreatePersonInput, id: UUID): PersonConnection!
+
+  # Opportunity
+  opportunity(id: UUID!): Opportunity
+  opportunities(filter: OpportunityFilter, orderBy: [OpportunityOrderByInput!], first: Int, last: Int, before: String, after: String): OpportunityConnection!
+  opportunitiesDuplicates(data: CreateOpportunityInput, id: UUID): OpportunityConnection!
+
+  # Note
+  note(id: UUID!): Note
+  notes(filter: NoteFilter, orderBy: [NoteOrderByInput!], first: Int, last: Int, before: String, after: String): NoteConnection!
+  notesDuplicates(data: CreateNoteInput, id: UUID): NoteConnection!
+
+  # NoteTarget
+  noteTarget(id: UUID!): NoteTarget
+  noteTargets(filter: NoteTargetFilter, orderBy: [NoteTargetOrderByInput!], first: Int, last: Int, before: String, after: String): NoteTargetConnection!
+
+  # Task
+  task(id: UUID!): Task
+  tasks(filter: TaskFilter, orderBy: [TaskOrderByInput!], first: Int, last: Int, before: String, after: String): TaskConnection!
+  tasksDuplicates(data: CreateTaskInput, id: UUID): TaskConnection!
+
+  # TaskTarget
+  taskTarget(id: UUID!): TaskTarget
+  taskTargets(filter: TaskTargetFilter, orderBy: [TaskTargetOrderByInput!], first: Int, last: Int, before: String, after: String): TaskTargetConnection!
+
+  # WorkspaceMember
+  workspaceMember(id: UUID!): WorkspaceMember
+  workspaceMembers(filter: WorkspaceMemberFilter, orderBy: [WorkspaceMemberOrderByInput!], first: Int, last: Int, before: String, after: String): WorkspaceMemberConnection!
+
+  # Attachment
+  attachment(id: UUID!): Attachment
+  attachments(filter: AttachmentFilter, orderBy: [AttachmentOrderByInput!], first: Int, last: Int, before: String, after: String): AttachmentConnection!
+
+  # Workflow
+  workflow(id: UUID!): Workflow
+  workflows(filter: WorkflowFilter, orderBy: [WorkflowOrderByInput!], first: Int, last: Int, before: String, after: String): WorkflowConnection!
+  workflowVersion(id: UUID!): WorkflowVersion
+  workflowVersions(filter: WorkflowVersionFilter, orderBy: [WorkflowVersionOrderByInput!], first: Int, last: Int, before: String, after: String): WorkflowVersionConnection!
+  workflowRun(id: UUID!): WorkflowRun
+  workflowRuns(filter: WorkflowRunFilter, orderBy: [WorkflowRunOrderByInput!], first: Int, last: Int, before: String, after: String): WorkflowRunConnection!
+
+  # TimelineActivity
+  timelineActivity(id: UUID!): TimelineActivity
+  timelineActivities(filter: TimelineActivityFilter, orderBy: [TimelineActivityOrderByInput!], first: Int, last: Int, before: String, after: String): TimelineActivityConnection!
+}
+
+# ---------------------------------------------------------------------------
+# Mutation
+# Per-object pattern: createOne, createMany, updateOne, updateMany,
+# deleteOne, deleteMany, restoreOne, restoreMany, destroyOne, destroyMany,
+# mergeMany
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  # Company
+  createCompany(data: CreateCompanyInput!): Company!
+  createCompanies(data: [CreateCompanyInput!]!): [Company!]!
+  updateCompany(id: UUID!, data: UpdateCompanyInput!): Company!
+  updateCompanies(filter: CompanyFilter!, data: UpdateCompanyInput!): [Company!]!
+  deleteCompany(id: UUID!): Company!
+  deleteCompanies(filter: CompanyFilter!): [Company!]!
+  restoreCompany(id: UUID!): Company!
+  restoreCompanies(filter: CompanyFilter!): [Company!]!
+  destroyCompany(id: UUID!): Company!
+  destroyCompanies(filter: CompanyFilter!): [Company!]!
+
+  # Person
+  createPerson(data: CreatePersonInput!): Person!
+  createPeople(data: [CreatePersonInput!]!): [Person!]!
+  updatePerson(id: UUID!, data: UpdatePersonInput!): Person!
+  updatePeople(filter: PersonFilter!, data: UpdatePersonInput!): [Person!]!
+  deletePerson(id: UUID!): Person!
+  deletePeople(filter: PersonFilter!): [Person!]!
+  restorePerson(id: UUID!): Person!
+  restorePeople(filter: PersonFilter!): [Person!]!
+  destroyPerson(id: UUID!): Person!
+  destroyPeople(filter: PersonFilter!): [Person!]!
+
+  # Opportunity
+  createOpportunity(data: CreateOpportunityInput!): Opportunity!
+  createOpportunities(data: [CreateOpportunityInput!]!): [Opportunity!]!
+  updateOpportunity(id: UUID!, data: UpdateOpportunityInput!): Opportunity!
+  updateOpportunities(filter: OpportunityFilter!, data: UpdateOpportunityInput!): [Opportunity!]!
+  deleteOpportunity(id: UUID!): Opportunity!
+  deleteOpportunities(filter: OpportunityFilter!): [Opportunity!]!
+  restoreOpportunity(id: UUID!): Opportunity!
+  restoreOpportunities(filter: OpportunityFilter!): [Opportunity!]!
+  destroyOpportunity(id: UUID!): Opportunity!
+  destroyOpportunities(filter: OpportunityFilter!): [Opportunity!]!
+
+  # Note
+  createNote(data: CreateNoteInput!): Note!
+  createNotes(data: [CreateNoteInput!]!): [Note!]!
+  updateNote(id: UUID!, data: UpdateNoteInput!): Note!
+  updateNotes(filter: NoteFilter!, data: UpdateNoteInput!): [Note!]!
+  deleteNote(id: UUID!): Note!
+  deleteNotes(filter: NoteFilter!): [Note!]!
+  restoreNote(id: UUID!): Note!
+  restoreNotes(filter: NoteFilter!): [Note!]!
+  destroyNote(id: UUID!): Note!
+  destroyNotes(filter: NoteFilter!): [Note!]!
+
+  # NoteTarget
+  createNoteTarget(data: CreateNoteTargetInput!): NoteTarget!
+  createNoteTargets(data: [CreateNoteTargetInput!]!): [NoteTarget!]!
+  updateNoteTarget(id: UUID!, data: UpdateNoteTargetInput!): NoteTarget!
+  deleteNoteTarget(id: UUID!): NoteTarget!
+  deleteNoteTargets(filter: NoteTargetFilter!): [NoteTarget!]!
+  destroyNoteTarget(id: UUID!): NoteTarget!
+  destroyNoteTargets(filter: NoteTargetFilter!): [NoteTarget!]!
+
+  # Task
+  createTask(data: CreateTaskInput!): Task!
+  createTasks(data: [CreateTaskInput!]!): [Task!]!
+  updateTask(id: UUID!, data: UpdateTaskInput!): Task!
+  updateTasks(filter: TaskFilter!, data: UpdateTaskInput!): [Task!]!
+  deleteTask(id: UUID!): Task!
+  deleteTasks(filter: TaskFilter!): [Task!]!
+  restoreTask(id: UUID!): Task!
+  restoreTasks(filter: TaskFilter!): [Task!]!
+  destroyTask(id: UUID!): Task!
+  destroyTasks(filter: TaskFilter!): [Task!]!
+
+  # TaskTarget
+  createTaskTarget(data: CreateTaskTargetInput!): TaskTarget!
+  createTaskTargets(data: [CreateTaskTargetInput!]!): [TaskTarget!]!
+  updateTaskTarget(id: UUID!, data: UpdateTaskTargetInput!): TaskTarget!
+  deleteTaskTarget(id: UUID!): TaskTarget!
+  deleteTaskTargets(filter: TaskTargetFilter!): [TaskTarget!]!
+  destroyTaskTarget(id: UUID!): TaskTarget!
+  destroyTaskTargets(filter: TaskTargetFilter!): [TaskTarget!]!
+
+  # WorkspaceMember
+  updateWorkspaceMember(id: UUID!, data: UpdateWorkspaceMemberInput!): WorkspaceMember!
+
+  # Attachment
+  createAttachment(data: CreateAttachmentInput!): Attachment!
+  createAttachments(data: [CreateAttachmentInput!]!): [Attachment!]!
+  updateAttachment(id: UUID!, data: UpdateAttachmentInput!): Attachment!
+  updateAttachments(filter: AttachmentFilter!, data: UpdateAttachmentInput!): [Attachment!]!
+  deleteAttachment(id: UUID!): Attachment!
+  deleteAttachments(filter: AttachmentFilter!): [Attachment!]!
+  destroyAttachment(id: UUID!): Attachment!
+  destroyAttachments(filter: AttachmentFilter!): [Attachment!]!
+
+  # Workflow
+  createWorkflow(data: CreateWorkflowInput!): Workflow!
+  createWorkflows(data: [CreateWorkflowInput!]!): [Workflow!]!
+  updateWorkflow(id: UUID!, data: UpdateWorkflowInput!): Workflow!
+  deleteWorkflow(id: UUID!): Workflow!
+  deleteWorkflows(filter: WorkflowFilter!): [Workflow!]!
+  destroyWorkflow(id: UUID!): Workflow!
+  destroyWorkflows(filter: WorkflowFilter!): [Workflow!]!
+}
