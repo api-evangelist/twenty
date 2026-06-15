@@ -4,11 +4,22 @@
   "url": "https://twenty.com/releases",
   "feeds": [
     {
-      "type": "atom",
-      "url": "https://github.com/twentyhq/twenty/releases.atom",
-      "title": "Release notes from twenty",
-      "confirmed": true,
-      "lastChecked": "2026-06-12"
+      "source": "https://www.linkedin.com/company/twenty",
+      "error": "HTTPError"
+    },
+    {
+      "source": "https://twenty.com/releases",
+      "feed_url": "https://twenty.com/releases",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://github.com/twentyhq/twenty/releases.atom",
+      "feed_url": "https://github.com/twentyhq/twenty/releases.atom",
+      "title": "",
+      "saved": 10,
+      "method": "feed"
     }
   ],
   "posts": [
@@ -32,5 +43,8 @@
       "url": "https://github.com/twentyhq/twenty/releases/tag/twenty%2Fv2.11.0",
       "published": "2026-06-09"
     }
-  ]
+  ],
+  "repo": "twenty",
+  "post_count": 10,
+  "fetched": "2026-06-14T20:42:17Z"
 }
