@@ -112,7 +112,7 @@ common:
   url: https://twenty.com/releases
 - type: BlogRSS
   url: https://github.com/twentyhq/twenty/releases.atom
-- type: Blogs
+- type: Blog
   url: blogs/blogs.json
 - type: Vocabulary
   url: vocabulary/twenty-vocabulary.yml

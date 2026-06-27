@@ -2,11 +2,8 @@
   "name": "Twenty Releases Blog",
   "description": "Release notes and changelog for the Twenty open-source CRM platform.",
   "url": "https://twenty.com/releases",
+  "repo": "twenty",
   "feeds": [
-    {
-      "source": "https://www.linkedin.com/company/twenty",
-      "error": "HTTPError"
-    },
     {
       "source": "https://twenty.com/releases",
       "feed_url": "https://twenty.com/releases",
@@ -18,33 +15,17 @@
       "source": "https://github.com/twentyhq/twenty/releases.atom",
       "feed_url": "https://github.com/twentyhq/twenty/releases.atom",
       "title": "",
-      "saved": 10,
+      "saved": 7,
       "method": "feed"
+    },
+    {
+      "source": "https://www.linkedin.com/company/twenty",
+      "feed_url": "https://www.linkedin.com/company/twenty",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "posts": [
-    {
-      "title": "twenty/v2.12.0",
-      "url": "https://github.com/twentyhq/twenty/releases/tag/twenty%2Fv2.12.0",
-      "published": "2026-06-12"
-    },
-    {
-      "title": "twenty/v2.11.2",
-      "url": "https://github.com/twentyhq/twenty/releases/tag/twenty%2Fv2.11.2",
-      "published": "2026-06-10"
-    },
-    {
-      "title": "twenty/v2.11.1",
-      "url": "https://github.com/twentyhq/twenty/releases/tag/twenty%2Fv2.11.1",
-      "published": "2026-06-09"
-    },
-    {
-      "title": "twenty/v2.11.0",
-      "url": "https://github.com/twentyhq/twenty/releases/tag/twenty%2Fv2.11.0",
-      "published": "2026-06-09"
-    }
-  ],
-  "repo": "twenty",
-  "post_count": 10,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z",
+  "post_count": 27
 }
