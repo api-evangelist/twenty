@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/twenty-core-api-openapi.yml, openapi/twenty-metadata-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty
+    workspace.
+  sources:
+  - openapi/twenty-core-api-openapi.yml
+  - openapi/twenty-metadata-api-openapi.yml

@@ -100,6 +100,12 @@ apis:
   - type: OpenAPI
     url: openapi/twenty-metadata-api-openapi.yml
 common:
+- type: VulnerabilityDisclosure
+  url: security/twenty-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/twenty-domain-security.yml
+- type: Authentication
+  url: authentication/twenty-authentication.yml
 - type: Website
   url: https://twenty.com
 - type: Documentation
