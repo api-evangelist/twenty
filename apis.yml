@@ -100,6 +100,8 @@ apis:
   - type: OpenAPI
     url: openapi/twenty-metadata-api-openapi.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/twenty-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/twenty-vulnerability-disclosure.yml
 - type: DomainSecurity
