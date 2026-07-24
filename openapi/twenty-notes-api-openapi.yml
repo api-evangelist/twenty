@@ -1,0 +1,388 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core companies notes API
+  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
+
+    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
+
+    '
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+servers:
+- url: https://api.twenty.com/rest/core
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: notes
+  description: Note records associated with CRM objects
+paths:
+  /notes:
+    get:
+      tags:
+      - notes
+      summary: Find Many Notes
+      operationId: findManyNotes
+      parameters:
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/startingAfter'
+      - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+      - notes
+      summary: Create One Note
+      operationId: createOneNote
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '201':
+          description: Note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  /notes/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      tags:
+      - notes
+      summary: Find One Note
+      operationId: findOneNote
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+      - notes
+      summary: Update One Note
+      operationId: updateOneNote
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '200':
+          description: Note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+      - notes
+      summary: Delete One Note
+      operationId: deleteOneNote
+      responses:
+        '200':
+          description: Note deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+components:
+  parameters:
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: name[eq]:"Acme"
+        dateRange:
+          value: createdAt[gte]:"2024-01-01"
+        composite:
+          value: emails.primaryEmail[eq]:foo@example.com
+        logical:
+          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+  schemas:
+    RichTextMetadata:
+      type: object
+      description: Rich text content (block-based)
+      properties:
+        blocknote:
+          type: string
+          nullable: true
+        markdown:
+          type: string
+          nullable: true
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    NoteListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            notes:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Note'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        context:
+          type: object
+          nullable: true
+    NoteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            note:
+              $ref: '#/components/schemas/Note'
+    NoteInput:
+      type: object
+      properties:
+        title:
+          type: string
+        bodyV2:
+          $ref: '#/components/schemas/RichTextMetadata'
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        title:
+          type: string
+        bodyV2:
+          allOf:
+          - $ref: '#/components/schemas/RichTextMetadata'
+          nullable: true
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty workspace.
+
+        '
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api

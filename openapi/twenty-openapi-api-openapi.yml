@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core companies openapi API
+  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
+
+    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
+
+    '
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+servers:
+- url: https://api.twenty.com/rest/core
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: openapi
+  description: OpenAPI schema discovery
+paths:
+  /open-api/core:
+    get:
+      tags:
+      - openapi
+      summary: Get Core OpenAPI Schema
+      description: 'Returns the full workspace-specific OpenAPI schema for the core API, including all standard and custom objects. Requires authentication.
+
+        '
+      operationId: getCoreOpenApiSchema
+      servers:
+      - url: https://api.twenty.com
+      responses:
+        '200':
+          description: OpenAPI document
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/401'
+  /open-api/metadata:
+    get:
+      tags:
+      - openapi
+      summary: Get Metadata OpenAPI Schema
+      description: 'Returns the full workspace-specific OpenAPI schema for the metadata API. Without authentication returns a skeleton schema. Requires Bearer token for the full schema with all custom object/field definitions.
+
+        '
+      operationId: getMetadataOpenApiSchema
+      servers:
+      - url: https://api.twenty.com
+      security: []
+      responses:
+        '200':
+          description: OpenAPI document
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty workspace.
+
+        '
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api

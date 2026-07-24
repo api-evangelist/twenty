@@ -1,0 +1,512 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core companies API
+  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
+
+    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
+
+    '
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+servers:
+- url: https://api.twenty.com/rest/core
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: companies
+  description: Company CRM records
+paths:
+  /companies:
+    get:
+      tags:
+      - companies
+      summary: Find Many Companies
+      description: 'Returns a paginated list of companies. Use filter, order_by, limit, starting_after, and ending_before to control results.
+
+        '
+      operationId: findManyCompanies
+      parameters:
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/startingAfter'
+      - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+      - companies
+      summary: Create One Company
+      operationId: createOneCompany
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInput'
+            example:
+              name: Acme Corp
+              domainName:
+                primaryLinkUrl: https://acme.com
+                primaryLinkLabel: Acme
+              address:
+                addressStreet1: 123 Main St
+                addressCity: San Francisco
+                addressState: CA
+                addressCountry: US
+                addressPostcode: '94102'
+      responses:
+        '201':
+          description: Company created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  /batch/companies:
+    post:
+      tags:
+      - companies
+      summary: Create Many Companies
+      operationId: createManyCompanies
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompanyInput'
+              maxItems: 60
+      responses:
+        '201':
+          description: Companies created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      createCompanies:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  /companies/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      tags:
+      - companies
+      summary: Find One Company
+      operationId: findOneCompany
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+      - companies
+      summary: Update One Company
+      operationId: updateOneCompany
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInput'
+      responses:
+        '200':
+          description: Company updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+      - companies
+      summary: Delete One Company
+      operationId: deleteOneCompany
+      responses:
+        '200':
+          description: Company deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+components:
+  schemas:
+    LinksMetadata:
+      type: object
+      description: Link with a primary URL and optional label
+      properties:
+        primaryLinkUrl:
+          type: string
+          format: uri
+          nullable: true
+        primaryLinkLabel:
+          type: string
+          nullable: true
+        secondaryLinks:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              label:
+                type: string
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    CompanyListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            companies:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Company'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        context:
+          type: object
+          nullable: true
+    AddressMetadata:
+      type: object
+      description: Postal address
+      properties:
+        addressStreet1:
+          type: string
+          nullable: true
+        addressStreet2:
+          type: string
+          nullable: true
+        addressCity:
+          type: string
+          nullable: true
+        addressState:
+          type: string
+          nullable: true
+        addressCountry:
+          type: string
+          nullable: true
+        addressPostcode:
+          type: string
+          nullable: true
+        addressLat:
+          type: number
+          nullable: true
+        addressLng:
+          type: number
+          nullable: true
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          allOf:
+          - $ref: '#/components/schemas/LinksMetadata'
+          nullable: true
+        annualRevenue:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyMetadata'
+          nullable: true
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+    CurrencyMetadata:
+      type: object
+      description: Monetary amount with currency code
+      properties:
+        amountMicros:
+          type: integer
+          format: int64
+          description: Amount in micros (e.g. 1000000 = 1.00)
+          nullable: true
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          example: USD
+          nullable: true
+    CompanyInput:
+      type: object
+      properties:
+        name:
+          type: string
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          $ref: '#/components/schemas/LinksMetadata'
+        annualRevenue:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        accountOwnerId:
+          type: string
+          format: uuid
+          nullable: true
+    CompanyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            company:
+              $ref: '#/components/schemas/Company'
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+  parameters:
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: name[eq]:"Acme"
+        dateRange:
+          value: createdAt[gte]:"2024-01-01"
+        composite:
+          value: emails.primaryEmail[eq]:foo@example.com
+        logical:
+          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty workspace.
+
+        '
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api

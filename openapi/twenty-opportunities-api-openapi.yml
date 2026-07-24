@@ -1,0 +1,443 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core companies opportunities API
+  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
+
+    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
+
+    '
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+servers:
+- url: https://api.twenty.com/rest/core
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: opportunities
+  description: Opportunity/deal CRM records
+paths:
+  /opportunities:
+    get:
+      tags:
+      - opportunities
+      summary: Find Many Opportunities
+      operationId: findManyOpportunities
+      parameters:
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/orderBy'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/startingAfter'
+      - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+      - opportunities
+      summary: Create One Opportunity
+      operationId: createOneOpportunity
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      - $ref: '#/components/parameters/upsert'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+            example:
+              name: New Deal with Acme
+              stage: NEW
+              amount:
+                amountMicros: 50000000000
+                currencyCode: USD
+              closeDate: '2026-12-31'
+      responses:
+        '201':
+          description: Opportunity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  /opportunities/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      tags:
+      - opportunities
+      summary: Find One Opportunity
+      operationId: findOneOpportunity
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      tags:
+      - opportunities
+      summary: Update One Opportunity
+      operationId: updateOneOpportunity
+      parameters:
+      - $ref: '#/components/parameters/depth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpportunityInput'
+      responses:
+        '200':
+          description: Opportunity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpportunityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      tags:
+      - opportunities
+      summary: Delete One Opportunity
+      operationId: deleteOneOpportunity
+      responses:
+        '200':
+          description: Opportunity deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+components:
+  parameters:
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: name[eq]:"Acme"
+        dateRange:
+          value: createdAt[gte]:"2024-01-01"
+        composite:
+          value: emails.primaryEmail[eq]:foo@example.com
+        logical:
+          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+  schemas:
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    OpportunityResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunity:
+              $ref: '#/components/schemas/Opportunity'
+    OpportunityInput:
+      type: object
+      properties:
+        name:
+          type: string
+        stage:
+          type: string
+          enum:
+          - NEW
+          - SCREENING
+          - MEETING
+          - PROPOSAL
+          - CUSTOMER
+        amount:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        closeDate:
+          type: string
+          format: date
+        companyId:
+          type: string
+          format: uuid
+        pointOfContactId:
+          type: string
+          format: uuid
+        ownerId:
+          type: string
+          format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    OpportunityListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunities:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Opportunity'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        context:
+          type: object
+          nullable: true
+    Opportunity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+        stage:
+          type: string
+          enum:
+          - NEW
+          - SCREENING
+          - MEETING
+          - PROPOSAL
+          - CUSTOMER
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyMetadata'
+          nullable: true
+        closeDate:
+          type: string
+          format: date
+          nullable: true
+        position:
+          type: number
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+        pointOfContactId:
+          type: string
+          format: uuid
+          nullable: true
+        ownerId:
+          type: string
+          format: uuid
+          nullable: true
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+    CurrencyMetadata:
+      type: object
+      description: Monetary amount with currency code
+      properties:
+        amountMicros:
+          type: integer
+          format: int64
+          description: Amount in micros (e.g. 1000000 = 1.00)
+          nullable: true
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          example: USD
+          nullable: true
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty workspace.
+
+        '
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api

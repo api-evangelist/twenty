@@ -1,0 +1,286 @@
+openapi: 3.0.3
+info:
+  title: Twenty Core companies relations API
+  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
+
+    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
+
+    '
+  version: v0.1
+  contact:
+    email: felix@twenty.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
+  termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
+servers:
+- url: https://api.twenty.com/rest/core
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: relations
+  description: Custom relation metadata management
+paths:
+  /relations:
+    get:
+      tags:
+      - relations
+      summary: Find Many Relations
+      operationId: findManyRelations
+      parameters:
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/startingAfter'
+      - $ref: '#/components/parameters/endingBefore'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationMetadataListResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      tags:
+      - relations
+      summary: Create One Relation
+      description: Creates a relation between two objects.
+      operationId: createOneRelation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationMetadataInput'
+      responses:
+        '201':
+          description: Relation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationMetadataResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  /relations/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    delete:
+      tags:
+      - relations
+      summary: Delete One Relation
+      operationId: deleteOneRelation
+      responses:
+        '200':
+          description: Relation deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+  schemas:
+    RelationMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relation:
+              $ref: '#/components/schemas/RelationMetadata'
+    RelationMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relations:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/RelationMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    RelationMetadataInput:
+      type: object
+      required:
+      - relationType
+      - fromObjectMetadataId
+      - toObjectMetadataId
+      - fromName
+      - fromLabel
+      - toName
+      - toLabel
+      properties:
+        relationType:
+          type: string
+          enum:
+          - ONE_TO_MANY
+          - MANY_TO_ONE
+          - ONE_TO_ONE
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromName:
+          type: string
+        fromLabel:
+          type: string
+        toName:
+          type: string
+        toLabel:
+          type: string
+        fromIcon:
+          type: string
+        toIcon:
+          type: string
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    RelationMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        relationType:
+          type: string
+          enum:
+          - ONE_TO_MANY
+          - MANY_TO_ONE
+          - ONE_TO_ONE
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromFieldMetadataId:
+          type: string
+          format: uuid
+        toFieldMetadataId:
+          type: string
+          format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type: string
+          nullable: true
+        endCursor:
+          type: string
+          nullable: true
+  responses:
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Workspace-scoped Bearer token. Generate from Settings → Playground in your Twenty workspace.
+
+        '
+externalDocs:
+  description: Twenty Developer Documentation
+  url: https://docs.twenty.com/developers/extend/api
