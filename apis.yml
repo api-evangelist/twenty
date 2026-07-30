@@ -11,7 +11,20 @@ description: 'Twenty is an open-source CRM platform built as a modern alternativ
 
   '
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: true
+  try_now: true
+  public: true
+  label: Freemium (free trial) · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twenty.png
 url: https://raw.githubusercontent.com/api-evangelist/twenty/refs/heads/main/apis.yml
 created: 2026-06-12
 modified: 2026-06-12
@@ -30,35 +43,16 @@ tags:
 - AI Agents
 - Custom Objects
 apis:
-- aid: twenty:core-api
-  name: Twenty Core API
-  description: 'The Twenty Core API provides REST and GraphQL endpoints for CRUD operations
-    on all CRM records including companies, people, opportunities, notes, tasks, and
-    any custom objects defined in a workspace. Both interfaces support batch operations
-    of up to 60 records per request, filtering, and relation traversal. GraphQL additionally
-    supports batch upsert using plural object names. Authentication is via bearer
-    token generated from the workspace settings. The API schema is per-tenant and
-    adapts automatically as custom objects are added.
-
-    '
-  type: Contract
+- aid: twenty:twenty-companies-api
+  name: Twenty companies API
+  description: Company CRM records
   tags:
-  - CRM
-  - REST
-  - GraphQL
-  - Companies
-  - People
-  - Opportunities
-  contact:
-  - FN: Twenty Developer Documentation
-    url: https://docs.twenty.com/developers/extend/api
+  - companies
   properties:
+  - type: OpenAPI
+    url: openapi/twenty-companies-api-openapi.yml
   - type: Documentation
     url: https://docs.twenty.com/developers/extend/api
-  - type: OpenAPI
-    url: https://api.twenty.com/open-api/core
-  - type: OpenAPI
-    url: openapi/twenty-core-api-openapi.yml
   - type: JSONSchema
     url: json-schema/twenty-company.json
   - type: JSONSchema
@@ -71,34 +65,200 @@ apis:
     url: examples/twenty-list-companies.json
   - type: Examples
     url: examples/twenty-create-custom-object.json
-  - url: graphql/twenty-graphql.md
-    type: GraphQL
-- aid: twenty:metadata-api
-  name: Twenty Metadata API
-  description: 'The Twenty Metadata API provides REST and GraphQL endpoints for programmatic
-    schema management, allowing developers to create, update, and delete custom objects,
-    fields, and relations within a workspace. Changes made through the Metadata API
-    are immediately reflected in the Core API surface, enabling dynamic data modeling
-    at runtime. The base paths are /rest/metadata/ for REST and /metadata/ for GraphQL.
-
-    '
-  type: Contract
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-fields-api
+  name: Twenty fields API
+  description: Custom field metadata management
   tags:
-  - Metadata
-  - Schema Management
-  - Custom Objects
-  - REST
-  - GraphQL
-  contact:
-  - FN: Twenty Developer Documentation
-    url: https://docs.twenty.com/developers/extend/api
+  - fields
   properties:
+  - type: OpenAPI
+    url: openapi/twenty-fields-api-openapi.yml
   - type: Documentation
     url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-notes-api
+  name: Twenty notes API
+  description: Note records associated with CRM objects
+  tags:
+  - notes
+  properties:
   - type: OpenAPI
-    url: https://api.twenty.com/open-api/metadata
+    url: openapi/twenty-notes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-objects-api
+  name: Twenty objects API
+  description: Custom object metadata management
+  tags:
+  - objects
+  properties:
   - type: OpenAPI
-    url: openapi/twenty-metadata-api-openapi.yml
+    url: openapi/twenty-objects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-openapi-api
+  name: Twenty openapi API
+  description: OpenAPI schema discovery
+  tags:
+  - openapi
+  properties:
+  - type: OpenAPI
+    url: openapi/twenty-openapi-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-opportunities-api
+  name: Twenty opportunities API
+  description: Opportunity/deal CRM records
+  tags:
+  - opportunities
+  properties:
+  - type: OpenAPI
+    url: openapi/twenty-opportunities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-people-api
+  name: Twenty people API
+  description: Person/contact CRM records
+  tags:
+  - people
+  properties:
+  - type: OpenAPI
+    url: openapi/twenty-people-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-relations-api
+  name: Twenty relations API
+  description: Custom relation metadata management
+  tags:
+  - relations
+  properties:
+  - type: OpenAPI
+    url: openapi/twenty-relations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
+- aid: twenty:twenty-tasks-api
+  name: Twenty tasks API
+  description: Task records associated with CRM objects
+  tags:
+  - tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/twenty-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.twenty.com/developers/extend/api
+  - type: JSONSchema
+    url: json-schema/twenty-company.json
+  - type: JSONSchema
+    url: json-schema/twenty-person.json
+  - type: JSONSchema
+    url: json-schema/twenty-opportunity.json
+  - type: Examples
+    url: examples/twenty-create-company.json
+  - type: Examples
+    url: examples/twenty-list-companies.json
+  - type: Examples
+    url: examples/twenty-create-custom-object.json
+  - type: GraphQL
+    url: graphql/twenty-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/twenty-agentic-access.yml
