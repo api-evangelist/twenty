@@ -1,0 +1,30 @@
+{
+  "provider": "twenty",
+  "sources": [
+    "twenty-companies-api-openapi.yml",
+    "twenty-fields-api-openapi.yml",
+    "twenty-notes-api-openapi.yml",
+    "twenty-objects-api-openapi.yml",
+    "twenty-openapi-api-openapi.yml",
+    "twenty-opportunities-api-openapi.yml",
+    "twenty-people-api-openapi.yml",
+    "twenty-relations-api-openapi.yml",
+    "twenty-tasks-api-openapi.yml"
+  ],
+  "outputs": [
+    "twenty-companies-api-openapi.yml",
+    "twenty-fields-api-openapi.yml",
+    "twenty-notes-api-openapi.yml",
+    "twenty-objects-api-openapi.yml",
+    "twenty-openapi-api-openapi.yml",
+    "twenty-opportunities-api-openapi.yml",
+    "twenty-people-api-openapi.yml",
+    "twenty-relations-api-openapi.yml",
+    "twenty-tasks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
