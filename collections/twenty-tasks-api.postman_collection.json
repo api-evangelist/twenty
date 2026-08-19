@@ -1,0 +1,1224 @@
+{
+  "item": [
+    {
+      "id": "a6143dac-32e6-4714-af0a-5cf3445e9344",
+      "name": "tasks",
+      "description": {
+        "content": "Task records associated with CRM objects",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a72a93b-b5da-4672-b8dc-ab26408688ff",
+          "name": "Find Many Tasks",
+          "request": {
+            "name": "Find Many Tasks",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "<string>",
+                  "description": "Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "60",
+                  "description": "Maximum number of records to return (default 60, max 60)."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination (use endCursor from previous response)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination (use startCursor from current response)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72544b37-0381-437c-bb94-1460bb108bc5",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"tasks\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"id\": \"a87debde-bdf2-5bcc-62b5-993c05950926\",\n            \"createdAt\": \"1954-11-23T08:44:11.866Z\",\n            \"updatedAt\": \"1979-12-23T11:01:02.094Z\",\n            \"deletedAt\": \"1953-10-30T22:09:47.065Z\",\n            \"title\": \"string\",\n            \"bodyV2\": {\n              \"blocknote\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"markdown\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"IN_PROGRESS\",\n            \"dueAt\": \"1973-04-26T19:55:58.529Z\",\n            \"position\": 1485.8658350571695,\n            \"assigneeId\": \"fd6b5339-f3a3-4aa5-68cb-7c7bb6143b99\",\n            \"createdBy\": {\n              \"source\": \"CALENDAR\",\n              \"workspaceMemberId\": \"e9884526-0bc5-9428-9f28-77f4d6d32c30\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"IMPORT\",\n              \"workspaceMemberId\": \"556201ca-d1d6-5b31-7f86-20ad9ef5c8d7\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        },\n        {\n          \"node\": {\n            \"id\": \"88755d52-c780-b41b-c7a8-79f827ed43b1\",\n            \"createdAt\": \"2015-06-18T07:14:21.372Z\",\n            \"updatedAt\": \"2024-08-28T02:52:59.795Z\",\n            \"deletedAt\": \"2005-06-17T02:08:47.102Z\",\n            \"title\": \"string\",\n            \"bodyV2\": {\n              \"blocknote\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"markdown\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"TODO\",\n            \"dueAt\": \"2026-03-06T23:34:56.259Z\",\n            \"position\": 5787.110613402122,\n            \"assigneeId\": \"61147b73-131b-1615-9387-44c1f9aff60f\",\n            \"createdBy\": {\n              \"source\": \"IMPORT\",\n              \"workspaceMemberId\": \"eab5d100-523a-f133-0f24-2097b50d4fd1\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"WORKFLOW\",\n              \"workspaceMemberId\": \"96fa41ed-aefe-ddd9-ede2-5a7d68a518c8\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        }\n      ],\n      \"pageInfo\": {\n        \"hasNextPage\": true,\n        \"hasPreviousPage\": true,\n        \"startCursor\": \"string\",\n        \"endCursor\": \"string\"\n      },\n      \"totalCount\": 663\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2d96713-668d-48ae-a0f1-516a9b7c1fa9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8744,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "402f70e1-b0be-4a8b-9df9-e7c56ebf92fb",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2c43230-992a-41d3-b20a-0666b414b0c5",
+          "name": "Create One Task",
+          "request": {
+            "name": "Create One Task",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "upsert",
+                  "value": "false",
+                  "description": "If true, creates or updates if record already exists."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"bodyV2\": {\n    \"blocknote\": \"<string>\",\n    \"markdown\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"dueAt\": \"<dateTime>\",\n  \"assigneeId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00471736-3b52-4c4d-a383-bc887863ec60",
+              "name": "Task created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Follow up with Acme\",\n  \"status\": \"TODO\",\n  \"dueAt\": \"2026-06-30T17:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"task\": {\n      \"id\": \"2fb70ecc-428b-524b-62c5-bf86217423e7\",\n      \"createdAt\": \"2017-10-07T05:03:02.010Z\",\n      \"updatedAt\": \"1949-09-15T12:16:47.635Z\",\n      \"deletedAt\": \"1963-03-14T02:28:24.223Z\",\n      \"title\": \"string\",\n      \"bodyV2\": {\n        \"blocknote\": \"<string>\",\n        \"markdown\": \"<string>\"\n      },\n      \"status\": \"DONE\",\n      \"dueAt\": \"2025-08-17T01:31:08.729Z\",\n      \"position\": 4271.899276977378,\n      \"assigneeId\": \"ff0a8c6b-74e1-c350-bd94-8993d38b1c57\",\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"4d3b6874-9000-05dc-608f-0283fb11e165\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"MANUAL\",\n        \"workspaceMemberId\": \"e6ff728b-779a-f8e7-6dfc-9b5be22e0c41\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a99a515-866b-4c93-8fa4-d6a7da5da7d2",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Follow up with Acme\",\n  \"status\": \"TODO\",\n  \"dueAt\": \"2026-06-30T17:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 55,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ee2dc57-9207-4be2-8a97-16590009ae89",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Follow up with Acme\",\n  \"status\": \"TODO\",\n  \"dueAt\": \"2026-06-30T17:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0b848fc-ad27-4da8-86c9-83755fe00890",
+          "name": "Find One Task",
+          "request": {
+            "name": "Find One Task",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "855a65ed-e327-484d-b84a-33a70e793a09",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"task\": {\n      \"id\": \"2fb70ecc-428b-524b-62c5-bf86217423e7\",\n      \"createdAt\": \"2017-10-07T05:03:02.010Z\",\n      \"updatedAt\": \"1949-09-15T12:16:47.635Z\",\n      \"deletedAt\": \"1963-03-14T02:28:24.223Z\",\n      \"title\": \"string\",\n      \"bodyV2\": {\n        \"blocknote\": \"<string>\",\n        \"markdown\": \"<string>\"\n      },\n      \"status\": \"DONE\",\n      \"dueAt\": \"2025-08-17T01:31:08.729Z\",\n      \"position\": 4271.899276977378,\n      \"assigneeId\": \"ff0a8c6b-74e1-c350-bd94-8993d38b1c57\",\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"4d3b6874-9000-05dc-608f-0283fb11e165\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"MANUAL\",\n        \"workspaceMemberId\": \"e6ff728b-779a-f8e7-6dfc-9b5be22e0c41\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d3fd305-fd8d-4f8c-9c5e-3bec39152e9c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 55,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9178c55-0c1c-441b-820a-7d38659e346a",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b6a2bee-0839-4d40-8c19-791373204fab",
+          "name": "Update One Task",
+          "request": {
+            "name": "Update One Task",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"bodyV2\": {\n    \"blocknote\": \"<string>\",\n    \"markdown\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"dueAt\": \"<dateTime>\",\n  \"assigneeId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2feed6b-3675-46fe-b55e-d70934a314e7",
+              "name": "Task updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"bodyV2\": {\n    \"blocknote\": \"<string>\",\n    \"markdown\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"dueAt\": \"<dateTime>\",\n  \"assigneeId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"task\": {\n      \"id\": \"2fb70ecc-428b-524b-62c5-bf86217423e7\",\n      \"createdAt\": \"2017-10-07T05:03:02.010Z\",\n      \"updatedAt\": \"1949-09-15T12:16:47.635Z\",\n      \"deletedAt\": \"1963-03-14T02:28:24.223Z\",\n      \"title\": \"string\",\n      \"bodyV2\": {\n        \"blocknote\": \"<string>\",\n        \"markdown\": \"<string>\"\n      },\n      \"status\": \"DONE\",\n      \"dueAt\": \"2025-08-17T01:31:08.729Z\",\n      \"position\": 4271.899276977378,\n      \"assigneeId\": \"ff0a8c6b-74e1-c350-bd94-8993d38b1c57\",\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"4d3b6874-9000-05dc-608f-0283fb11e165\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"MANUAL\",\n        \"workspaceMemberId\": \"e6ff728b-779a-f8e7-6dfc-9b5be22e0c41\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc70c72e-b8ab-4712-bea9-92a09b04a0c8",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"bodyV2\": {\n    \"blocknote\": \"<string>\",\n    \"markdown\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"dueAt\": \"<dateTime>\",\n  \"assigneeId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 55,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb77b809-cecb-443f-bb71-052686a6af46",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"bodyV2\": {\n    \"blocknote\": \"<string>\",\n    \"markdown\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"dueAt\": \"<dateTime>\",\n  \"assigneeId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "894afb4c-a1a8-49e3-95c1-d791cfb15630",
+          "name": "Delete One Task",
+          "request": {
+            "name": "Delete One Task",
+            "description": {},
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8dc046a2-03e7-4a87-a975-05e3c5e2bcb8",
+              "name": "Task deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"822a9fa5-d07e-2832-5bc7-1e2940d7e86a\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da62b3e8-d95e-4f80-bb5d-0023b8a0e9d4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 55,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3348b492-bc61-440d-be14-4090902ab3ff",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twenty.com/rest/core",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "57d68571-38b4-421f-b2af-62c22a4f8b73",
+    "name": "Twenty Core companies tasks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.\nNote: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.\n\n\nContact Support:\n Email: felix@twenty.com",
+      "type": "text/plain"
+    }
+  }
+}

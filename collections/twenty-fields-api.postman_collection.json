@@ -1,0 +1,960 @@
+{
+  "item": [
+    {
+      "id": "5888dc22-bd9c-4198-be9b-f07bec8fb85d",
+      "name": "fields",
+      "description": {
+        "content": "Custom field metadata management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d5732bc7-3913-4132-9337-29932f110c22",
+          "name": "Find Many Fields",
+          "request": {
+            "name": "Find Many Fields",
+            "description": {
+              "content": "Returns metadata for all fields across all objects in the workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "<string>",
+                  "description": "Ordering clause"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "Maximum number of records to return (default 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1b39423-20db-4922-a555-2267989e7875",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"fields\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"id\": \"b2bce75d-6bdc-72bd-83bd-3fd33db57b72\",\n            \"createdAt\": \"2016-10-30T23:29:32.889Z\",\n            \"updatedAt\": \"1984-07-10T11:22:51.999Z\",\n            \"objectMetadataId\": \"2824c96a-65c1-a7df-8c6c-06344279d49b\",\n            \"name\": \"string\",\n            \"label\": \"string\",\n            \"type\": \"DATE\",\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"isNullable\": false,\n            \"isCustom\": false,\n            \"isSystem\": true,\n            \"isActive\": false,\n            \"defaultValue\": {},\n            \"options\": [\n              {\n                \"id\": \"string\",\n                \"value\": \"string\",\n                \"label\": \"string\",\n                \"color\": \"string\"\n              },\n              {\n                \"id\": \"string\",\n                \"value\": \"string\",\n                \"label\": \"string\",\n                \"color\": \"string\"\n              }\n            ]\n          },\n          \"cursor\": \"string\"\n        },\n        {\n          \"node\": {\n            \"id\": \"97b11a30-e87c-8718-55ed-4d0907f6eae8\",\n            \"createdAt\": \"2009-11-12T00:30:34.416Z\",\n            \"updatedAt\": \"2011-12-28T05:42:12.036Z\",\n            \"objectMetadataId\": \"20624ea3-10ed-da21-213c-005d60fd2934\",\n            \"name\": \"string\",\n            \"label\": \"string\",\n            \"type\": \"FULL_NAME\",\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"isNullable\": false,\n            \"isCustom\": true,\n            \"isSystem\": true,\n            \"isActive\": true,\n            \"defaultValue\": {},\n            \"options\": [\n              {\n                \"id\": \"string\",\n                \"value\": \"string\",\n                \"label\": \"string\",\n                \"color\": \"string\"\n              },\n              {\n                \"id\": \"string\",\n                \"value\": \"string\",\n                \"label\": \"string\",\n                \"color\": \"string\"\n              }\n            ]\n          },\n          \"cursor\": \"string\"\n        }\n      ],\n      \"pageInfo\": {\n        \"hasNextPage\": false,\n        \"hasPreviousPage\": true,\n        \"startCursor\": \"string\",\n        \"endCursor\": \"string\"\n      },\n      \"totalCount\": 4622\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af50d183-c1fd-4c03-ba03-1b5d37295d76",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e22c730a-e9ff-4103-8842-7c6864649019",
+          "name": "Create One Field",
+          "request": {
+            "name": "Create One Field",
+            "description": {
+              "content": "Creates a new custom field on an object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"objectMetadataId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"label\": \"<string>\",\n  \"type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"isNullable\": \"<boolean>\",\n  \"defaultValue\": {},\n  \"options\": [\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6c82eb7a-7479-4809-9566-9867018d33be",
+              "name": "Field created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"3c2a1d0e-1234-5678-abcd-ef0123456789\",\n  \"name\": \"invoiceNumber\",\n  \"label\": \"Invoice Number\",\n  \"type\": \"TEXT\",\n  \"description\": \"Unique invoice identifier\",\n  \"icon\": \"IconHash\",\n  \"isNullable\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"field\": {\n      \"id\": \"1e43a8c2-e2ff-c465-d4a6-57081620839e\",\n      \"createdAt\": \"1959-06-30T01:26:26.540Z\",\n      \"updatedAt\": \"1950-09-09T01:36:37.207Z\",\n      \"objectMetadataId\": \"d1d54533-9fea-839a-9b5e-ff0089a722a7\",\n      \"name\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"BOOLEAN\",\n      \"description\": \"string\",\n      \"icon\": \"string\",\n      \"isNullable\": false,\n      \"isCustom\": false,\n      \"isSystem\": false,\n      \"isActive\": false,\n      \"defaultValue\": {},\n      \"options\": [\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03bc3b0a-2a14-4d72-8b2a-064b37f49204",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"3c2a1d0e-1234-5678-abcd-ef0123456789\",\n  \"name\": \"invoiceNumber\",\n  \"label\": \"Invoice Number\",\n  \"type\": \"TEXT\",\n  \"description\": \"Unique invoice identifier\",\n  \"icon\": \"IconHash\",\n  \"isNullable\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 9167,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19ac5db9-0a49-49ed-b2e4-16708b05e7a8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"3c2a1d0e-1234-5678-abcd-ef0123456789\",\n  \"name\": \"invoiceNumber\",\n  \"label\": \"Invoice Number\",\n  \"type\": \"TEXT\",\n  \"description\": \"Unique invoice identifier\",\n  \"icon\": \"IconHash\",\n  \"isNullable\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57580503-065f-49ae-b8b0-5d0afbdee0b4",
+          "name": "Find One Field",
+          "request": {
+            "name": "Find One Field",
+            "description": {},
+            "url": {
+              "path": [
+                "fields",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1408c890-d308-4f52-ae8e-aeb1bf24977a",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"field\": {\n      \"id\": \"1e43a8c2-e2ff-c465-d4a6-57081620839e\",\n      \"createdAt\": \"1959-06-30T01:26:26.540Z\",\n      \"updatedAt\": \"1950-09-09T01:36:37.207Z\",\n      \"objectMetadataId\": \"d1d54533-9fea-839a-9b5e-ff0089a722a7\",\n      \"name\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"BOOLEAN\",\n      \"description\": \"string\",\n      \"icon\": \"string\",\n      \"isNullable\": false,\n      \"isCustom\": false,\n      \"isSystem\": false,\n      \"isActive\": false,\n      \"defaultValue\": {},\n      \"options\": [\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7809f38c-68df-4f00-8859-66c681998587",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5154c994-8fa6-46ae-9732-eb37dd4c7c83",
+          "name": "Update One Field",
+          "request": {
+            "name": "Update One Field",
+            "description": {},
+            "url": {
+              "path": [
+                "fields",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"objectMetadataId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"label\": \"<string>\",\n  \"type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"isNullable\": \"<boolean>\",\n  \"defaultValue\": {},\n  \"options\": [\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1502300c-e56d-49d1-9e9e-1df9d94fc4df",
+              "name": "Field updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"label\": \"<string>\",\n  \"type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"isNullable\": \"<boolean>\",\n  \"defaultValue\": {},\n  \"options\": [\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"field\": {\n      \"id\": \"1e43a8c2-e2ff-c465-d4a6-57081620839e\",\n      \"createdAt\": \"1959-06-30T01:26:26.540Z\",\n      \"updatedAt\": \"1950-09-09T01:36:37.207Z\",\n      \"objectMetadataId\": \"d1d54533-9fea-839a-9b5e-ff0089a722a7\",\n      \"name\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"BOOLEAN\",\n      \"description\": \"string\",\n      \"icon\": \"string\",\n      \"isNullable\": false,\n      \"isCustom\": false,\n      \"isSystem\": false,\n      \"isActive\": false,\n      \"defaultValue\": {},\n      \"options\": [\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"value\": \"string\",\n          \"label\": \"string\",\n          \"color\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9f027fd-899f-42e3-89f9-8c6fd355649b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"label\": \"<string>\",\n  \"type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"isNullable\": \"<boolean>\",\n  \"defaultValue\": {},\n  \"options\": [\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8627,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4ea2ffe-e275-4dee-8201-8429e9f50854",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"objectMetadataId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"label\": \"<string>\",\n  \"type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"isNullable\": \"<boolean>\",\n  \"defaultValue\": {},\n  \"options\": [\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"label\": \"<string>\",\n      \"color\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41e1cad7-9253-4789-bb53-02cf45683dbe",
+          "name": "Delete One Field",
+          "request": {
+            "name": "Delete One Field",
+            "description": {},
+            "url": {
+              "path": [
+                "fields",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a4f3b70e-11de-4088-88e8-d1f7e11e3080",
+              "name": "Field deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"a1c5944f-8fba-9f80-b473-856ad5d748ab\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4b71f78-d4d0-4655-a3c9-7a219157514b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twenty.com/rest/core",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b5ef93d5-8e06-4397-a8a5-fabde4e283ca",
+    "name": "Twenty Core companies fields API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.\nNote: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.\n\n\nContact Support:\n Email: felix@twenty.com",
+      "type": "text/plain"
+    }
+  }
+}

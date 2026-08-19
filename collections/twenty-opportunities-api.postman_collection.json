@@ -1,0 +1,1224 @@
+{
+  "item": [
+    {
+      "id": "9d49a145-f0c4-428f-a8be-89e601b284dd",
+      "name": "opportunities",
+      "description": {
+        "content": "Opportunity/deal CRM records",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22f37687-86e7-45fa-8666-dd4a6a187616",
+          "name": "Find Many Opportunities",
+          "request": {
+            "name": "Find Many Opportunities",
+            "description": {},
+            "url": {
+              "path": [
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "<string>",
+                  "description": "Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "60",
+                  "description": "Maximum number of records to return (default 60, max 60)."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination (use endCursor from previous response)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination (use startCursor from current response)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8eed616-5f5d-4c08-94f1-7e5d22923ff0",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"opportunities\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"id\": \"23506348-d05e-8f8e-4faa-79efd74609df\",\n            \"createdAt\": \"1989-03-17T21:15:57.357Z\",\n            \"updatedAt\": \"1949-09-03T23:41:34.769Z\",\n            \"deletedAt\": \"1995-01-07T20:12:47.906Z\",\n            \"name\": \"string\",\n            \"stage\": \"NEW\",\n            \"amount\": {\n              \"amountMicros\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currencyCode\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"closeDate\": \"1947-06-06\",\n            \"position\": 9490.29500309053,\n            \"companyId\": \"bce8e904-a8d9-cfe0-dc6a-0ae019c64c05\",\n            \"pointOfContactId\": \"5c3db4a1-ab77-08f3-666e-e346920dc869\",\n            \"ownerId\": \"25213513-2872-627e-84c6-e0783245fad9\",\n            \"createdBy\": {\n              \"source\": \"API\",\n              \"workspaceMemberId\": \"13dac7fc-e78c-1586-08ec-7657fa9254f7\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"WORKFLOW\",\n              \"workspaceMemberId\": \"42f93e39-2687-2748-b6cb-6b4a3f984806\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        },\n        {\n          \"node\": {\n            \"id\": \"5437f83d-acb0-f601-7722-5ccfd4c5c234\",\n            \"createdAt\": \"1948-07-02T17:17:55.687Z\",\n            \"updatedAt\": \"1955-01-11T07:42:10.842Z\",\n            \"deletedAt\": \"1965-03-25T18:40:59.949Z\",\n            \"name\": \"string\",\n            \"stage\": \"MEETING\",\n            \"amount\": {\n              \"amountMicros\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currencyCode\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"closeDate\": \"1994-10-26\",\n            \"position\": 9050.126161089804,\n            \"companyId\": \"082109ea-cbcf-5658-281e-dbef835328fe\",\n            \"pointOfContactId\": \"60b3a00a-ee52-3336-f002-41266efaf0f4\",\n            \"ownerId\": \"26be266e-022b-5450-d70f-70bada7d03a0\",\n            \"createdBy\": {\n              \"source\": \"CALENDAR\",\n              \"workspaceMemberId\": \"7527a905-4239-9f98-a348-96da3c3a3cff\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"API\",\n              \"workspaceMemberId\": \"da49ecaf-236a-1437-eff4-ae7a069bc012\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        }\n      ],\n      \"pageInfo\": {\n        \"hasNextPage\": true,\n        \"hasPreviousPage\": true,\n        \"startCursor\": \"string\",\n        \"endCursor\": \"string\"\n      },\n      \"totalCount\": 5292\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fdd871e-5002-46f1-84b7-e84876c10df4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 4509,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48a52e67-5320-462f-a3e1-8960da6310e3",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34fd580d-55e8-4551-a829-480dd13f68f2",
+          "name": "Create One Opportunity",
+          "request": {
+            "name": "Create One Opportunity",
+            "description": {},
+            "url": {
+              "path": [
+                "opportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "upsert",
+                  "value": "false",
+                  "description": "If true, creates or updates if record already exists."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"amount\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"closeDate\": \"<date>\",\n  \"companyId\": \"<uuid>\",\n  \"pointOfContactId\": \"<uuid>\",\n  \"ownerId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7013cc30-ae05-4808-b9f5-8f5a7a9697f4",
+              "name": "Opportunity created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Deal with Acme\",\n  \"stage\": \"NEW\",\n  \"amount\": {\n    \"amountMicros\": 50000000000,\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"2026-12-31\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"opportunity\": {\n      \"id\": \"7a8a1086-bdac-c1a7-6170-766c028631e3\",\n      \"createdAt\": \"2005-10-26T14:16:51.104Z\",\n      \"updatedAt\": \"2016-01-18T21:50:41.936Z\",\n      \"deletedAt\": \"1967-10-23T13:34:31.792Z\",\n      \"name\": \"string\",\n      \"stage\": \"CUSTOMER\",\n      \"amount\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"closeDate\": \"1953-03-13\",\n      \"position\": 3400.613374199525,\n      \"companyId\": \"37d0c6d1-041a-3d1a-916c-9ff49e70e5a1\",\n      \"pointOfContactId\": \"9872d992-0f6e-1177-490b-72462f18f323\",\n      \"ownerId\": \"9fcdd40b-a90c-efff-9bca-f43af723d0b9\",\n      \"createdBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"0332f9a9-d413-5a44-0103-4cdf4e2d5b3f\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"7cdae5b7-d954-09a9-e1e5-85d3740ffa76\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4882a9f1-4b69-4120-9f3b-bfc42734dc8e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Deal with Acme\",\n  \"stage\": \"NEW\",\n  \"amount\": {\n    \"amountMicros\": 50000000000,\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"2026-12-31\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 3537,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98ae215d-50b2-42b3-9048-d328bb93c319",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Deal with Acme\",\n  \"stage\": \"NEW\",\n  \"amount\": {\n    \"amountMicros\": 50000000000,\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"2026-12-31\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b5d1cd2-ac8a-43fc-a268-b4535d99c203",
+          "name": "Find One Opportunity",
+          "request": {
+            "name": "Find One Opportunity",
+            "description": {},
+            "url": {
+              "path": [
+                "opportunities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e22ab7de-4160-49f0-94f3-5d839bc161e7",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"opportunity\": {\n      \"id\": \"7a8a1086-bdac-c1a7-6170-766c028631e3\",\n      \"createdAt\": \"2005-10-26T14:16:51.104Z\",\n      \"updatedAt\": \"2016-01-18T21:50:41.936Z\",\n      \"deletedAt\": \"1967-10-23T13:34:31.792Z\",\n      \"name\": \"string\",\n      \"stage\": \"CUSTOMER\",\n      \"amount\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"closeDate\": \"1953-03-13\",\n      \"position\": 3400.613374199525,\n      \"companyId\": \"37d0c6d1-041a-3d1a-916c-9ff49e70e5a1\",\n      \"pointOfContactId\": \"9872d992-0f6e-1177-490b-72462f18f323\",\n      \"ownerId\": \"9fcdd40b-a90c-efff-9bca-f43af723d0b9\",\n      \"createdBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"0332f9a9-d413-5a44-0103-4cdf4e2d5b3f\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"7cdae5b7-d954-09a9-e1e5-85d3740ffa76\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45180afa-a518-4dec-a0b8-dde74489f87f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 3537,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24ee9f2f-1e36-43d5-ba36-6c77d2c0b73e",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5261ddd2-bf9f-4073-9c93-0c4b1e4259bf",
+          "name": "Update One Opportunity",
+          "request": {
+            "name": "Update One Opportunity",
+            "description": {},
+            "url": {
+              "path": [
+                "opportunities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"amount\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"closeDate\": \"<date>\",\n  \"companyId\": \"<uuid>\",\n  \"pointOfContactId\": \"<uuid>\",\n  \"ownerId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81f9b72b-fd4e-4a70-8e23-cd544a40db21",
+              "name": "Opportunity updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"amount\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"<date>\",\n  \"companyId\": \"<uuid>\",\n  \"pointOfContactId\": \"<uuid>\",\n  \"ownerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"opportunity\": {\n      \"id\": \"7a8a1086-bdac-c1a7-6170-766c028631e3\",\n      \"createdAt\": \"2005-10-26T14:16:51.104Z\",\n      \"updatedAt\": \"2016-01-18T21:50:41.936Z\",\n      \"deletedAt\": \"1967-10-23T13:34:31.792Z\",\n      \"name\": \"string\",\n      \"stage\": \"CUSTOMER\",\n      \"amount\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"closeDate\": \"1953-03-13\",\n      \"position\": 3400.613374199525,\n      \"companyId\": \"37d0c6d1-041a-3d1a-916c-9ff49e70e5a1\",\n      \"pointOfContactId\": \"9872d992-0f6e-1177-490b-72462f18f323\",\n      \"ownerId\": \"9fcdd40b-a90c-efff-9bca-f43af723d0b9\",\n      \"createdBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"0332f9a9-d413-5a44-0103-4cdf4e2d5b3f\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"WEBHOOK\",\n        \"workspaceMemberId\": \"7cdae5b7-d954-09a9-e1e5-85d3740ffa76\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a2679cc-9bc6-4291-8d2f-cdd0dcb978ba",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"amount\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"<date>\",\n  \"companyId\": \"<uuid>\",\n  \"pointOfContactId\": \"<uuid>\",\n  \"ownerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 3537,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f24d0bc0-cef1-48aa-8ea7-a18d8b8edb2f",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"amount\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"closeDate\": \"<date>\",\n  \"companyId\": \"<uuid>\",\n  \"pointOfContactId\": \"<uuid>\",\n  \"ownerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f7cf92a-63c5-41fb-bb95-b0e28b652147",
+          "name": "Delete One Opportunity",
+          "request": {
+            "name": "Delete One Opportunity",
+            "description": {},
+            "url": {
+              "path": [
+                "opportunities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60d04182-a1c7-4f8b-a788-da6cc3761bf7",
+              "name": "Opportunity deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"1c0a149f-cf00-1cfc-e730-20112ba4de5e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b70b268b-98dc-49dd-8d89-eccdd0b28ffc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 3537,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20346057-8bc8-4291-9979-69873a69be45",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opportunities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twenty.com/rest/core",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f6e5e475-c815-4c02-9060-9a010704d8f6",
+    "name": "Twenty Core companies opportunities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.\nNote: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.\n\n\nContact Support:\n Email: felix@twenty.com",
+      "type": "text/plain"
+    }
+  }
+}

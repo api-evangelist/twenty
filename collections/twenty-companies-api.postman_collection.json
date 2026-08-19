@@ -1,0 +1,1469 @@
+{
+  "item": [
+    {
+      "id": "3a5444fb-10ea-49f3-9c87-0d7ce825bdf7",
+      "name": "companies",
+      "description": {
+        "content": "Company CRM records",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4db5119-db28-4a21-a337-7fee3bd1dfab",
+          "name": "Find Many Companies",
+          "request": {
+            "name": "Find Many Companies",
+            "description": {
+              "content": "Returns a paginated list of companies. Use filter, order_by, limit, starting_after, and ending_before to control results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "<string>",
+                  "description": "Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "60",
+                  "description": "Maximum number of records to return (default 60, max 60)."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination (use endCursor from previous response)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination (use startCursor from current response)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0ced356-1016-4afd-a125-bf77e92e7a88",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"companies\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"id\": \"0d13170b-b70f-4561-2397-6e67798f643a\",\n            \"createdAt\": \"2013-07-13T22:57:46.153Z\",\n            \"updatedAt\": \"2018-10-04T03:45:02.575Z\",\n            \"deletedAt\": \"1995-05-16T00:23:15.329Z\",\n            \"name\": \"string\",\n            \"domainName\": {\n              \"primaryLinkUrl\": \"https://qxu.ehdawLbjs7.2KRDbzNwvnL,hO.NG84e8tOVKMmJz3gbxbtzI-on\",\n              \"primaryLinkLabel\": \"string\",\n              \"secondaryLinks\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"linkedinLink\": {\n              \"primaryLinkUrl\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"primaryLinkLabel\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"secondaryLinks\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"annualRevenue\": {\n              \"amountMicros\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currencyCode\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"address\": {\n              \"addressStreet1\": \"string\",\n              \"addressStreet2\": \"string\",\n              \"addressCity\": \"string\",\n              \"addressState\": \"string\",\n              \"addressCountry\": \"string\",\n              \"addressPostcode\": \"string\",\n              \"addressLat\": 2720.8777495148397,\n              \"addressLng\": 2079.8877582671857\n            },\n            \"position\": 5256.8666377221725,\n            \"createdBy\": {\n              \"source\": \"SYSTEM\",\n              \"workspaceMemberId\": \"705adc06-5973-1d61-4b46-3689c35194d5\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"API\",\n              \"workspaceMemberId\": \"2645061e-fb2e-3c94-3f0e-0975f4a396f0\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        },\n        {\n          \"node\": {\n            \"id\": \"28641e0b-5438-934a-173e-ee52ba1ad4ab\",\n            \"createdAt\": \"1976-11-20T03:21:04.393Z\",\n            \"updatedAt\": \"1975-04-13T05:12:53.401Z\",\n            \"deletedAt\": \"1988-01-23T15:40:48.651Z\",\n            \"name\": \"string\",\n            \"domainName\": {\n              \"primaryLinkUrl\": \"http://oNdidCJUtDGpCbSesIBbZlixoiAfc.vsZI,jqAuEeFJcaOiyl+H053,+gBVWT8iW0FX.w9PLzR,EpiYfemz4zNOTuuX9zb2wxRTCdjRK+qJW\",\n              \"primaryLinkLabel\": \"string\",\n              \"secondaryLinks\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            },\n            \"linkedinLink\": {\n              \"primaryLinkUrl\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"primaryLinkLabel\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"secondaryLinks\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"annualRevenue\": {\n              \"amountMicros\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currencyCode\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"address\": {\n              \"addressStreet1\": \"string\",\n              \"addressStreet2\": \"string\",\n              \"addressCity\": \"string\",\n              \"addressState\": \"string\",\n              \"addressCountry\": \"string\",\n              \"addressPostcode\": \"string\",\n              \"addressLat\": 3143.5773152464008,\n              \"addressLng\": 1047.4264777864228\n            },\n            \"position\": 9716.621837334176,\n            \"createdBy\": {\n              \"source\": \"EMAIL\",\n              \"workspaceMemberId\": \"7d7a1d08-ea89-4eac-95fd-f659d8f7b056\",\n              \"name\": \"string\",\n              \"context\": {}\n            },\n            \"updatedBy\": {\n              \"source\": \"SYSTEM\",\n              \"workspaceMemberId\": \"18be6bcf-e3d9-9c67-d9df-58965643cbeb\",\n              \"name\": \"string\",\n              \"context\": {}\n            }\n          },\n          \"cursor\": \"string\"\n        }\n      ],\n      \"pageInfo\": {\n        \"hasNextPage\": false,\n        \"hasPreviousPage\": true,\n        \"startCursor\": \"string\",\n        \"endCursor\": \"string\"\n      },\n      \"totalCount\": 8876\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "016d2f6c-23ce-41ca-a80e-b60a295f18e4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 1739,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3a50b7f-a27a-44fd-aa5d-b37f869fdaaa",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "name[eq]:\"Acme\""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "60"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32676ea8-b158-4449-996c-59854400cda1",
+          "name": "Create One Company",
+          "request": {
+            "name": "Create One Company",
+            "description": {},
+            "url": {
+              "path": [
+                "companies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "upsert",
+                  "value": "false",
+                  "description": "If true, creates or updates if record already exists."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"linkedinLink\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"annualRevenue\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"<string>\",\n    \"addressStreet2\": \"<string>\",\n    \"addressCity\": \"<string>\",\n    \"addressState\": \"<string>\",\n    \"addressCountry\": \"<string>\",\n    \"addressPostcode\": \"<string>\",\n    \"addressLat\": \"<number>\",\n    \"addressLng\": \"<number>\"\n  },\n  \"accountOwnerId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4a89cc0c-8e38-4416-8e65-643c4314133a",
+              "name": "Company created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Corp\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"https://acme.com\",\n    \"primaryLinkLabel\": \"Acme\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"123 Main St\",\n    \"addressCity\": \"San Francisco\",\n    \"addressState\": \"CA\",\n    \"addressCountry\": \"US\",\n    \"addressPostcode\": \"94102\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"company\": {\n      \"id\": \"3346246f-2536-f6ea-68c2-4e6e83ced5a1\",\n      \"createdAt\": \"1964-11-14T07:01:46.756Z\",\n      \"updatedAt\": \"2007-05-09T10:26:25.404Z\",\n      \"deletedAt\": \"1956-01-19T14:54:12.920Z\",\n      \"name\": \"string\",\n      \"domainName\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"linkedinLink\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"annualRevenue\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"address\": {\n        \"addressStreet1\": \"<string>\",\n        \"addressStreet2\": \"<string>\",\n        \"addressCity\": \"<string>\",\n        \"addressState\": \"<string>\",\n        \"addressCountry\": \"<string>\",\n        \"addressPostcode\": \"<string>\",\n        \"addressLat\": \"<number>\",\n        \"addressLng\": \"<number>\"\n      },\n      \"position\": 3009.473387160736,\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"b7fbc2ed-3423-2072-57f6-a1c19ef97bde\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"API\",\n        \"workspaceMemberId\": \"e467e944-31f3-d69c-c7e7-bd64438da194\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d93f61d0-01b9-4597-939f-6809774b1d3f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Corp\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"https://acme.com\",\n    \"primaryLinkLabel\": \"Acme\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"123 Main St\",\n    \"addressCity\": \"San Francisco\",\n    \"addressState\": \"CA\",\n    \"addressCountry\": \"US\",\n    \"addressPostcode\": \"94102\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8323,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "638a5e47-b38c-41b6-986b-dd5c695c6358",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Acme Corp\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"https://acme.com\",\n    \"primaryLinkLabel\": \"Acme\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"123 Main St\",\n    \"addressCity\": \"San Francisco\",\n    \"addressState\": \"CA\",\n    \"addressCountry\": \"US\",\n    \"addressPostcode\": \"94102\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dd78472-d6f3-4233-9ac9-4365e7783265",
+          "name": "Create Many Companies",
+          "request": {
+            "name": "Create Many Companies",
+            "description": {},
+            "url": {
+              "path": [
+                "batch",
+                "companies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "upsert",
+                  "value": "false",
+                  "description": "If true, creates or updates if record already exists."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"<string>\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"<string>\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4e99f4ac-436b-45be-bae3-02603c231dcf",
+              "name": "Companies created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"createCompanies\": [\n      {\n        \"id\": \"d096147e-3e86-7b98-f5de-3be24e14911b\",\n        \"createdAt\": \"1963-01-01T09:35:17.148Z\",\n        \"updatedAt\": \"1980-05-30T20:35:05.857Z\",\n        \"deletedAt\": \"2006-02-24T23:54:59.294Z\",\n        \"name\": \"string\",\n        \"domainName\": {\n          \"primaryLinkUrl\": \"<uri>\",\n          \"primaryLinkLabel\": \"<string>\",\n          \"secondaryLinks\": [\n            {\n              \"url\": \"<uri>\",\n              \"label\": \"<string>\"\n            },\n            {\n              \"url\": \"<uri>\",\n              \"label\": \"<string>\"\n            }\n          ]\n        },\n        \"linkedinLink\": {\n          \"primaryLinkUrl\": \"<uri>\",\n          \"primaryLinkLabel\": \"<string>\",\n          \"secondaryLinks\": [\n            {\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        \"annualRevenue\": {\n          \"amountMicros\": \"<long>\",\n          \"currencyCode\": \"USD\"\n        },\n        \"address\": {\n          \"addressStreet1\": \"<string>\",\n          \"addressStreet2\": \"<string>\",\n          \"addressCity\": \"<string>\",\n          \"addressState\": \"<string>\",\n          \"addressCountry\": \"<string>\",\n          \"addressPostcode\": \"<string>\",\n          \"addressLat\": \"<number>\",\n          \"addressLng\": \"<number>\"\n        },\n        \"position\": 335.99341476259315,\n        \"createdBy\": {\n          \"source\": \"IMPORT\",\n          \"workspaceMemberId\": \"04790ab0-348f-dfe7-185b-a13be1691d95\",\n          \"name\": \"string\",\n          \"context\": {}\n        },\n        \"updatedBy\": {\n          \"source\": \"EMAIL\",\n          \"workspaceMemberId\": \"0a10d6a8-1a74-4811-6faf-6e6865fd651a\",\n          \"name\": \"string\",\n          \"context\": {}\n        }\n      },\n      {\n        \"id\": \"76721c1a-bf80-75a3-f950-40173f32e0dd\",\n        \"createdAt\": \"1971-09-01T00:17:17.202Z\",\n        \"updatedAt\": \"1968-05-17T10:38:00.590Z\",\n        \"deletedAt\": \"2024-02-17T03:26:31.365Z\",\n        \"name\": \"string\",\n        \"domainName\": {\n          \"primaryLinkUrl\": \"<uri>\",\n          \"primaryLinkLabel\": \"<string>\",\n          \"secondaryLinks\": [\n            {\n              \"url\": \"<uri>\",\n              \"label\": \"<string>\"\n            },\n            {\n              \"url\": \"<uri>\",\n              \"label\": \"<string>\"\n            }\n          ]\n        },\n        \"linkedinLink\": {\n          \"primaryLinkUrl\": \"<uri>\",\n          \"primaryLinkLabel\": \"<string>\",\n          \"secondaryLinks\": [\n            {\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        \"annualRevenue\": {\n          \"amountMicros\": \"<long>\",\n          \"currencyCode\": \"USD\"\n        },\n        \"address\": {\n          \"addressStreet1\": \"<string>\",\n          \"addressStreet2\": \"<string>\",\n          \"addressCity\": \"<string>\",\n          \"addressState\": \"<string>\",\n          \"addressCountry\": \"<string>\",\n          \"addressPostcode\": \"<string>\",\n          \"addressLat\": \"<number>\",\n          \"addressLng\": \"<number>\"\n        },\n        \"position\": 7393.261671290677,\n        \"createdBy\": {\n          \"source\": \"MANUAL\",\n          \"workspaceMemberId\": \"d3142070-b4d1-dbab-697b-68958b542bb9\",\n          \"name\": \"string\",\n          \"context\": {}\n        },\n        \"updatedBy\": {\n          \"source\": \"WORKFLOW\",\n          \"workspaceMemberId\": \"db218ae1-c10d-2dc5-5a1b-ea35d813cd75\",\n          \"name\": \"string\",\n          \"context\": {}\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6251c5a-7a23-46ee-9b78-974c29a2aabf",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8323,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db87a5df-c7b9-49c0-a19c-1a8279aff1ff",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "upsert",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"domainName\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"linkedinLink\": {\n      \"primaryLinkUrl\": \"<uri>\",\n      \"primaryLinkLabel\": \"<string>\",\n      \"secondaryLinks\": [\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        },\n        {\n          \"url\": \"<uri>\",\n          \"label\": \"<string>\"\n        }\n      ]\n    },\n    \"annualRevenue\": {\n      \"amountMicros\": \"<long>\",\n      \"currencyCode\": \"USD\"\n    },\n    \"address\": {\n      \"addressStreet1\": \"<string>\",\n      \"addressStreet2\": \"<string>\",\n      \"addressCity\": \"<string>\",\n      \"addressState\": \"<string>\",\n      \"addressCountry\": \"<string>\",\n      \"addressPostcode\": \"<string>\",\n      \"addressLat\": \"<number>\",\n      \"addressLng\": \"<number>\"\n    },\n    \"accountOwnerId\": \"<uuid>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39b6a332-1fd8-4138-9ae1-e342bdf9b085",
+          "name": "Find One Company",
+          "request": {
+            "name": "Find One Company",
+            "description": {},
+            "url": {
+              "path": [
+                "companies",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a499d4d-df29-47be-9428-9e1cbb118dde",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"company\": {\n      \"id\": \"3346246f-2536-f6ea-68c2-4e6e83ced5a1\",\n      \"createdAt\": \"1964-11-14T07:01:46.756Z\",\n      \"updatedAt\": \"2007-05-09T10:26:25.404Z\",\n      \"deletedAt\": \"1956-01-19T14:54:12.920Z\",\n      \"name\": \"string\",\n      \"domainName\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"linkedinLink\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"annualRevenue\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"address\": {\n        \"addressStreet1\": \"<string>\",\n        \"addressStreet2\": \"<string>\",\n        \"addressCity\": \"<string>\",\n        \"addressState\": \"<string>\",\n        \"addressCountry\": \"<string>\",\n        \"addressPostcode\": \"<string>\",\n        \"addressLat\": \"<number>\",\n        \"addressLng\": \"<number>\"\n      },\n      \"position\": 3009.473387160736,\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"b7fbc2ed-3423-2072-57f6-a1c19ef97bde\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"API\",\n        \"workspaceMemberId\": \"e467e944-31f3-d69c-c7e7-bd64438da194\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f81d5fa5-f1ba-4440-a63c-7220cf03bfc5",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8323,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef15f4a4-7f4e-40b1-890a-099bc2d551ef",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc1a29b8-5376-47f7-a28f-889d0a696634",
+          "name": "Update One Company",
+          "request": {
+            "name": "Update One Company",
+            "description": {},
+            "url": {
+              "path": [
+                "companies",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"linkedinLink\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"annualRevenue\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"<string>\",\n    \"addressStreet2\": \"<string>\",\n    \"addressCity\": \"<string>\",\n    \"addressState\": \"<string>\",\n    \"addressCountry\": \"<string>\",\n    \"addressPostcode\": \"<string>\",\n    \"addressLat\": \"<number>\",\n    \"addressLng\": \"<number>\"\n  },\n  \"accountOwnerId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2f2100b-a8f4-448e-8a8a-1089fa15c71b",
+              "name": "Company updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"linkedinLink\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"annualRevenue\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"<string>\",\n    \"addressStreet2\": \"<string>\",\n    \"addressCity\": \"<string>\",\n    \"addressState\": \"<string>\",\n    \"addressCountry\": \"<string>\",\n    \"addressPostcode\": \"<string>\",\n    \"addressLat\": \"<number>\",\n    \"addressLng\": \"<number>\"\n  },\n  \"accountOwnerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"company\": {\n      \"id\": \"3346246f-2536-f6ea-68c2-4e6e83ced5a1\",\n      \"createdAt\": \"1964-11-14T07:01:46.756Z\",\n      \"updatedAt\": \"2007-05-09T10:26:25.404Z\",\n      \"deletedAt\": \"1956-01-19T14:54:12.920Z\",\n      \"name\": \"string\",\n      \"domainName\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"linkedinLink\": {\n        \"primaryLinkUrl\": \"<uri>\",\n        \"primaryLinkLabel\": \"<string>\",\n        \"secondaryLinks\": [\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          },\n          {\n            \"url\": \"<uri>\",\n            \"label\": \"<string>\"\n          }\n        ]\n      },\n      \"annualRevenue\": {\n        \"amountMicros\": \"<long>\",\n        \"currencyCode\": \"USD\"\n      },\n      \"address\": {\n        \"addressStreet1\": \"<string>\",\n        \"addressStreet2\": \"<string>\",\n        \"addressCity\": \"<string>\",\n        \"addressState\": \"<string>\",\n        \"addressCountry\": \"<string>\",\n        \"addressPostcode\": \"<string>\",\n        \"addressLat\": \"<number>\",\n        \"addressLng\": \"<number>\"\n      },\n      \"position\": 3009.473387160736,\n      \"createdBy\": {\n        \"source\": \"SYSTEM\",\n        \"workspaceMemberId\": \"b7fbc2ed-3423-2072-57f6-a1c19ef97bde\",\n        \"name\": \"string\",\n        \"context\": {}\n      },\n      \"updatedBy\": {\n        \"source\": \"API\",\n        \"workspaceMemberId\": \"e467e944-31f3-d69c-c7e7-bd64438da194\",\n        \"name\": \"string\",\n        \"context\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39f1a6a4-b4e3-49e1-823e-2c2dc1a00578",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"linkedinLink\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"annualRevenue\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"<string>\",\n    \"addressStreet2\": \"<string>\",\n    \"addressCity\": \"<string>\",\n    \"addressState\": \"<string>\",\n    \"addressCountry\": \"<string>\",\n    \"addressPostcode\": \"<string>\",\n    \"addressLat\": \"<number>\",\n    \"addressLng\": \"<number>\"\n  },\n  \"accountOwnerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8323,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e6c6729-b641-4183-9936-7547a18beedc",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"domainName\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"linkedinLink\": {\n    \"primaryLinkUrl\": \"<uri>\",\n    \"primaryLinkLabel\": \"<string>\",\n    \"secondaryLinks\": [\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      },\n      {\n        \"url\": \"<uri>\",\n        \"label\": \"<string>\"\n      }\n    ]\n  },\n  \"annualRevenue\": {\n    \"amountMicros\": \"<long>\",\n    \"currencyCode\": \"USD\"\n  },\n  \"address\": {\n    \"addressStreet1\": \"<string>\",\n    \"addressStreet2\": \"<string>\",\n    \"addressCity\": \"<string>\",\n    \"addressState\": \"<string>\",\n    \"addressCountry\": \"<string>\",\n    \"addressPostcode\": \"<string>\",\n    \"addressLat\": \"<number>\",\n    \"addressLng\": \"<number>\"\n  },\n  \"accountOwnerId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "659ed41b-74d1-4c3e-8291-14203a73089f",
+          "name": "Delete One Company",
+          "request": {
+            "name": "Delete One Company",
+            "description": {},
+            "url": {
+              "path": [
+                "companies",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3d18691-4fa9-4158-a9ee-3b72d386164f",
+              "name": "Company deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"ceed1d0b-09e1-c4f5-d8c8-608a0d2ac9f1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9c8fac3-971a-4c6a-ac25-4f72ce68c61c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 8323,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3d37ee2-4561-4add-a140-1fb49ee2a2b3",
+              "name": "Unauthorized - missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twenty.com/rest/core",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "11827648-d5a6-419b-9884-1cfd2de41293",
+    "name": "Twenty Core companies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.\nNote: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.\n\n\nContact Support:\n Email: felix@twenty.com",
+      "type": "text/plain"
+    }
+  }
+}

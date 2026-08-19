@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Twenty Core companies openapi API",
+    "version": "v0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "openapi",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Core OpenAPI Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twenty.com/rest/core/open-api/core"
+          },
+          "docs": "Returns the full workspace-specific OpenAPI schema for the core API, including all standard and custom objects. Requires authentication.\n"
+        },
+        {
+          "info": {
+            "name": "Get Metadata OpenAPI Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.twenty.com/rest/core/open-api/metadata"
+          },
+          "docs": "Returns the full workspace-specific OpenAPI schema for the metadata API. Without authentication returns a skeleton schema. Requires Bearer token for the full schema with all custom object/field definitions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

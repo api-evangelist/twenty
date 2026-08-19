@@ -1,0 +1,564 @@
+{
+  "item": [
+    {
+      "id": "6a639634-3f6e-462c-9164-4685150b1c39",
+      "name": "relations",
+      "description": {
+        "content": "Custom relation metadata management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0ae5aa9b-1979-4145-bbd0-776f48d0dce0",
+          "name": "Find Many Relations",
+          "request": {
+            "name": "Find Many Relations",
+            "description": {},
+            "url": {
+              "path": [
+                "relations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "Maximum number of records to return (default 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5ea0dbd-0d23-48f5-be36-8a1a0be3c40a",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"relations\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"id\": \"29c5f2fc-de46-95d7-50c8-525123082b90\",\n            \"createdAt\": \"2004-09-07T11:45:22.223Z\",\n            \"updatedAt\": \"2020-05-16T05:34:42.510Z\",\n            \"relationType\": \"ONE_TO_ONE\",\n            \"fromObjectMetadataId\": \"25ccdf28-6c83-e4bd-7f87-19f8feb99249\",\n            \"toObjectMetadataId\": \"4369e710-0bbf-de83-5add-a2732d19c48a\",\n            \"fromFieldMetadataId\": \"a91c26b2-4e9e-41be-da19-c5f8b59ff804\",\n            \"toFieldMetadataId\": \"0d2d0104-c524-0584-ef4f-9ae8a2ec6c80\"\n          },\n          \"cursor\": \"string\"\n        },\n        {\n          \"node\": {\n            \"id\": \"92b19821-3587-b37f-2d1d-3df23ab1e146\",\n            \"createdAt\": \"1991-02-25T16:12:31.949Z\",\n            \"updatedAt\": \"2005-11-08T21:37:38.280Z\",\n            \"relationType\": \"ONE_TO_MANY\",\n            \"fromObjectMetadataId\": \"594342da-41fa-b5b5-ad6c-d837437397b9\",\n            \"toObjectMetadataId\": \"767c81fe-9164-546e-f594-f8afbf48d615\",\n            \"fromFieldMetadataId\": \"6fca0ea0-44df-3f31-731a-390ef2066bf1\",\n            \"toFieldMetadataId\": \"c66d9846-b6c7-420b-742f-4bd18ee21085\"\n          },\n          \"cursor\": \"string\"\n        }\n      ],\n      \"pageInfo\": {\n        \"hasNextPage\": true,\n        \"hasPreviousPage\": false,\n        \"startCursor\": \"string\",\n        \"endCursor\": \"string\"\n      },\n      \"totalCount\": 7332\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "186a56af-5990-4359-b727-187bffba846d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c24b7c6a-7748-4ec5-a617-6a4e0d89bab9",
+          "name": "Create One Relation",
+          "request": {
+            "name": "Create One Relation",
+            "description": {
+              "content": "Creates a relation between two objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "relations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"relationType\": \"<string>\",\n  \"fromObjectMetadataId\": \"<uuid>\",\n  \"toObjectMetadataId\": \"<uuid>\",\n  \"fromName\": \"<string>\",\n  \"fromLabel\": \"<string>\",\n  \"toName\": \"<string>\",\n  \"toLabel\": \"<string>\",\n  \"fromIcon\": \"<string>\",\n  \"toIcon\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "224a1e4a-5234-4d5f-9f35-f8c76c372ede",
+              "name": "Relation created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"relationType\": \"<string>\",\n  \"fromObjectMetadataId\": \"<uuid>\",\n  \"toObjectMetadataId\": \"<uuid>\",\n  \"fromName\": \"<string>\",\n  \"fromLabel\": \"<string>\",\n  \"toName\": \"<string>\",\n  \"toLabel\": \"<string>\",\n  \"fromIcon\": \"<string>\",\n  \"toIcon\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"relation\": {\n      \"id\": \"076e56eb-d429-0477-78da-3255fce6e45a\",\n      \"createdAt\": \"2002-01-16T20:44:44.432Z\",\n      \"updatedAt\": \"1981-05-27T16:00:29.957Z\",\n      \"relationType\": \"ONE_TO_MANY\",\n      \"fromObjectMetadataId\": \"32ca949d-4a3e-74e3-b556-6914188802ed\",\n      \"toObjectMetadataId\": \"f81a5561-889d-6c9b-7290-768ab7592496\",\n      \"fromFieldMetadataId\": \"2b8fcf87-98c5-4287-481c-d1d01f8c3bdd\",\n      \"toFieldMetadataId\": \"1378e973-4f08-4136-a893-c506e564f37a\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a24c7f53-382e-4796-9471-64afffda7bf1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"relationType\": \"<string>\",\n  \"fromObjectMetadataId\": \"<uuid>\",\n  \"toObjectMetadataId\": \"<uuid>\",\n  \"fromName\": \"<string>\",\n  \"fromLabel\": \"<string>\",\n  \"toName\": \"<string>\",\n  \"toLabel\": \"<string>\",\n  \"fromIcon\": \"<string>\",\n  \"toIcon\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 6360,\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89ea83ae-1e4f-420f-82bc-7abcc9acb524",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"relationType\": \"<string>\",\n  \"fromObjectMetadataId\": \"<uuid>\",\n  \"toObjectMetadataId\": \"<uuid>\",\n  \"fromName\": \"<string>\",\n  \"fromLabel\": \"<string>\",\n  \"toName\": \"<string>\",\n  \"toLabel\": \"<string>\",\n  \"fromIcon\": \"<string>\",\n  \"toIcon\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b93257e-2a77-4a36-8c12-2fb6017c5d1f",
+          "name": "Delete One Relation",
+          "request": {
+            "name": "Delete One Relation",
+            "description": {},
+            "url": {
+              "path": [
+                "relations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Object UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "610ea548-192a-4f5c-911e-39e58e2d08df",
+              "name": "Relation deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"b5ba24dd-10ea-b1ea-12e2-5b8bc4a7aae5\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56aff4f9-eb3e-4e4d-82cf-7af7f7cd1fb5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Object UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 403,\n  \"messages\": [\n    \"Missing authentication token\"\n  ],\n  \"error\": \"FORBIDDEN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.twenty.com/rest/core",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3df40c79-a982-459b-9dea-af5f44e3fcf7",
+    "name": "Twenty Core companies relations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.\nNote: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.\n\n\nContact Support:\n Email: felix@twenty.com",
+      "type": "text/plain"
+    }
+  }
+}
