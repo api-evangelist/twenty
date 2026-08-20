@@ -31,6 +31,19 @@ modified: 2026-06-12
 specificationVersion: '0.23'
 tags:
 - CRM
+- Open-Source
+- REST
+- GraphQL
+- Webhook
+- Self-Hosted
+- Companies
+- People
+- Opportunities
+- Workflows
+- AI Agents
+- Custom Objects
+tags_raw:
+- CRM
 - Open Source
 - REST
 - GraphQL
@@ -47,6 +60,8 @@ apis:
   name: Twenty companies API
   description: Company CRM records
   tags:
+  - Companies
+  tags_raw:
   - companies
   properties:
   - type: OpenAPI
@@ -71,6 +86,8 @@ apis:
   name: Twenty fields API
   description: Custom field metadata management
   tags:
+  - Fields
+  tags_raw:
   - fields
   properties:
   - type: OpenAPI
@@ -95,6 +112,8 @@ apis:
   name: Twenty notes API
   description: Note records associated with CRM objects
   tags:
+  - Notes
+  tags_raw:
   - notes
   properties:
   - type: OpenAPI
@@ -119,6 +138,8 @@ apis:
   name: Twenty objects API
   description: Custom object metadata management
   tags:
+  - Objects
+  tags_raw:
   - objects
   properties:
   - type: OpenAPI
@@ -143,6 +164,8 @@ apis:
   name: Twenty openapi API
   description: OpenAPI schema discovery
   tags:
+  - OpenAPI
+  tags_raw:
   - openapi
   properties:
   - type: OpenAPI
@@ -167,6 +190,8 @@ apis:
   name: Twenty opportunities API
   description: Opportunity/deal CRM records
   tags:
+  - Opportunities
+  tags_raw:
   - opportunities
   properties:
   - type: OpenAPI
@@ -191,6 +216,8 @@ apis:
   name: Twenty people API
   description: Person/contact CRM records
   tags:
+  - People
+  tags_raw:
   - people
   properties:
   - type: OpenAPI
@@ -215,6 +242,8 @@ apis:
   name: Twenty relations API
   description: Custom relation metadata management
   tags:
+  - Relations
+  tags_raw:
   - relations
   properties:
   - type: OpenAPI
@@ -239,6 +268,8 @@ apis:
   name: Twenty tasks API
   description: Task records associated with CRM objects
   tags:
+  - Task
+  tags_raw:
   - tasks
   properties:
   - type: OpenAPI
