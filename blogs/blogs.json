@@ -15,18 +15,14 @@
       "source": "https://github.com/twentyhq/twenty/releases.atom",
       "feed_url": "https://github.com/twentyhq/twenty/releases.atom",
       "title": "",
-      "saved": 10,
+      "saved": 0,
       "method": "feed"
     },
     {
       "source": "https://www.linkedin.com/company/twenty",
-      "feed_url": "https://www.linkedin.com/company/twenty",
-      "title": "",
-      "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-08-15T12:11:08Z",
-  "post_count": 80
+  "fetched": "2026-08-22T20:20:02Z",
+  "post_count": 86
 }
