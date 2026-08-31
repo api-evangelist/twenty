@@ -254,7 +254,7 @@ apis:
   name: Twenty relations API
   description: Custom relation metadata management
   tags:
-  - Relations
+  - relations
   tags_raw:
   - relations
   properties:
@@ -323,8 +323,6 @@ common:
   url: https://twenty.com/releases
 - type: BlogRSS
   url: https://github.com/twentyhq/twenty/releases.atom
-- type: Blog
-  url: blogs/blogs.json
 - type: Vocabulary
   url: vocabulary/twenty-vocabulary.yml
 - type: JSONLDContext
