@@ -5,6 +5,13 @@
   "repo": "twenty",
   "feeds": [
     {
+      "source": "https://www.linkedin.com/company/twenty",
+      "feed_url": "https://www.linkedin.com/company/twenty",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://twenty.com/releases",
       "feed_url": "https://twenty.com/releases",
       "title": "",
@@ -16,20 +23,11 @@
       "feed_url": "https://github.com/twentyhq/twenty/releases.atom",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "undetermined",
-      "nature_basis": null
-    },
-    {
-      "source": "https://www.linkedin.com/company/twenty",
-      "feed_url": "https://www.linkedin.com/company/twenty",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "method": "feed"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
-  "post_count": 96,
+  "fetched": "2026-09-06T19:17:18Z",
+  "post_count": 103,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
