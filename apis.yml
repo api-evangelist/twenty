@@ -288,10 +288,6 @@ apis:
     type: Documentation
   - url: https://docs.twenty.com/api-reference/openapi.json
     type: APIReference
-  - url: graphql/twenty-crm-graphql.md
-    type: GraphQL
-  - url: graphql/twenty-crm-schema.graphql
-    type: GraphQL
   description: >-
     Auto-generated GraphQL API over the same workspace schema, exposing queries, mutations, batch upserts
     via plural object names, and relation traversal for the Core API (/graphql) and Metadata API (/metadata),
@@ -302,6 +298,8 @@ apis:
   humanURL: https://docs.twenty.com/developers/extend/api
   baseURL: https://api.twenty.com/graphql
   tags:
+  - OpenAPI
+  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
