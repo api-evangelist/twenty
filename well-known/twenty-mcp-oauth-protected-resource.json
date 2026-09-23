@@ -1,0 +1,1 @@
+{"resource":"https://mcp.twenty.com/mcp","authorization_servers":["https://mcp.twenty.com"],"scopes_supported":["api","profile"],"bearer_methods_supported":["header"]}

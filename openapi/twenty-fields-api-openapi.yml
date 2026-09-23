@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Twenty Core companies fields API
-  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
-
-    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
-
-    '
+  title: Twenty Metadata Fields API
+  description: The Twenty Metadata API provides REST endpoints for programmatic schema management, allowing developers to create, update, and delete custom objects, fields, and relations within a workspace.
   version: v0.1
   contact:
     email: felix@twenty.com
@@ -14,18 +10,18 @@ info:
     url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
   termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
 servers:
-- url: https://api.twenty.com/rest/core
+- url: https://api.twenty.com/rest/metadata
   description: Production
 security:
 - bearerAuth: []
 tags:
-- name: fields
+- name: Fields
   description: Custom field metadata management
 paths:
   /fields:
     get:
       tags:
-      - fields
+      - Fields
       summary: Find Many Fields
       description: Returns metadata for all fields across all objects in the workspace.
       operationId: findManyFields
@@ -46,7 +42,7 @@ paths:
           $ref: '#/components/responses/401'
     post:
       tags:
-      - fields
+      - Fields
       summary: Create One Field
       description: Creates a new custom field on an object.
       operationId: createOneField
@@ -80,7 +76,7 @@ paths:
     - $ref: '#/components/parameters/id'
     get:
       tags:
-      - fields
+      - Fields
       summary: Find One Field
       operationId: findOneField
       responses:
@@ -94,7 +90,7 @@ paths:
           $ref: '#/components/responses/401'
     patch:
       tags:
-      - fields
+      - Fields
       summary: Update One Field
       operationId: updateOneField
       requestBody:
@@ -116,7 +112,7 @@ paths:
           $ref: '#/components/responses/401'
     delete:
       tags:
-      - fields
+      - Fields
       summary: Delete One Field
       operationId: deleteOneField
       responses:
@@ -129,62 +125,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
-      schema:
-        type: string
   schemas:
-    FieldMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            field:
-              $ref: '#/components/schemas/FieldMetadata'
     FieldMetadataListResponse:
       type: object
       properties:
@@ -207,6 +148,25 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    FieldMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            field:
+              $ref: '#/components/schemas/FieldMetadata'
     FieldMetadata:
       type: object
       properties:
@@ -256,11 +216,13 @@ components:
           - ARRAY
           - TS_VECTOR
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         icon:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         isNullable:
           type: boolean
         isCustom:
@@ -271,11 +233,11 @@ components:
           readOnly: true
         isActive:
           type: boolean
-        defaultValue:
-          nullable: true
+        defaultValue: {}
         options:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: object
             properties:
@@ -287,15 +249,6 @@ components:
                 type: string
               color:
                 type: string
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
     FieldMetadataInput:
       type: object
       required:
@@ -339,8 +292,7 @@ components:
           type: string
         isNullable:
           type: boolean
-        defaultValue:
-          nullable: true
+        defaultValue: {}
         options:
           type: array
           items:
@@ -352,17 +304,6 @@ components:
                 type: string
               color:
                 type: string
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
     PageInfo:
       type: object
       properties:
@@ -371,12 +312,76 @@ components:
         hasPreviousPage:
           type: boolean
         startCursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         endCursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+  parameters:
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
   responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized
       content:
@@ -388,12 +393,6 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Twenty Core companies API
-  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
-
-    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
-
-    '
+  title: Twenty Core Companies API
+  description: The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace.
   version: v0.1
   contact:
     email: felix@twenty.com
@@ -19,17 +15,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: companies
+- name: Companies
   description: Company CRM records
 paths:
   /companies:
     get:
       tags:
-      - companies
+      - Companies
       summary: Find Many Companies
-      description: 'Returns a paginated list of companies. Use filter, order_by, limit, starting_after, and ending_before to control results.
-
-        '
+      description: Returns a paginated list of companies. Use filter, order_by, limit, starting_after, and ending_before to control results.
       operationId: findManyCompanies
       parameters:
       - $ref: '#/components/parameters/filter'
@@ -51,7 +45,7 @@ paths:
           $ref: '#/components/responses/401'
     post:
       tags:
-      - companies
+      - Companies
       summary: Create One Company
       operationId: createOneCompany
       parameters:
@@ -88,7 +82,7 @@ paths:
   /batch/companies:
     post:
       tags:
-      - companies
+      - Companies
       summary: Create Many Companies
       operationId: createManyCompanies
       parameters:
@@ -127,7 +121,7 @@ paths:
     - $ref: '#/components/parameters/id'
     get:
       tags:
-      - companies
+      - Companies
       summary: Find One Company
       operationId: findOneCompany
       parameters:
@@ -145,7 +139,7 @@ paths:
           $ref: '#/components/responses/401'
     patch:
       tags:
-      - companies
+      - Companies
       summary: Update One Company
       operationId: updateOneCompany
       parameters:
@@ -169,7 +163,7 @@ paths:
           $ref: '#/components/responses/401'
     delete:
       tags:
-      - companies
+      - Companies
       summary: Delete One Company
       operationId: deleteOneCompany
       responses:
@@ -185,37 +179,6 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
-    LinksMetadata:
-      type: object
-      description: Link with a primary URL and optional label
-      properties:
-        primaryLinkUrl:
-          type: string
-          format: uri
-          nullable: true
-        primaryLinkLabel:
-          type: string
-          nullable: true
-        secondaryLinks:
-          type: array
-          nullable: true
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-                format: uri
-              label:
-                type: string
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
     ErrorResponse:
       type: object
       properties:
@@ -227,6 +190,202 @@ components:
             type: string
         error:
           type: string
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        name:
+          type:
+          - string
+          - 'null'
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          allOf:
+          - $ref: '#/components/schemas/LinksMetadata'
+        annualRevenue:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyMetadata'
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    LinksMetadata:
+      type: object
+      description: Link with a primary URL and optional label
+      properties:
+        primaryLinkUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+        primaryLinkLabel:
+          type:
+          - string
+          - 'null'
+        secondaryLinks:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              label:
+                type: string
+    CompanyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            company:
+              $ref: '#/components/schemas/Company'
+    AddressMetadata:
+      type: object
+      description: Postal address
+      properties:
+        addressStreet1:
+          type:
+          - string
+          - 'null'
+        addressStreet2:
+          type:
+          - string
+          - 'null'
+        addressCity:
+          type:
+          - string
+          - 'null'
+        addressState:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
+        addressPostcode:
+          type:
+          - string
+          - 'null'
+        addressLat:
+          type:
+          - number
+          - 'null'
+        addressLng:
+          type:
+          - number
+          - 'null'
+    CompanyInput:
+      type: object
+      properties:
+        name:
+          type: string
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          $ref: '#/components/schemas/LinksMetadata'
+        annualRevenue:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        accountOwnerId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - object
+          - 'null'
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    CurrencyMetadata:
+      type: object
+      description: Monetary amount with currency code
+      properties:
+        amountMicros:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Amount in micros (e.g. 1000000 = 1.00)
+        currencyCode:
+          type:
+          - string
+          - 'null'
+          description: ISO 4217 currency code
+          example: USD
     CompanyListResponse:
       type: object
       properties:
@@ -249,160 +408,21 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-    ActorMetadata:
-      type: object
-      description: Record of who created or last updated an object
-      properties:
-        source:
-          type: string
-          enum:
-          - EMAIL
-          - CALENDAR
-          - API
-          - IMPORT
-          - MANUAL
-          - SYSTEM
-          - WORKFLOW
-          - WEBHOOK
-        workspaceMemberId:
-          type: string
-          format: uuid
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        context:
-          type: object
-          nullable: true
-    AddressMetadata:
-      type: object
-      description: Postal address
-      properties:
-        addressStreet1:
-          type: string
-          nullable: true
-        addressStreet2:
-          type: string
-          nullable: true
-        addressCity:
-          type: string
-          nullable: true
-        addressState:
-          type: string
-          nullable: true
-        addressCountry:
-          type: string
-          nullable: true
-        addressPostcode:
-          type: string
-          nullable: true
-        addressLat:
-          type: number
-          nullable: true
-        addressLng:
-          type: number
-          nullable: true
-    Company:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        deletedAt:
-          type: string
-          format: date-time
-          nullable: true
-          readOnly: true
-        name:
-          type: string
-          nullable: true
-        domainName:
-          $ref: '#/components/schemas/LinksMetadata'
-        linkedinLink:
-          allOf:
-          - $ref: '#/components/schemas/LinksMetadata'
-          nullable: true
-        annualRevenue:
-          allOf:
-          - $ref: '#/components/schemas/CurrencyMetadata'
-          nullable: true
-        address:
-          $ref: '#/components/schemas/AddressMetadata'
-        position:
-          type: number
-        createdBy:
-          $ref: '#/components/schemas/ActorMetadata'
-        updatedBy:
-          $ref: '#/components/schemas/ActorMetadata'
-    CurrencyMetadata:
-      type: object
-      description: Monetary amount with currency code
-      properties:
-        amountMicros:
-          type: integer
-          format: int64
-          description: Amount in micros (e.g. 1000000 = 1.00)
-          nullable: true
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
-          example: USD
-          nullable: true
-    CompanyInput:
-      type: object
-      properties:
-        name:
-          type: string
-        domainName:
-          $ref: '#/components/schemas/LinksMetadata'
-        linkedinLink:
-          $ref: '#/components/schemas/LinksMetadata'
-        annualRevenue:
-          $ref: '#/components/schemas/CurrencyMetadata'
-        address:
-          $ref: '#/components/schemas/AddressMetadata'
-        accountOwnerId:
-          type: string
-          format: uuid
-          nullable: true
-    CompanyResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            company:
-              $ref: '#/components/schemas/Company'
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type: string
-          nullable: true
-        endCursor:
-          type: string
-          nullable: true
   parameters:
-    endingBefore:
-      name: ending_before
+    orderBy:
+      name: order_by
       in: query
       required: false
-      description: Cursor for backward pagination (use startCursor from current response).
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
       schema:
         type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
     id:
       name: id
       in: path
@@ -411,6 +431,41 @@ components:
       schema:
         type: string
         format: uuid
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
     filter:
       name: filter
       in: query
@@ -429,48 +484,6 @@ components:
           value: emails.primaryEmail[eq]:foo@example.com
         logical:
           value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
-    upsert:
-      name: upsert
-      in: query
-      required: false
-      description: If true, creates or updates if record already exists.
-      schema:
-        type: boolean
-        default: false
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
-
-        '
-      schema:
-        type: string
-      examples:
-        simple:
-          value: createdAt
-        complex:
-          value: id[AscNullsFirst],createdAt[DescNullsLast]
-    depth:
-      name: depth
-      in: query
-      required: false
-      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
-
-        '
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-        default: 1
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
     limit:
       name: limit
       in: query

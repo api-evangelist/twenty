@@ -1,30 +1,42 @@
 {
   "provider": "twenty",
   "sources": [
-    "twenty-companies-api-openapi.yml",
-    "twenty-fields-api-openapi.yml",
-    "twenty-notes-api-openapi.yml",
-    "twenty-objects-api-openapi.yml",
-    "twenty-openapi-api-openapi.yml",
-    "twenty-opportunities-api-openapi.yml",
-    "twenty-people-api-openapi.yml",
-    "twenty-relations-api-openapi.yml",
-    "twenty-tasks-api-openapi.yml"
+    "_original/twenty-core-api-openapi.yml",
+    "_original/twenty-metadata-api-openapi.yml"
   ],
   "outputs": [
     "twenty-companies-api-openapi.yml",
-    "twenty-fields-api-openapi.yml",
     "twenty-notes-api-openapi.yml",
-    "twenty-objects-api-openapi.yml",
     "twenty-openapi-api-openapi.yml",
     "twenty-opportunities-api-openapi.yml",
     "twenty-people-api-openapi.yml",
-    "twenty-relations-api-openapi.yml",
-    "twenty-tasks-api-openapi.yml"
+    "twenty-tasks-api-openapi.yml",
+    "twenty-fields-api-openapi.yml",
+    "twenty-objects-api-openapi.yml",
+    "twenty-relations-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "twenty-core-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "twenty-metadata-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'openapi' spans 2 source specs (twenty-core-api-openapi.yml, twenty-metadata-api-openapi.yml): per-path servers applied",
+    "superseded outputs removed: twenty-open-api-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 10 total)"
+  ],
+  "skipped": [
+    "twenty-companies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-notes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-objects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-open-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-opportunities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-people-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-relations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "twenty-tasks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

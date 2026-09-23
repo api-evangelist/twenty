@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Twenty Core companies relations API
-  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
-
-    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
-
-    '
+  title: Twenty Metadata Relations API
+  description: The Twenty Metadata API provides REST endpoints for programmatic schema management, allowing developers to create, update, and delete custom objects, fields, and relations within a workspace.
   version: v0.1
   contact:
     email: felix@twenty.com
@@ -14,18 +10,18 @@ info:
     url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
   termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
 servers:
-- url: https://api.twenty.com/rest/core
+- url: https://api.twenty.com/rest/metadata
   description: Production
 security:
 - bearerAuth: []
 tags:
-- name: relations
+- name: Relations
   description: Custom relation metadata management
 paths:
   /relations:
     get:
       tags:
-      - relations
+      - Relations
       summary: Find Many Relations
       operationId: findManyRelations
       parameters:
@@ -44,7 +40,7 @@ paths:
           $ref: '#/components/responses/401'
     post:
       tags:
-      - relations
+      - Relations
       summary: Create One Relation
       description: Creates a relation between two objects.
       operationId: createOneRelation
@@ -70,7 +66,7 @@ paths:
     - $ref: '#/components/parameters/id'
     delete:
       tags:
-      - relations
+      - Relations
       summary: Delete One Relation
       operationId: deleteOneRelation
       responses:
@@ -83,55 +79,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
   schemas:
-    RelationMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            relation:
-              $ref: '#/components/schemas/RelationMetadata'
     RelationMetadataListResponse:
       type: object
       properties:
@@ -154,6 +102,17 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
     RelationMetadataInput:
       type: object
       required:
@@ -189,6 +148,29 @@ components:
           type: string
         toIcon:
           type: string
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    RelationMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relation:
+              $ref: '#/components/schemas/RelationMetadata'
     DeleteResponse:
       type: object
       properties:
@@ -231,31 +213,53 @@ components:
         toFieldMetadataId:
           type: string
           format: uuid
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type: string
-          nullable: true
-        endCursor:
-          type: string
-          nullable: true
+  parameters:
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
   responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized
       content:
@@ -267,12 +271,6 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Twenty Core companies objects API
-  description: 'The Twenty Core API provides REST endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and any custom objects defined in a workspace. All list endpoints use cursor-based pagination. Authentication is via Bearer token generated from workspace Settings → Playground. The API schema is per-tenant and adapts automatically as custom objects are added.
-
-    Note: The full workspace-specific schema is available at https://api.twenty.com/open-api/core (requires Bearer token) and reflects all standard and custom objects configured in your workspace.
-
-    '
+  title: Twenty Metadata Objects API
+  description: The Twenty Metadata API provides REST endpoints for programmatic schema management, allowing developers to create, update, and delete custom objects, fields, and relations within a workspace.
   version: v0.1
   contact:
     email: felix@twenty.com
@@ -14,18 +10,18 @@ info:
     url: https://github.com/twentyhq/twenty?tab=License-1-ov-file#readme
   termsOfService: https://github.com/twentyhq/twenty?tab=coc-ov-file#readme
 servers:
-- url: https://api.twenty.com/rest/core
+- url: https://api.twenty.com/rest/metadata
   description: Production
 security:
 - bearerAuth: []
 tags:
-- name: objects
+- name: Objects
   description: Custom object metadata management
 paths:
   /objects:
     get:
       tags:
-      - objects
+      - Objects
       summary: Find Many Objects
       description: Returns metadata for all objects defined in the workspace.
       operationId: findManyObjects
@@ -46,7 +42,7 @@ paths:
           $ref: '#/components/responses/401'
     post:
       tags:
-      - objects
+      - Objects
       summary: Create One Object
       description: Creates a new custom object in the workspace schema.
       operationId: createOneObject
@@ -79,7 +75,7 @@ paths:
     - $ref: '#/components/parameters/id'
     get:
       tags:
-      - objects
+      - Objects
       summary: Find One Object
       operationId: findOneObject
       responses:
@@ -93,7 +89,7 @@ paths:
           $ref: '#/components/responses/401'
     patch:
       tags:
-      - objects
+      - Objects
       summary: Update One Object
       operationId: updateOneObject
       requestBody:
@@ -115,7 +111,7 @@ paths:
           $ref: '#/components/responses/401'
     delete:
       tags:
-      - objects
+      - Objects
       summary: Delete One Object
       operationId: deleteOneObject
       responses:
@@ -128,72 +124,119 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
-      schema:
-        type: string
-  responses:
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            statusCode: 403
-            messages:
-            - Missing authentication token
-            error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ObjectMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/ObjectMetadata'
+    ObjectMetadataInput:
+      type: object
+      required:
+      - nameSingular
+      - namePlural
+      - labelSingular
+      - labelPlural
+      properties:
+        nameSingular:
+          type: string
+        namePlural:
+          type: string
+        labelSingular:
+          type: string
+        labelPlural:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        isActive:
+          type: boolean
+    ObjectMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        nameSingular:
+          type: string
+          description: Camel-case singular name (e.g. invoice)
+        namePlural:
+          type: string
+          description: Camel-case plural name (e.g. invoices)
+        labelSingular:
+          type: string
+          description: Human-readable singular label
+        labelPlural:
+          type: string
+          description: Human-readable plural label
+        description:
+          type:
+          - string
+          - 'null'
+        icon:
+          type:
+          - string
+          - 'null'
+          description: Icon name from Twenty icon set
+        isCustom:
+          type: boolean
+          readOnly: true
+        isActive:
+          type: boolean
+        isSystem:
+          type: boolean
+          readOnly: true
+        fields:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/FieldMetadata'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    ObjectMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            objects:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/ObjectMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
     FieldMetadata:
       type: object
       properties:
@@ -243,11 +286,13 @@ components:
           - ARRAY
           - TS_VECTOR
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         icon:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         isNullable:
           type: boolean
         isCustom:
@@ -258,11 +303,11 @@ components:
           readOnly: true
         isActive:
           type: boolean
-        defaultValue:
-          nullable: true
+        defaultValue: {}
         options:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: object
             properties:
@@ -274,50 +319,21 @@ components:
                 type: string
               color:
                 type: string
-    ObjectMetadataInput:
+    PageInfo:
       type: object
-      required:
-      - nameSingular
-      - namePlural
-      - labelSingular
-      - labelPlural
       properties:
-        nameSingular:
-          type: string
-        namePlural:
-          type: string
-        labelSingular:
-          type: string
-        labelPlural:
-          type: string
-        description:
-          type: string
-        icon:
-          type: string
-        isActive:
+        hasNextPage:
           type: boolean
-    ObjectMetadataListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            objects:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/ObjectMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
     DeleteResponse:
       type: object
       properties:
@@ -327,85 +343,71 @@ components:
             id:
               type: string
               format: uuid
-    ObjectMetadata:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        nameSingular:
-          type: string
-          description: Camel-case singular name (e.g. invoice)
-        namePlural:
-          type: string
-          description: Camel-case plural name (e.g. invoices)
-        labelSingular:
-          type: string
-          description: Human-readable singular label
-        labelPlural:
-          type: string
-          description: Human-readable plural label
-        description:
-          type: string
-          nullable: true
-        icon:
-          type: string
-          nullable: true
-          description: Icon name from Twenty icon set
-        isCustom:
-          type: boolean
-          readOnly: true
-        isActive:
-          type: boolean
-        isSystem:
-          type: boolean
-          readOnly: true
-        fields:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/FieldMetadata'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    ObjectMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            object:
-              $ref: '#/components/schemas/ObjectMetadata'
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type: string
-          nullable: true
-        endCursor:
-          type: string
-          nullable: true
+  parameters:
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
   securitySchemes:
     bearerAuth:
       type: http
