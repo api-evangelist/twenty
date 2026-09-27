@@ -41,7 +41,7 @@ modified: 2026-06-12
 specificationVersion: '0.23'
 tags:
 - CRM
-- Open-Source
+- Open Source
 - REST
 - GraphQL
 - Webhook
@@ -65,9 +65,10 @@ tags_raw:
 - Workflows
 - AI Agents
 - Custom Objects
+- Open-Source
 apis:
 - aid: twenty:twenty-companies-api
-  name: Twenty companies API
+  name: Twenty Companies API
   description: Company CRM records
   tags:
   - Companies
@@ -93,7 +94,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-fields-api
-  name: Twenty fields API
+  name: Twenty Fields API
   description: Custom field metadata management
   tags:
   - Fields
@@ -119,7 +120,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-notes-api
-  name: Twenty notes API
+  name: Twenty Notes API
   description: Note records associated with CRM objects
   tags:
   - Notes
@@ -145,7 +146,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-objects-api
-  name: Twenty objects API
+  name: Twenty Objects API
   description: Custom object metadata management
   tags:
   - Objects
@@ -171,7 +172,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-opportunities-api
-  name: Twenty opportunities API
+  name: Twenty Opportunities API
   description: Opportunity/deal CRM records
   tags:
   - Opportunities
@@ -197,7 +198,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-people-api
-  name: Twenty people API
+  name: Twenty People API
   description: Person/contact CRM records
   tags:
   - People
@@ -223,7 +224,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-relations-api
-  name: Twenty relations API
+  name: Twenty Relations API
   description: Custom relation metadata management
   tags:
   - Relations
@@ -249,7 +250,7 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 - aid: twenty:twenty-tasks-api
-  name: Twenty tasks API
+  name: Twenty Tasks API
   description: Task records associated with CRM objects
   tags:
   - Task
@@ -298,8 +299,6 @@ apis:
   humanURL: https://docs.twenty.com/developers/extend/api
   baseURL: https://api.twenty.com/graphql
   tags:
-  - OpenAPI
-  tags_raw:
   - Open API
   properties:
   - type: OpenAPI

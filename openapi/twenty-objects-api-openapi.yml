@@ -125,14 +125,6 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
-    ObjectMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            object:
-              $ref: '#/components/schemas/ObjectMetadata'
     ObjectMetadataInput:
       type: object
       required:
@@ -155,88 +147,15 @@ components:
           type: string
         isActive:
           type: boolean
-    ObjectMetadata:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        nameSingular:
-          type: string
-          description: Camel-case singular name (e.g. invoice)
-        namePlural:
-          type: string
-          description: Camel-case plural name (e.g. invoices)
-        labelSingular:
-          type: string
-          description: Human-readable singular label
-        labelPlural:
-          type: string
-          description: Human-readable plural label
-        description:
-          type:
-          - string
-          - 'null'
-        icon:
-          type:
-          - string
-          - 'null'
-          description: Icon name from Twenty icon set
-        isCustom:
-          type: boolean
-          readOnly: true
-        isActive:
-          type: boolean
-        isSystem:
-          type: boolean
-          readOnly: true
-        fields:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/FieldMetadata'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    ObjectMetadataListResponse:
+    DeleteResponse:
       type: object
       properties:
         data:
           type: object
           properties:
-            objects:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/ObjectMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
+            id:
+              type: string
+              format: uuid
     FieldMetadata:
       type: object
       properties:
@@ -319,6 +238,36 @@ components:
                 type: string
               color:
                 type: string
+    ObjectMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            objects:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/ObjectMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    ObjectMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/ObjectMetadata'
     PageInfo:
       type: object
       properties:
@@ -334,28 +283,79 @@ components:
           type:
           - string
           - 'null'
-    DeleteResponse:
+    ObjectMetadata:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        nameSingular:
+          type: string
+          description: Camel-case singular name (e.g. invoice)
+        namePlural:
+          type: string
+          description: Camel-case plural name (e.g. invoices)
+        labelSingular:
+          type: string
+          description: Human-readable singular label
+        labelPlural:
+          type: string
+          description: Human-readable plural label
+        description:
+          type:
+          - string
+          - 'null'
+        icon:
+          type:
+          - string
+          - 'null'
+          description: Icon name from Twenty icon set
+        isCustom:
+          type: boolean
+          readOnly: true
+        isActive:
+          type: boolean
+        isSystem:
+          type: boolean
+          readOnly: true
+        fields:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/FieldMetadata'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
   parameters:
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
     filter:
       name: filter
       in: query
       required: false
       description: Filter expression
-      schema:
-        type: string
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
       schema:
         type: string
     limit:
@@ -368,6 +368,13 @@ components:
         minimum: 0
         maximum: 1000
         default: 1000
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -376,18 +383,11 @@ components:
       schema:
         type: string
         format: uuid
-    startingAfter:
-      name: starting_after
+    endingBefore:
+      name: ending_before
       in: query
       required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
+      description: Cursor for backward pagination
       schema:
         type: string
   responses:

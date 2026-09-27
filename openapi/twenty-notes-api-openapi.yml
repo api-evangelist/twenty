@@ -129,7 +129,109 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
+  parameters:
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: name[eq]:"Acme"
+        dateRange:
+          value: createdAt[gte]:"2024-01-01"
+        composite:
+          value: emails.primaryEmail[eq]:foo@example.com
+        logical:
+          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
   schemas:
+    NoteInput:
+      type: object
+      properties:
+        title:
+          type: string
+        bodyV2:
+          $ref: '#/components/schemas/RichTextMetadata'
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
     ErrorResponse:
       type: object
       properties:
@@ -156,21 +258,34 @@ components:
           type:
           - string
           - 'null'
-    NoteInput:
+    ActorMetadata:
       type: object
+      description: Record of who created or last updated an object
       properties:
-        title:
+        source:
           type: string
-        bodyV2:
-          $ref: '#/components/schemas/RichTextMetadata'
-    NoteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            note:
-              $ref: '#/components/schemas/Note'
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - object
+          - 'null'
     Note:
       type: object
       properties:
@@ -203,43 +318,6 @@ components:
           $ref: '#/components/schemas/ActorMetadata'
         updatedBy:
           $ref: '#/components/schemas/ActorMetadata'
-    ActorMetadata:
-      type: object
-      description: Record of who created or last updated an object
-      properties:
-        source:
-          type: string
-          enum:
-          - EMAIL
-          - CALENDAR
-          - API
-          - IMPORT
-          - MANUAL
-          - SYSTEM
-          - WORKFLOW
-          - WEBHOOK
-        workspaceMemberId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - object
-          - 'null'
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
     RichTextMetadata:
       type: object
       description: Rich text content (block-based)
@@ -274,93 +352,21 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-  parameters:
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
-
-        '
-      schema:
-        type: string
-      examples:
-        simple:
-          value: createdAt
-        complex:
-          value: id[AscNullsFirst],createdAt[DescNullsLast]
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    upsert:
-      name: upsert
-      in: query
-      required: false
-      description: If true, creates or updates if record already exists.
-      schema:
-        type: boolean
-        default: false
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination (use startCursor from current response).
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
-    depth:
-      name: depth
-      in: query
-      required: false
-      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
-
-        '
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-        default: 1
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
-
-        '
-      schema:
-        type: string
-      examples:
-        simple:
-          value: name[eq]:"Acme"
-        dateRange:
-          value: createdAt[gte]:"2024-01-01"
-        composite:
-          value: emails.primaryEmail[eq]:foo@example.com
-        logical:
-          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 60, max 60).
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 60
-        default: 60
+    NoteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            note:
+              $ref: '#/components/schemas/Note'
   responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized - missing or invalid Bearer token
       content:
@@ -372,12 +378,6 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

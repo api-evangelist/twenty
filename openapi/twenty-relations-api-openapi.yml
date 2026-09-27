@@ -80,39 +80,29 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
-    RelationMetadataListResponse:
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    RelationMetadataResponse:
       type: object
       properties:
         data:
           type: object
           properties:
-            relations:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/RelationMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
+            relation:
+              $ref: '#/components/schemas/RelationMetadata'
     RelationMetadataInput:
       type: object
       required:
@@ -148,29 +138,28 @@ components:
           type: string
         toIcon:
           type: string
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-    RelationMetadataResponse:
+    RelationMetadataListResponse:
       type: object
       properties:
         data:
           type: object
           properties:
-            relation:
-              $ref: '#/components/schemas/RelationMetadata'
+            relations:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/RelationMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
     DeleteResponse:
       type: object
       properties:
@@ -180,6 +169,17 @@ components:
             id:
               type: string
               format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
     RelationMetadata:
       type: object
       properties:
@@ -214,18 +214,18 @@ components:
           type: string
           format: uuid
   parameters:
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
     filter:
       name: filter
       in: query
       required: false
       description: Filter expression
-      schema:
-        type: string
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
       schema:
         type: string
     limit:
@@ -238,13 +238,6 @@ components:
         minimum: 0
         maximum: 1000
         default: 1000
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
     id:
       name: id
       in: path
@@ -253,6 +246,13 @@ components:
       schema:
         type: string
         format: uuid
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
   responses:
     '400':
       description: Bad request

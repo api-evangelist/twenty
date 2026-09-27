@@ -126,6 +126,93 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    FieldMetadataInput:
+      type: object
+      required:
+      - objectMetadataId
+      - name
+      - label
+      - type
+      properties:
+        objectMetadataId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - RICH_TEXT
+          - NUMERIC
+          - NUMBER
+          - BOOLEAN
+          - DATE
+          - DATE_TIME
+          - SELECT
+          - MULTI_SELECT
+          - CURRENCY
+          - FULL_NAME
+          - EMAILS
+          - PHONES
+          - LINKS
+          - ADDRESS
+          - RATING
+          - UUID
+          - JSON
+          - ARRAY
+        description:
+          type: string
+        icon:
+          type: string
+        isNullable:
+          type: boolean
+        defaultValue: {}
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              label:
+                type: string
+              color:
+                type: string
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    FieldMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            field:
+              $ref: '#/components/schemas/FieldMetadata'
     FieldMetadataListResponse:
       type: object
       properties:
@@ -148,25 +235,6 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    FieldMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            field:
-              $ref: '#/components/schemas/FieldMetadata'
     FieldMetadata:
       type: object
       properties:
@@ -249,105 +317,30 @@ components:
                 type: string
               color:
                 type: string
-    FieldMetadataInput:
+    ErrorResponse:
       type: object
-      required:
-      - objectMetadataId
-      - name
-      - label
-      - type
       properties:
-        objectMetadataId:
-          type: string
-          format: uuid
-        name:
-          type: string
-        label:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - RICH_TEXT
-          - NUMERIC
-          - NUMBER
-          - BOOLEAN
-          - DATE
-          - DATE_TIME
-          - SELECT
-          - MULTI_SELECT
-          - CURRENCY
-          - FULL_NAME
-          - EMAILS
-          - PHONES
-          - LINKS
-          - ADDRESS
-          - RATING
-          - UUID
-          - JSON
-          - ARRAY
-        description:
-          type: string
-        icon:
-          type: string
-        isNullable:
-          type: boolean
-        defaultValue: {}
-        options:
+        statusCode:
+          type: integer
+        messages:
           type: array
           items:
-            type: object
-            properties:
-              value:
-                type: string
-              label:
-                type: string
-              color:
-                type: string
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
+            type: string
+        error:
+          type: string
   parameters:
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
     startingAfter:
       name: starting_after
       in: query
       required: false
       description: Cursor for forward pagination
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
       schema:
         type: string
     limit:
@@ -360,6 +353,13 @@ components:
         minimum: 0
         maximum: 1000
         default: 1000
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -368,11 +368,11 @@ components:
       schema:
         type: string
         format: uuid
-    orderBy:
-      name: order_by
+    endingBefore:
+      name: ending_before
       in: query
       required: false
-      description: Ordering clause
+      description: Cursor for backward pagination
       schema:
         type: string
   responses:
