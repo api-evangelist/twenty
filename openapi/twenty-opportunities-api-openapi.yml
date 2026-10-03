@@ -151,31 +151,6 @@ components:
           value: createdAt
         complex:
           value: id[AscNullsFirst],createdAt[DescNullsLast]
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 60, max 60).
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 60
-        default: 60
-    upsert:
-      name: upsert
-      in: query
-      required: false
-      description: If true, creates or updates if record already exists.
-      schema:
-        type: boolean
-        default: false
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
     filter:
       name: filter
       in: query
@@ -207,13 +182,6 @@ components:
         - 0
         - 1
         default: 1
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination (use startCursor from current response).
-      schema:
-        type: string
     id:
       name: id
       in: path
@@ -222,7 +190,175 @@ components:
       schema:
         type: string
         format: uuid
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
   schemas:
+    CurrencyMetadata:
+      type: object
+      description: Monetary amount with currency code
+      properties:
+        amountMicros:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Amount in micros (e.g. 1000000 = 1.00)
+        currencyCode:
+          type:
+          - string
+          - 'null'
+          description: ISO 4217 currency code
+          example: USD
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - object
+          - 'null'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    OpportunityInput:
+      type: object
+      properties:
+        name:
+          type: string
+        stage:
+          type: string
+          enum:
+          - NEW
+          - SCREENING
+          - MEETING
+          - PROPOSAL
+          - CUSTOMER
+        amount:
+          $ref: '#/components/schemas/CurrencyMetadata'
+        closeDate:
+          type: string
+          format: date
+        companyId:
+          type: string
+          format: uuid
+        pointOfContactId:
+          type: string
+          format: uuid
+        ownerId:
+          type: string
+          format: uuid
+    OpportunityListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunities:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Opportunity'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    OpportunityResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            opportunity:
+              $ref: '#/components/schemas/Opportunity'
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
     Opportunity:
       type: object
       properties:
@@ -283,149 +419,7 @@ components:
           $ref: '#/components/schemas/ActorMetadata'
         updatedBy:
           $ref: '#/components/schemas/ActorMetadata'
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    OpportunityListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            opportunities:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/Opportunity'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    OpportunityInput:
-      type: object
-      properties:
-        name:
-          type: string
-        stage:
-          type: string
-          enum:
-          - NEW
-          - SCREENING
-          - MEETING
-          - PROPOSAL
-          - CUSTOMER
-        amount:
-          $ref: '#/components/schemas/CurrencyMetadata'
-        closeDate:
-          type: string
-          format: date
-        companyId:
-          type: string
-          format: uuid
-        pointOfContactId:
-          type: string
-          format: uuid
-        ownerId:
-          type: string
-          format: uuid
-    CurrencyMetadata:
-      type: object
-      description: Monetary amount with currency code
-      properties:
-        amountMicros:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Amount in micros (e.g. 1000000 = 1.00)
-        currencyCode:
-          type:
-          - string
-          - 'null'
-          description: ISO 4217 currency code
-          example: USD
-    ActorMetadata:
-      type: object
-      description: Record of who created or last updated an object
-      properties:
-        source:
-          type: string
-          enum:
-          - EMAIL
-          - CALENDAR
-          - API
-          - IMPORT
-          - MANUAL
-          - SYSTEM
-          - WORKFLOW
-          - WEBHOOK
-        workspaceMemberId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - object
-          - 'null'
-    OpportunityResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            opportunity:
-              $ref: '#/components/schemas/Opportunity'
   responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized - missing or invalid Bearer token
       content:
@@ -437,6 +431,12 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

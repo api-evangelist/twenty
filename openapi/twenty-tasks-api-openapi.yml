@@ -148,31 +148,6 @@ components:
           value: createdAt
         complex:
           value: id[AscNullsFirst],createdAt[DescNullsLast]
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 60, max 60).
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 60
-        default: 60
-    upsert:
-      name: upsert
-      in: query
-      required: false
-      description: If true, creates or updates if record already exists.
-      schema:
-        type: boolean
-        default: false
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
     filter:
       name: filter
       in: query
@@ -204,13 +179,6 @@ components:
         - 0
         - 1
         default: 1
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination (use startCursor from current response).
-      schema:
-        type: string
     id:
       name: id
       in: path
@@ -219,7 +187,56 @@ components:
       schema:
         type: string
         format: uuid
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
   schemas:
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    TaskResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            task:
+              $ref: '#/components/schemas/Task'
     TaskInput:
       type: object
       properties:
@@ -239,63 +256,18 @@ components:
         assigneeId:
           type: string
           format: uuid
-    DeleteResponse:
+    RichTextMetadata:
       type: object
+      description: Rich text content (block-based)
       properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    TaskListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            tasks:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/Task'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
+        blocknote:
           type:
           - string
           - 'null'
-        endCursor:
+        markdown:
           type:
           - string
           - 'null'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
     ActorMetadata:
       type: object
       description: Record of who created or last updated an object
@@ -324,18 +296,17 @@ components:
           type:
           - object
           - 'null'
-    RichTextMetadata:
+    ErrorResponse:
       type: object
-      description: Rich text content (block-based)
       properties:
-        blocknote:
-          type:
-          - string
-          - 'null'
-        markdown:
-          type:
-          - string
-          - 'null'
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
     Task:
       type: object
       properties:
@@ -388,21 +359,44 @@ components:
           $ref: '#/components/schemas/ActorMetadata'
         updatedBy:
           $ref: '#/components/schemas/ActorMetadata'
-    TaskResponse:
+    TaskListResponse:
       type: object
       properties:
         data:
           type: object
           properties:
-            task:
-              $ref: '#/components/schemas/Task'
+            tasks:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Task'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
   responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized - missing or invalid Bearer token
       content:
@@ -414,6 +408,12 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

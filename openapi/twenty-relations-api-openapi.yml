@@ -80,6 +80,67 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
+    RelationMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        relationType:
+          type: string
+          enum:
+          - ONE_TO_MANY
+          - MANY_TO_ONE
+          - ONE_TO_ONE
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromFieldMetadataId:
+          type: string
+          format: uuid
+        toFieldMetadataId:
+          type: string
+          format: uuid
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    RelationMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            relation:
+              $ref: '#/components/schemas/RelationMetadata'
     PageInfo:
       type: object
       properties:
@@ -95,14 +156,6 @@ components:
           type:
           - string
           - 'null'
-    RelationMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            relation:
-              $ref: '#/components/schemas/RelationMetadata'
     RelationMetadataInput:
       type: object
       required:
@@ -160,99 +213,6 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    RelationMetadata:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        relationType:
-          type: string
-          enum:
-          - ONE_TO_MANY
-          - MANY_TO_ONE
-          - ONE_TO_ONE
-        fromObjectMetadataId:
-          type: string
-          format: uuid
-        toObjectMetadataId:
-          type: string
-          format: uuid
-        fromFieldMetadataId:
-          type: string
-          format: uuid
-        toFieldMetadataId:
-          type: string
-          format: uuid
-  parameters:
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
   responses:
     '400':
       description: Bad request
@@ -271,6 +231,46 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+  parameters:
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerAuth:
       type: http

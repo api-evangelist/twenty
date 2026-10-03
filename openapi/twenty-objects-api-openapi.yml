@@ -125,28 +125,28 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
-    ObjectMetadataInput:
+    ObjectMetadataListResponse:
       type: object
-      required:
-      - nameSingular
-      - namePlural
-      - labelSingular
-      - labelPlural
       properties:
-        nameSingular:
-          type: string
-        namePlural:
-          type: string
-        labelSingular:
-          type: string
-        labelPlural:
-          type: string
-        description:
-          type: string
-        icon:
-          type: string
-        isActive:
-          type: boolean
+        data:
+          type: object
+          properties:
+            objects:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/ObjectMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
     DeleteResponse:
       type: object
       properties:
@@ -156,6 +156,25 @@ components:
             id:
               type: string
               format: uuid
+    ObjectMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/ObjectMetadata'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
     FieldMetadata:
       type: object
       properties:
@@ -238,51 +257,6 @@ components:
                 type: string
               color:
                 type: string
-    ObjectMetadataListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            objects:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/ObjectMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    ObjectMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            object:
-              $ref: '#/components/schemas/ObjectMetadata'
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
     ObjectMetadata:
       type: object
       properties:
@@ -332,64 +306,43 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/FieldMetadata'
-    ErrorResponse:
+    PageInfo:
       type: object
       properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    ObjectMetadataInput:
+      type: object
+      required:
+      - nameSingular
+      - namePlural
+      - labelSingular
+      - labelPlural
+      properties:
+        nameSingular:
           type: string
-  parameters:
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
+        namePlural:
+          type: string
+        labelSingular:
+          type: string
+        labelPlural:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        isActive:
+          type: boolean
   responses:
     '400':
       description: Bad request
@@ -408,6 +361,53 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+  parameters:
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerAuth:
       type: http

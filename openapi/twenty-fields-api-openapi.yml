@@ -126,76 +126,6 @@ paths:
           $ref: '#/components/responses/401'
 components:
   schemas:
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-    FieldMetadataInput:
-      type: object
-      required:
-      - objectMetadataId
-      - name
-      - label
-      - type
-      properties:
-        objectMetadataId:
-          type: string
-          format: uuid
-        name:
-          type: string
-        label:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - RICH_TEXT
-          - NUMERIC
-          - NUMBER
-          - BOOLEAN
-          - DATE
-          - DATE_TIME
-          - SELECT
-          - MULTI_SELECT
-          - CURRENCY
-          - FULL_NAME
-          - EMAILS
-          - PHONES
-          - LINKS
-          - ADDRESS
-          - RATING
-          - UUID
-          - JSON
-          - ARRAY
-        description:
-          type: string
-        icon:
-          type: string
-        isNullable:
-          type: boolean
-        defaultValue: {}
-        options:
-          type: array
-          items:
-            type: object
-            properties:
-              value:
-                type: string
-              label:
-                type: string
-              color:
-                type: string
     DeleteResponse:
       type: object
       properties:
@@ -205,36 +135,6 @@ components:
             id:
               type: string
               format: uuid
-    FieldMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            field:
-              $ref: '#/components/schemas/FieldMetadata'
-    FieldMetadataListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            fields:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/FieldMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
     FieldMetadata:
       type: object
       properties:
@@ -317,6 +217,83 @@ components:
                 type: string
               color:
                 type: string
+    FieldMetadataInput:
+      type: object
+      required:
+      - objectMetadataId
+      - name
+      - label
+      - type
+      properties:
+        objectMetadataId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - RICH_TEXT
+          - NUMERIC
+          - NUMBER
+          - BOOLEAN
+          - DATE
+          - DATE_TIME
+          - SELECT
+          - MULTI_SELECT
+          - CURRENCY
+          - FULL_NAME
+          - EMAILS
+          - PHONES
+          - LINKS
+          - ADDRESS
+          - RATING
+          - UUID
+          - JSON
+          - ARRAY
+        description:
+          type: string
+        icon:
+          type: string
+        isNullable:
+          type: boolean
+        defaultValue: {}
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              label:
+                type: string
+              color:
+                type: string
+    FieldMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            fields:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/FieldMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
     ErrorResponse:
       type: object
       properties:
@@ -328,53 +305,29 @@ components:
             type: string
         error:
           type: string
-  parameters:
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
+    FieldMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            field:
+              $ref: '#/components/schemas/FieldMetadata'
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
   responses:
     '400':
       description: Bad request
@@ -393,6 +346,53 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+  parameters:
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerAuth:
       type: http
