@@ -299,6 +299,8 @@ apis:
   humanURL: https://docs.twenty.com/developers/extend/api
   baseURL: https://api.twenty.com/graphql
   tags:
+  - OpenAPI
+  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
@@ -320,6 +322,9 @@ apis:
   - type: GraphQL
     url: graphql/twenty-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/twenty-capability-edges.yml
+  name: Twenty Business Capability Map
 - type: AgenticAccess
   url: agentic-access/twenty-agentic-access.yml
 - type: VulnerabilityDisclosure
