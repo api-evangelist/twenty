@@ -62,18 +62,6 @@ paths:
     - url: https://api.twenty.com/rest/metadata
       description: Production
 components:
-  schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
   responses:
     '401':
       description: Unauthorized - missing or invalid Bearer token
@@ -86,6 +74,18 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -125,7 +125,128 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
+  responses:
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: Ordering clause
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
   schemas:
+    FieldMetadataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            fields:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/FieldMetadata'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    FieldMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            field:
+              $ref: '#/components/schemas/FieldMetadata'
     DeleteResponse:
       type: object
       properties:
@@ -272,127 +393,6 @@ components:
                 type: string
               color:
                 type: string
-    FieldMetadataListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            fields:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/FieldMetadata'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    FieldMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            field:
-              $ref: '#/components/schemas/FieldMetadata'
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-  responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            statusCode: 403
-            messages:
-            - Missing authentication token
-            error: FORBIDDEN_EXCEPTION
-  parameters:
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: Ordering clause
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: Filter expression
-      schema:
-        type: string
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerAuth:
       type: http

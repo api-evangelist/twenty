@@ -79,60 +79,25 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
+  responses:
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    RelationMetadata:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        relationType:
-          type: string
-          enum:
-          - ONE_TO_MANY
-          - MANY_TO_ONE
-          - ONE_TO_ONE
-        fromObjectMetadataId:
-          type: string
-          format: uuid
-        toObjectMetadataId:
-          type: string
-          format: uuid
-        fromFieldMetadataId:
-          type: string
-          format: uuid
-        toFieldMetadataId:
-          type: string
-          format: uuid
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
     RelationMetadataResponse:
       type: object
       properties:
@@ -141,21 +106,6 @@ components:
           properties:
             relation:
               $ref: '#/components/schemas/RelationMetadata'
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
     RelationMetadataInput:
       type: object
       required:
@@ -191,6 +141,74 @@ components:
           type: string
         toIcon:
           type: string
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    RelationMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        relationType:
+          type: string
+          enum:
+          - ONE_TO_MANY
+          - MANY_TO_ONE
+          - ONE_TO_ONE
+        fromObjectMetadataId:
+          type: string
+          format: uuid
+        toObjectMetadataId:
+          type: string
+          format: uuid
+        fromFieldMetadataId:
+          type: string
+          format: uuid
+        toFieldMetadataId:
+          type: string
+          format: uuid
     RelationMetadataListResponse:
       type: object
       properties:
@@ -213,42 +231,7 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-  responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            statusCode: 403
-            messages:
-            - Missing authentication token
-            error: FORBIDDEN_EXCEPTION
   parameters:
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 1000)
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 1000
     filter:
       name: filter
       in: query
@@ -271,6 +254,23 @@ components:
       schema:
         type: string
         format: uuid
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 1000)
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 1000
   securitySchemes:
     bearerAuth:
       type: http

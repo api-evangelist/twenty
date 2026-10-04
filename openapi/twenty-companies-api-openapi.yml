@@ -178,7 +178,151 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    depth:
+      name: depth
+      in: query
+      required: false
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+
+        '
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: name[eq]:"Acme"
+        dateRange:
+          value: createdAt[gte]:"2024-01-01"
+        composite:
+          value: emails.primaryEmail[eq]:foo@example.com
+        logical:
+          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
+    orderBy:
+      name: order_by
+      in: query
+      required: false
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+
+        '
+      schema:
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
+      schema:
+        type: string
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
+    upsert:
+      name: upsert
+      in: query
+      required: false
+      description: If true, creates or updates if record already exists.
+      schema:
+        type: boolean
+        default: false
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of records to return (default 60, max 60).
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 60
   schemas:
+    LinksMetadata:
+      type: object
+      description: Link with a primary URL and optional label
+      properties:
+        primaryLinkUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+        primaryLinkLabel:
+          type:
+          - string
+          - 'null'
+        secondaryLinks:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+              label:
+                type: string
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
     CompanyInput:
       type: object
       properties:
@@ -197,14 +341,6 @@ components:
           - string
           - 'null'
           format: uuid
-    CompanyResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            company:
-              $ref: '#/components/schemas/Company'
     CurrencyMetadata:
       type: object
       description: Monetary amount with currency code
@@ -221,6 +357,94 @@ components:
           - 'null'
           description: ISO 4217 currency code
           example: USD
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+    CompanyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            company:
+              $ref: '#/components/schemas/Company'
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - object
+          - 'null'
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        name:
+          type:
+          - string
+          - 'null'
+        domainName:
+          $ref: '#/components/schemas/LinksMetadata'
+        linkedinLink:
+          allOf:
+          - $ref: '#/components/schemas/LinksMetadata'
+        annualRevenue:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyMetadata'
+        address:
+          $ref: '#/components/schemas/AddressMetadata'
+        position:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/ActorMetadata'
+        updatedBy:
+          $ref: '#/components/schemas/ActorMetadata'
     AddressMetadata:
       type: object
       description: Postal address
@@ -266,126 +490,6 @@ components:
             id:
               type: string
               format: uuid
-    Company:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          readOnly: true
-        name:
-          type:
-          - string
-          - 'null'
-        domainName:
-          $ref: '#/components/schemas/LinksMetadata'
-        linkedinLink:
-          allOf:
-          - $ref: '#/components/schemas/LinksMetadata'
-        annualRevenue:
-          allOf:
-          - $ref: '#/components/schemas/CurrencyMetadata'
-        address:
-          $ref: '#/components/schemas/AddressMetadata'
-        position:
-          type: number
-        createdBy:
-          $ref: '#/components/schemas/ActorMetadata'
-        updatedBy:
-          $ref: '#/components/schemas/ActorMetadata'
-    ActorMetadata:
-      type: object
-      description: Record of who created or last updated an object
-      properties:
-        source:
-          type: string
-          enum:
-          - EMAIL
-          - CALENDAR
-          - API
-          - IMPORT
-          - MANUAL
-          - SYSTEM
-          - WORKFLOW
-          - WEBHOOK
-        workspaceMemberId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - object
-          - 'null'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    LinksMetadata:
-      type: object
-      description: Link with a primary URL and optional label
-      properties:
-        primaryLinkUrl:
-          type:
-          - string
-          - 'null'
-          format: uri
-        primaryLinkLabel:
-          type:
-          - string
-          - 'null'
-        secondaryLinks:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-                format: uri
-              label:
-                type: string
-    PageInfo:
-      type: object
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
     CompanyListResponse:
       type: object
       properties:
@@ -408,110 +512,6 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-  parameters:
-    orderBy:
-      name: order_by
-      in: query
-      required: false
-      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
-
-        '
-      schema:
-        type: string
-      examples:
-        simple:
-          value: createdAt
-        complex:
-          value: id[AscNullsFirst],createdAt[DescNullsLast]
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: 'Filter expression. Format: field[COMPARATOR]:value. Multiple conditions separated by comma (AND). Supports eq, neq, in, is, gt, gte, lt, lte, like, ilike, startsWith, containsAny. Composable with and(), or(), not().
-
-        '
-      schema:
-        type: string
-      examples:
-        simple:
-          value: name[eq]:"Acme"
-        dateRange:
-          value: createdAt[gte]:"2024-01-01"
-        composite:
-          value: emails.primaryEmail[eq]:foo@example.com
-        logical:
-          value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
-    depth:
-      name: depth
-      in: query
-      required: false
-      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
-
-        '
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-        default: 1
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
-    upsert:
-      name: upsert
-      in: query
-      required: false
-      description: If true, creates or updates if record already exists.
-      schema:
-        type: boolean
-        default: false
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of records to return (default 60, max 60).
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 60
-        default: 60
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination (use startCursor from current response).
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
-  responses:
-    '401':
-      description: Unauthorized - missing or invalid Bearer token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            statusCode: 403
-            messages:
-            - Missing authentication token
-            error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

@@ -147,23 +147,92 @@ components:
                   $ref: '#/components/schemas/PageInfo'
                 totalCount:
                   type: integer
-    DeleteResponse:
+    ObjectMetadata:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    ObjectMetadataResponse:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        nameSingular:
+          type: string
+          description: Camel-case singular name (e.g. invoice)
+        namePlural:
+          type: string
+          description: Camel-case plural name (e.g. invoices)
+        labelSingular:
+          type: string
+          description: Human-readable singular label
+        labelPlural:
+          type: string
+          description: Human-readable plural label
+        description:
+          type:
+          - string
+          - 'null'
+        icon:
+          type:
+          - string
+          - 'null'
+          description: Icon name from Twenty icon set
+        isCustom:
+          type: boolean
+          readOnly: true
+        isActive:
+          type: boolean
+        isSystem:
+          type: boolean
+          readOnly: true
+        fields:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/FieldMetadata'
+    ObjectMetadataInput:
+      type: object
+      required:
+      - nameSingular
+      - namePlural
+      - labelSingular
+      - labelPlural
+      properties:
+        nameSingular:
+          type: string
+        namePlural:
+          type: string
+        labelSingular:
+          type: string
+        labelPlural:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        isActive:
+          type: boolean
+    PageInfo:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            object:
-              $ref: '#/components/schemas/ObjectMetadata'
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
     ErrorResponse:
       type: object
       properties:
@@ -257,99 +326,24 @@ components:
                 type: string
               color:
                 type: string
-    ObjectMetadata:
+    DeleteResponse:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        nameSingular:
-          type: string
-          description: Camel-case singular name (e.g. invoice)
-        namePlural:
-          type: string
-          description: Camel-case plural name (e.g. invoices)
-        labelSingular:
-          type: string
-          description: Human-readable singular label
-        labelPlural:
-          type: string
-          description: Human-readable plural label
-        description:
-          type:
-          - string
-          - 'null'
-        icon:
-          type:
-          - string
-          - 'null'
-          description: Icon name from Twenty icon set
-        isCustom:
-          type: boolean
-          readOnly: true
-        isActive:
-          type: boolean
-        isSystem:
-          type: boolean
-          readOnly: true
-        fields:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/FieldMetadata'
-    PageInfo:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    ObjectMetadataResponse:
       type: object
       properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-    ObjectMetadataInput:
-      type: object
-      required:
-      - nameSingular
-      - namePlural
-      - labelSingular
-      - labelPlural
-      properties:
-        nameSingular:
-          type: string
-        namePlural:
-          type: string
-        labelSingular:
-          type: string
-        labelPlural:
-          type: string
-        description:
-          type: string
-        icon:
-          type: string
-        isActive:
-          type: boolean
+        data:
+          type: object
+          properties:
+            object:
+              $ref: '#/components/schemas/ObjectMetadata'
   responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: Unauthorized
       content:
@@ -361,19 +355,40 @@ components:
             messages:
             - Missing authentication token
             error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: Filter expression
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
     orderBy:
       name: order_by
       in: query
       required: false
       description: Ordering clause
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination
       schema:
         type: string
     limit:
@@ -386,28 +401,13 @@ components:
         minimum: 0
         maximum: 1000
         default: 1000
-    filter:
-      name: filter
+    startingAfter:
+      name: starting_after
       in: query
       required: false
-      description: Filter expression
+      description: Cursor for forward pagination
       schema:
         type: string
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerAuth:
       type: http

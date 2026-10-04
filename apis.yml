@@ -299,8 +299,6 @@ apis:
   humanURL: https://docs.twenty.com/developers/extend/api
   baseURL: https://api.twenty.com/graphql
   tags:
-  - OpenAPI
-  tags_raw:
   - Open API
   properties:
   - type: OpenAPI

@@ -168,21 +168,46 @@ paths:
         '401':
           $ref: '#/components/responses/401'
 components:
+  responses:
+    '401':
+      description: Unauthorized - missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            messages:
+            - Missing authentication token
+            error: FORBIDDEN_EXCEPTION
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
-    orderBy:
-      name: order_by
+    id:
+      name: id
+      in: path
+      required: true
+      description: Object UUID
+      schema:
+        type: string
+        format: uuid
+    depth:
+      name: depth
       in: query
       required: false
-      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
+      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
 
         '
       schema:
-        type: string
-      examples:
-        simple:
-          value: createdAt
-        complex:
-          value: id[AscNullsFirst],createdAt[DescNullsLast]
+        type: integer
+        enum:
+        - 0
+        - 1
+        default: 1
     filter:
       name: filter
       in: query
@@ -201,27 +226,34 @@ components:
           value: emails.primaryEmail[eq]:foo@example.com
         logical:
           value: or(stage[eq]:"NEW",stage[eq]:"IN_PROGRESS")
-    depth:
-      name: depth
+    orderBy:
+      name: order_by
       in: query
       required: false
-      description: 'Depth of nested relations to include. 0 = primary object only; 1 = primary object + direct relations.
+      description: 'Ordering. Format: field1,field2[DIRECTION]. Directions: AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast.
 
         '
       schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-        default: 1
-    id:
-      name: id
-      in: path
-      required: true
-      description: Object UUID
+        type: string
+      examples:
+        simple:
+          value: createdAt
+        complex:
+          value: id[AscNullsFirst],createdAt[DescNullsLast]
+    startingAfter:
+      name: starting_after
+      in: query
+      required: false
+      description: Cursor for forward pagination (use endCursor from previous response).
       schema:
         type: string
-        format: uuid
+    endingBefore:
+      name: ending_before
+      in: query
+      required: false
+      description: Cursor for backward pagination (use startCursor from current response).
+      schema:
+        type: string
     upsert:
       name: upsert
       in: query
@@ -240,149 +272,7 @@ components:
         minimum: 0
         maximum: 60
         default: 60
-    endingBefore:
-      name: ending_before
-      in: query
-      required: false
-      description: Cursor for backward pagination (use startCursor from current response).
-      schema:
-        type: string
-    startingAfter:
-      name: starting_after
-      in: query
-      required: false
-      description: Cursor for forward pagination (use endCursor from previous response).
-      schema:
-        type: string
   schemas:
-    PhonesMetadata:
-      type: object
-      description: Phone numbers
-      properties:
-        primaryPhoneNumber:
-          type:
-          - string
-          - 'null'
-        primaryPhoneCountryCode:
-          type:
-          - string
-          - 'null'
-        primaryPhoneCallingCode:
-          type:
-          - string
-          - 'null'
-        additionalPhones:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-    PersonListResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            people:
-              type: object
-              properties:
-                edges:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      node:
-                        $ref: '#/components/schemas/Person'
-                      cursor:
-                        type: string
-                pageInfo:
-                  $ref: '#/components/schemas/PageInfo'
-                totalCount:
-                  type: integer
-    DeleteResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-    PersonResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            person:
-              $ref: '#/components/schemas/Person'
-    EmailsMetadata:
-      type: object
-      description: Email addresses
-      properties:
-        primaryEmail:
-          type:
-          - string
-          - 'null'
-          format: email
-        additionalEmails:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: email
-    ActorMetadata:
-      type: object
-      description: Record of who created or last updated an object
-      properties:
-        source:
-          type: string
-          enum:
-          - EMAIL
-          - CALENDAR
-          - API
-          - IMPORT
-          - MANUAL
-          - SYSTEM
-          - WORKFLOW
-          - WEBHOOK
-        workspaceMemberId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - object
-          - 'null'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        messages:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-    FullNameMetadata:
-      type: object
-      description: Person full name
-      properties:
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
     LinksMetadata:
       type: object
       description: Link with a primary URL and optional label
@@ -408,6 +298,62 @@ components:
                 format: uri
               label:
                 type: string
+    PageInfo:
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        startCursor:
+          type:
+          - string
+          - 'null'
+        endCursor:
+          type:
+          - string
+          - 'null'
+    PersonListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            people:
+              type: object
+              properties:
+                edges:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      node:
+                        $ref: '#/components/schemas/Person'
+                      cursor:
+                        type: string
+                pageInfo:
+                  $ref: '#/components/schemas/PageInfo'
+                totalCount:
+                  type: integer
+    PersonResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            person:
+              $ref: '#/components/schemas/Person'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        messages:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
     Person:
       type: object
       properties:
@@ -454,6 +400,56 @@ components:
           $ref: '#/components/schemas/ActorMetadata'
         updatedBy:
           $ref: '#/components/schemas/ActorMetadata'
+    ActorMetadata:
+      type: object
+      description: Record of who created or last updated an object
+      properties:
+        source:
+          type: string
+          enum:
+          - EMAIL
+          - CALENDAR
+          - API
+          - IMPORT
+          - MANUAL
+          - SYSTEM
+          - WORKFLOW
+          - WEBHOOK
+        workspaceMemberId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - object
+          - 'null'
+    PhonesMetadata:
+      type: object
+      description: Phone numbers
+      properties:
+        primaryPhoneNumber:
+          type:
+          - string
+          - 'null'
+        primaryPhoneCountryCode:
+          type:
+          - string
+          - 'null'
+        primaryPhoneCallingCode:
+          type:
+          - string
+          - 'null'
+        additionalPhones:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
     PersonInput:
       type: object
       properties:
@@ -472,39 +468,43 @@ components:
           - string
           - 'null'
           format: uuid
-    PageInfo:
+    EmailsMetadata:
+      type: object
+      description: Email addresses
+      properties:
+        primaryEmail:
+          type:
+          - string
+          - 'null'
+          format: email
+        additionalEmails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: email
+    FullNameMetadata:
+      type: object
+      description: Person full name
+      properties:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+    DeleteResponse:
       type: object
       properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        startCursor:
-          type:
-          - string
-          - 'null'
-        endCursor:
-          type:
-          - string
-          - 'null'
-  responses:
-    '401':
-      description: Unauthorized - missing or invalid Bearer token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            statusCode: 403
-            messages:
-            - Missing authentication token
-            error: FORBIDDEN_EXCEPTION
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
   securitySchemes:
     bearerAuth:
       type: http
