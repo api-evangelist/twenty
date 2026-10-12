@@ -1,0 +1,432 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/twenty/integrations
+- https://composio.dev/toolkits/twenty
+checked:
+- https://composio.dev/toolkits/twenty
+- https://monid.ai/tools/twenty
+- https://n8n.io/integrations/twenty/
+- https://zapier.com/apps/twenty/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: twenty
+  url: https://zapier.com/apps/twenty/integrations
+  external_url: https://twenty.com/
+  partner_tier: BRONZE
+  triggers:
+  - key: trigger_record
+    label: Record Trigger
+  actions:
+  - key: crud_record
+    label: Create, Update or Delete Record
+  searches: []
+- marketplace: composio
+  channel: agent-gateway
+  app: twenty
+  url: https://composio.dev/toolkits/twenty
+  identity: action-prefix
+  actions:
+  - key: TWENTY_BATCH_CREATE_RECORDS
+  - key: TWENTY_CREATE_RECORD
+  - key: TWENTY_DELETE_RECORD
+  - key: TWENTY_GET_RECORD
+  - key: TWENTY_LIST_FIELDS
+  - key: TWENTY_LIST_OBJECTS
+  - key: TWENTY_LIST_RECORDS
+  - key: TWENTY_UPDATE_RECORD
+edges:
+- partner_name: Facebook Lead Ads
+  partner: facebook-lead-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/facebook-lead-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://www.facebook.com/business/ads/lead-ads
+- partner_name: Slack
+  partner: slack
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/slack
+  direction: third-party
+  category: Team Chat
+  partner_url: https://slack.com/
+- partner_name: Ninja Forms
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/ninjaforms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://ninjaforms.com/extensions/zapier/
+- partner_name: Calendly
+  partner: calendly
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/calendly
+  direction: third-party
+  category: Scheduling & Booking
+  partner_url: https://calendly.com/?utm_medium=partner&utm_source=zapier&utm_campaign=main_partner_page&utm_content=main_inbound_link
+- partner_name: Mailchimp
+  partner: mailchimp
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/mailchimp
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://mailchimp.com/
+- partner_name: Apollo
+  partner: apollo
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/apollo
+  direction: third-party
+  category: Sales & CRM
+  partner_url: https://www.apollo.io/
+- partner_name: WhatsApp Notifications
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/whatsapp-notifications
+  direction: third-party
+  category: Communication
+  partner_url: null
+- partner_name: WhatsApp Business
+  partner: whatsapp
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/whatsapp-business
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://business.whatsapp.com/
+- partner_name: Microsoft Outlook
+  partner: microsoft-outlook
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/microsoft-outlook
+  direction: third-party
+  category: Calendar
+  partner_url: https://outlook.live.com/
+- partner_name: Google Ads
+  partner: google-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/google-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.google.com/
+- partner_name: Cal.com
+  partner: cal-com
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/calcom
+  direction: third-party
+  category: Scheduling & Booking
+  partner_url: http://go.cal.com/zapier
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/google-sheets
+  direction: third-party
+  category: Google
+  partner_url: http://sheets.google.com/
+- partner_name: Google Forms
+  partner: google-forms
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/google-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: Stripe
+  partner: stripe
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/stripe
+  direction: third-party
+  category: Payment Processing
+  partner_url: https://stripe.com/
+- partner_name: TikTok Lead Generation
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/tiktok-lead-generation
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.tiktok.com/
+- partner_name: Crisp
+  partner: crisp
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/crisp
+  direction: third-party
+  category: Customer Support
+  partner_url: https://crisp.chat/
+- partner_name: B2B Wave
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/b2b-wave
+  direction: third-party
+  category: eCommerce
+  partner_url: https://www.b2bwave.com/
+- partner_name: Wave Connect
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/wave-connect
+  direction: third-party
+  category: Contact Management
+  partner_url: https://wavecnct.com/
+- partner_name: HubSpot
+  partner: hubspot
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/hubspot
+  direction: third-party
+  category: Marketing Automation
+  partner_url: http://www.hubspot.com/
+- partner_name: Squarespace Forms
+  partner: squarespace
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/squarespace-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.squarespace.com/
+- partner_name: Flodesk
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/flodesk
+  direction: third-party
+  category: Email Newsletters
+  partner_url: https://flodesk.com/
+- partner_name: WordPress
+  partner: wordpress
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/wordpress
+  direction: third-party
+  category: Website Builders
+  partner_url: https://wordpress.org/
+- partner_name: LinkedIn
+  partner: linkedin
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/linkedin
+  direction: third-party
+  category: Microsoft
+  partner_url: http://www.linkedin.com/
+- partner_name: Microsoft Office 365
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/office-365
+  direction: third-party
+  category: Email
+  partner_url: https://www.office.com/
+- partner_name: Clay
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/clay
+  direction: third-party
+  category: Spreadsheets
+  partner_url: https://clay.run/
+- partner_name: Invoice Ninja
+  partner: invoice-ninja
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/invoice-ninja
+  direction: third-party
+  category: Proposal & Invoice Management
+  partner_url: https://www.invoiceninja.com/
+- partner_name: Notion
+  partner: notion
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/notion
+  direction: third-party
+  category: Task Management
+  partner_url: https://www.notion.so/
+- partner_name: Telegram
+  partner: telegram
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/telegram
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://telegram.org/
+- partner_name: Discord
+  partner: discord
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/discord
+  direction: third-party
+  category: Team Chat
+  partner_url: https://discordapp.com/
+- partner_name: TidyCal
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/twenty/integrations/tidycal
+  direction: third-party
+  category: Calendar
+  partner_url: https://tidycal.com/
+templates:
+- title: Manage new Tally submissions by creating, updating, or deleting records in Twenty
+  url: https://zapier.com/apps/tally/integrations/twenty/1730953/manage-new-tally-submissions-by-creating-updating-or-deleting-records-in-twenty
+  apps:
+  - tally
+  - twenty
+- title: Send new Twenty record triggers as channel messages in Slack
+  url: https://zapier.com/apps/slack/integrations/twenty/1738686/send-new-twenty-record-triggers-as-channel-messages-in-slack
+  apps:
+  - twenty
+  - slack
+- title: Manage new Squarespace Forms form submissions by creating, updating or deleting records in Twenty
+  url: https://zapier.com/apps/squarespace-forms/integrations/twenty/1703428/manage-new-squarespace-forms-form-submissions-by-creating-updating-or-deleting-records-in-twenty
+  apps:
+  - squarespace-forms
+  - twenty
+- title: Manage new WooCommerce customers by creating, updating, or deleting records in Twenty
+  url: https://zapier.com/apps/twenty/integrations/woocommerce/1740336/manage-new-woocommerce-customers-by-creating-updating-or-deleting-records-in-twenty
+  apps:
+  - woocommerce
+  - twenty
+- title: Manage updated PhoneBurner contacts by automating record actions in Twenty
+  url: https://zapier.com/apps/phoneburner/integrations/twenty/1740505/manage-updated-phoneburner-contacts-by-automating-record-actions-in-twenty
+  apps:
+  - phoneburner
+  - twenty
+- title: Trigger new records in Zapier Tables each time a record triggers in Twenty
+  url: https://zapier.com/apps/twenty/integrations/zapier-tables/1757623/trigger-new-records-in-zapier-tables-each-time-a-record-triggers-in-twenty
+  apps:
+  - twenty
+  - zapier-tables
+- title: Manage new Cal.com bookings by creating, updating, or deleting records in Twenty
+  url: https://zapier.com/apps/calcom/integrations/twenty/1758840/manage-new-calcom-bookings-by-creating-updating-or-deleting-records-in-twenty
+  apps:
+  - calcom
+  - twenty
+- title: Create spreadsheet rows in Google Sheets for new record triggers in Twenty
+  url: https://zapier.com/apps/google-sheets/integrations/twenty/1762769/create-spreadsheet-rows-in-google-sheets-for-new-record-triggers-in-twenty
+  apps:
+  - twenty
+  - google-sheets
+- title: Create new Notion database items from Twenty record triggers
+  url: https://zapier.com/apps/notion/integrations/twenty/1768426/create-new-notion-database-items-from-twenty-record-triggers
+  apps:
+  - twenty
+  - notion
+- title: Trigger records in Twenty and create corresponding tasks in Google Tasks
+  url: https://zapier.com/apps/google-tasks/integrations/twenty/255569883/trigger-records-in-twenty-and-create-corresponding-tasks-in-google-tasks
+  apps:
+  - twenty
+  - google-tasks
+- title: Create drafts in Gmail for new record triggers in Twenty
+  url: https://zapier.com/apps/gmail/integrations/twenty/255571636/create-drafts-in-gmail-for-new-record-triggers-in-twenty
+  apps:
+  - twenty
+  - gmail
+- title: Manage new Gmail emails by creating, updating, or deleting records in Twenty
+  url: https://zapier.com/apps/gmail/integrations/twenty/255574750/manage-new-gmail-emails-by-creating-updating-or-deleting-records-in-twenty
+  apps:
+  - gmail
+  - twenty
+template_total: 44
