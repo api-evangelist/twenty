@@ -297,7 +297,6 @@
   arazzo: null
 - slug: twenty-microsoft-office-365
   label: Microsoft Office 365
-  partner: microsoft-office-365
   partner_name: Microsoft Office 365
   category: Email
   type: marketplace
@@ -305,7 +304,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/twenty/integrations/office-365
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: twenty-clay
   label: Clay
@@ -364,4 +363,55 @@
   evidence: https://zapier.com/apps/twenty/integrations/tidycal
   source: edge
   status: pending-partner-spec
+  arazzo: null
+- slug: twenty-zapier
+  label: Zapier
+  partner: zapier
+  partner_name: Zapier
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  evidence: https://zapier.com/apps/twenty/integrations
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Twenty
+    matched_domain: twenty.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: twenty
+    beta: false
+    builder: unknown (not in the directory record)
+  status: pending-generation
+  arazzo: null
+- slug: twenty-pipedream
+  label: Pipedream
+  partner: pipedream
+  partner_name: Pipedream
+  type: marketplace
+  marketplace: pipedream-components
+  channel: open-source-node
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/twenty
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Pipedream components (PipedreamHQ/pipedream components/)
+    spec_file: null
+    role: ipaas-connector:pipedream
+    registered_name: twenty
+    matched_domain: twenty.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: twenty
+    actions: true
+    sources: true
+    builder: Pipedream repo (component)
+  status: pending-generation
   arazzo: null
