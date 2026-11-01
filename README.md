@@ -1,4 +1,4 @@
-# Twenty (twenty)
+# Twenty
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,75 +66,181 @@
 
 Twenty is an open-source CRM platform built as a modern alternative to Salesforce, designed for teams that need flexibility, data ownership, and a contemporary developer experience. It provides REST and GraphQL APIs covering core CRM operations such as managing companies, people, opportunities, notes, tasks, and fully customizable objects. Developers can extend Twenty with custom objects, server-side logic, UI components, and AI agents as TypeScript packages, all surfaced through the same API surface. The platform is available as a cloud service or as a self-hosted deployment via Docker Compose, giving teams full control over their data residency and infrastructure.
 
-APIs.json: https://raw.githubusercontent.com/api-evangelist/twenty/refs/heads/main/apis.yml
+**Areas:** CRM · Open Source · REST · GraphQL · Webhook · Self-Hosted · Companies · People · Opportunities · Workflows · AI Agents · Custom Objects
 
-Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=twenty-api-evangelist&utm_content=repo
+## Twenty on APIs.io
 
-## Tags
+Everything profiled for Twenty is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/twenty/](https://apis.io/providers/twenty/)** — or go straight to one of the APIs or properties below.
 
-- CRM
-- Open Source
-- REST
-- GraphQL
-- Webhooks
-- Self-Hosted
-- Companies
-- People
-- Opportunities
-- Workflows
-- AI Agents
-- Custom Objects
+### APIs (10)
 
-## APIs
+- [Twenty Companies API](https://apis.io/apis/twenty/twenty-companies-api/) — Company CRM records
+- [Twenty Fields API](https://apis.io/apis/twenty/twenty-fields-api/) — Custom field metadata management
+- [Twenty Notes API](https://apis.io/apis/twenty/twenty-notes-api/) — Note records associated with CRM objects
+- [Twenty Objects API](https://apis.io/apis/twenty/twenty-objects-api/) — Custom object metadata management
+- [Twenty Opportunities API](https://apis.io/apis/twenty/twenty-opportunities-api/) — Opportunity/deal CRM records
+- [Twenty People API](https://apis.io/apis/twenty/twenty-people-api/) — Person/contact CRM records
+- [Twenty Relations API](https://apis.io/apis/twenty/twenty-relations-api/) — Custom relation metadata management
+- [Twenty Tasks API](https://apis.io/apis/twenty/twenty-tasks-api/) — Task records associated with CRM objects
+- [Twenty GraphQL API](https://apis.io/apis/twenty/twenty-crm-graphql-api/) — Auto-generated GraphQL API over the same workspace schema, exposing queries, mutations, batch upserts via plural object names, and relation traversal for…
+- [Twenty Open API](https://apis.io/apis/twenty/twenty-open-api-api/) — OpenAPI schema discovery
 
-| API | Description |
-|-----|-------------|
-| Twenty Core API | REST and GraphQL endpoints for CRUD operations on all CRM records including companies, people, opportunities, notes, tasks, and custom objects. Supports batch operations up to 60 records per request. |
-| Twenty Metadata API | REST and GraphQL endpoints for programmatic schema management — create, update, and delete custom objects, fields, and relations within a workspace. |
+### Published properties
 
-## Plans / Rate Limits / FinOps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Resource | Location |
-|----------|----------|
-| Plans and Pricing | [plans/twenty-plans-pricing.yml](plans/twenty-plans-pricing.yml) |
-| Rate Limits | [rate-limits/twenty-rate-limits.yml](rate-limits/twenty-rate-limits.yml) |
-| FinOps | [finops/twenty-finops.yml](finops/twenty-finops.yml) |
+#### GraphQL (1)
 
-### Pricing Summary
+GraphQL schemas.
 
-| Plan | Price |
-|------|-------|
-| Self-Hosted | Free (infrastructure costs borne by operator) |
-| Pro | $9 / user / month ($6.75 annually) |
-| Organization | $19 / user / month ($14.25 annually) |
+- [Twenty CRM GraphQL API](https://apis.io/graphqls/twenty/twenty-graphql/)
 
-### Rate Limit Summary
+#### MCP servers (1)
 
-| Plan | API Calls/Minute | Batch Records/Request |
-|------|------------------|-----------------------|
-| Pro | 50 | 60 |
-| Organization | 100 | 60 |
-| Self-Hosted | Configurable | 60 |
+Model Context Protocol servers that expose the API to agents.
 
-## Timestamps
+- [twenty](https://apis.io/servers/twenty/twenty/)
 
-- Created: 2026-06-12
-- Modified: 2026-06-12
+#### Agentic access (1)
 
-## Common
+Which operations an agent can call, which act, and which need a human in the loop.
 
-| Type | URL |
-|------|-----|
-| Website | https://twenty.com |
-| Documentation | https://docs.twenty.com/developers/introduction |
-| GitHub Org | https://github.com/twentyhq |
-| LinkedIn | https://www.linkedin.com/company/twenty |
-| Blog / Releases | https://twenty.com/releases |
-| Pricing | https://twenty.com/pricing |
-| X (Twitter) | https://x.com/twentycrm |
+- [Twenty Agentic Access](https://apis.io/agentic-access/twenty/twenty-agentic-access/)
 
-## Maintainers
+#### JSON Schema (3)
 
-| Name | Email |
-|------|-------|
-| Kin Lane | kin@apievangelist.com |
+The data models the API reads and writes.
+
+- [Company](https://apis.io/schemas/twenty/twenty-company/)
+- [Opportunity](https://apis.io/schemas/twenty/twenty-opportunity/)
+- [Person](https://apis.io/schemas/twenty/twenty-person/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Twenty Context](https://apis.io/jsonld/twenty/twenty-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Twenty CRM Vocabulary](https://apis.io/vocabularies/twenty/twenty-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Twenty Create Company](https://apis.io/examples/twenty/twenty-create-company/)
+- [Twenty Create Custom Object](https://apis.io/examples/twenty/twenty-create-custom-object/)
+- [Twenty List Companies](https://apis.io/examples/twenty/twenty-list-companies/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Twenty Core companies API](https://apis.io/collections/twenty/open-twenty-companies-api/)
+- [Twenty Core companies fields API](https://apis.io/collections/twenty/open-twenty-fields-api/)
+- [Twenty Core companies notes API](https://apis.io/collections/twenty/open-twenty-notes-api/)
+- [Twenty Core companies objects API](https://apis.io/collections/twenty/open-twenty-objects-api/)
+- [Twenty Core companies openapi API](https://apis.io/collections/twenty/open-twenty-openapi-api/)
+- [Twenty Core companies opportunities API](https://apis.io/collections/twenty/open-twenty-opportunities-api/)
+- [Twenty Core companies people API](https://apis.io/collections/twenty/open-twenty-people-api/)
+- [Twenty Core companies relations API](https://apis.io/collections/twenty/open-twenty-relations-api/)
+- [Twenty Core companies tasks API](https://apis.io/collections/twenty/open-twenty-tasks-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Twenty — jsonschema rules](https://apis.io/rules/twenty/twenty-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Twenty Authentication](https://apis.io/security/twenty/twenty-authentication/)
+- [Twenty Domain Security](https://apis.io/security/twenty/twenty-domain-security/)
+- [Twenty Vulnerability Disclosure](https://apis.io/security/twenty/twenty-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Twenty Plans Pricing](https://apis.io/plans/twenty/twenty-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Twenty Rate Limits](https://apis.io/rate-limits/twenty/twenty-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Twenty Finops](https://apis.io/finops/twenty/twenty-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://twenty.com)
+- [Documentation](https://docs.twenty.com/developers/introduction)
+- [Pricing](https://twenty.com/pricing)
+- [Blog](https://twenty.com/releases)
+
+## API Evangelist rating
+
+**Kin Score 39.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 51.7 |
+| Contract quality | 68.3 |
+| Contract governance | 23.5 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 18.4 |
+
+**Agent readiness 46.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/twenty/](https://apis.io/providers/twenty/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Twenty: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/twenty/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
